@@ -19,10 +19,10 @@ private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "oth
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
 private _rectTex = "#(argb,8,8,3)color(1,1,1,1)";
 private _ink = [0.84, 0.86, 0.8, 1];
-// Not: fileExists PBO içindeki .paa için güvenilir değil (oyunda yanlış false dönüyordu); dokular her zaman kullanılır.
+// Doku dosyaları <ad>_ca.paa olarak adlandırılır (tools/gen_textures.py); kodda yalnızca <ad> kullanılır.
 // Dokusuz yedek moda geçmek için CBA ayarı "Dokulari kullan" kapatılır.
 private _useTex = missionNamespace getVariable ["SB_TankUI_useTextures", true];
-private _tex = { ["", format ["\z\tank33\addons\tankui\data\%1.paa", _this]] select _useTex };
+private _tex = { ["", format ["\z\tank33\addons\tankui\data\%1_ca.paa", _this]] select _useTex };
 private _fx = { _bx + _this * _u * _asp };
 private _fy = { _by + _this * _u };
 
