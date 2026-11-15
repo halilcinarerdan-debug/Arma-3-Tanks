@@ -23,6 +23,7 @@
 
 // Sürücü/komutan eylemleri: araç sahibinde çalışır (tüm makinelerde kayıtlı)
 ["SB_TankUI_engine", { params ["_veh", "_on"]; _veh engineOn _on }] call CBA_fnc_addEventHandler;
+["SB_TankUI_turretLimits", { params ["_veh", "_lim"]; _veh setTurretLimits _lim }] call CBA_fnc_addEventHandler;
 ["SB_TankUI_fire", { params ["_veh", "_weapon"]; _veh fire _weapon }] call CBA_fnc_addEventHandler;
 
 if (!hasInterface) exitWith {};
@@ -81,4 +82,19 @@ if (!hasInterface) exitWith {};
 ["SB_TankUI_hudScale", "SLIDER",
     ["Nisangah plaka boyutu (%)", "Plakalarin olcegi (115 = varsayilan, 100 = daha kucuk)."],
     "Steel Tank UI", [50, 200, 115, 0], 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_rangeSource", "LIST",
+    ["Menzil kaynagi", "Menzil ekranlarinin (istasyon, nisangah plakasi) verisi: Arma'nin kendi lazer menzili (nisangahtaki sayi) ya da panelin LAZER dugmesiyle olctugu."],
+    "Steel Tank UI", [[0, 1], ["Arma lazeri (nisangah ile ayni)", "Panel lazeri (LAZER dugmesi)"], 0], 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_turretLock", "CHECKBOX",
+    ["Hidrolik kapaliyken taret kilitlenir", "HIDROLIK salteri kapatilinca taret mevcut yonunde kilitlenir (elle krank yok); acilinca serbest kalir."],
+    "Steel Tank UI", true, 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_opticStab", "CHECKBOX",
+    ["Ayna kilidi optik stabilizasyonu etkiler", "Hidrolik acik + ayna acik + 120 sn isinma tamamsa optik yon stabilizasyonu acilir. Yalnizca optik modunda config'te directionStabilized varsa etkilidir."],
+    "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;

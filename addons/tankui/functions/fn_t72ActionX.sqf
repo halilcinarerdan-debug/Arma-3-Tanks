@@ -19,21 +19,33 @@ switch (_action) do {
         if (call compile "isTurnedOut player") then { player action ["TurnIn", _veh] } else { player action ["TurnOut", _veh] };
     };
     case "smoke": {
-        // duman fırlatıcıyı bul: komutan veya nişancı tarette, silah, "smoke" içeren mermi kabul eden
-        private _found = "";
+        // fire/selectWeapon yalnızca YEREL birim için güvenilir: duman fırlatıcı oyuncunun kendi taretinde aranır ve oyuncuya ateş ettirilir
+        private _own = uiNamespace getVariable ["SB_TankUI_turret", [0]];
+        private _found = ["", ""];
         {
-            { private _w = _x;
-                if (_found == "" && {((compatibleMagazines _w) findIf {((toLower _x) find "smoke") >= 0}) >= 0}) then { _found = _w };
-            } forEach (_veh weaponsTurret _x);
-        } forEach [[0], [0, 0]];
-        if (_found == "") exitWith { systemChat "Duman fırlatıcı bulunamadi." };
+            private _w = _x;
+            private _muz = getArray (configFile >> "CfgWeapons" >> _w >> "muzzles");
+            if (_muz isEqualTo []) then { _muz = ["this"] };
+            {
+                private _m = if (_x == "this") then {_w} else {_x};
+                if ((_found select 0) == "" && {((compatibleMagazines [_w, _m]) findIf {((toLower _x) find "smoke") >= 0}) >= 0}) then { _found = [_w, _m] };
+            } forEach _muz;
+        } forEach (_veh weaponsTurret _own);
+        if ((_found select 0) == "") exitWith { systemChat "Duman firlatici bu koltukta yok (baska koltuktaki oyuncu atmali)." };
+
+        private _prev = _veh currentWeaponTurret _own;
         private _count = { private _n = 0; { if (((toLower (_x select 1)) find "smoke") >= 0) then { _n = _n + (_x select 3) } } forEach ([_veh] call SB_fnc_getAmmoList); _n };
         private _before = call _count;
-        ["SB_TankUI_fire", [_veh, _found], _veh] call CBA_fnc_targetEvent;
+        [_veh, _own, _found select 0, _found select 1] call SB_fnc_selectWeapon;
         [{
-            params ["_before", "_count"];
-            private _after = call _count;
-            systemChat (if (_after < _before) then {"Duman atildi."} else {"Duman atilamadi (fire etkisiz kaldi). RPT'ye bakin."});
-        }, [_before, _count], 1.2] call CBA_fnc_waitAndExecute;
+            params ["_veh", "_own", "_muzzle", "_prev", "_before", "_count"];
+            player fire _muzzle;
+            [{
+                params ["_veh", "_own", "_prev", "_before", "_count"];
+                systemChat (if ((call _count) < _before) then {"Duman atildi."} else {"Duman atilamadi (fire etkisiz kaldi). RPT'ye bakin."});
+                // önceki silaha dön
+                if (_prev != "") then { [_veh, _own, _prev, _prev] call SB_fnc_selectWeapon };
+            }, [_veh, _own, _prev, _before, _count], 1.2] call CBA_fnc_waitAndExecute;
+        }, [_veh, _own, _found select 1, _prev, _before, _count], 0.9] call CBA_fnc_waitAndExecute;
     };
 };

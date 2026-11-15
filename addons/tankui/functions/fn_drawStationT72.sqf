@@ -72,12 +72,12 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 
 // ---- Sağ küme: LRF ekranı + lambalar ----
 ["display", 13.6, 2.6, 5.6, 2.7, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
-[11.575, 2.6, compile "_this getVariable ['SB_lrfText', '----']"] call _sevenSeg;
+[11.575, 2.6, compile "[_this] call SB_fnc_rangeText"] call _sevenSeg;
 [18.0, 2.3, "L_LRF" call _L, _green, {_this getVariable ["SB_lrfOn", false]}] call _lampRound;
 [19.6, 2.3, "L_READY" call _L, _red, {(_this getVariable ["SB_lrfOn", false]) && {time >= (_this getVariable ["SB_lrfReadyAt", 0])}}] call _lampRound;
 
 // ---- Yay biçimli menzil çarkı + ateşe hazır lambası (kılavuz s.15) ----
-[14.4, 8.4, 3.1, "gauge_arc", 30, -80, 80, compile "(_this getVariable ['SB_range', 0]) / 100", [1, 0.45, 0.1, 1], [0, 0, 0, 0], 0.98] call _gauge;
+[14.4, 8.4, 3.1, "gauge_arc", 30, -80, 80, compile "([_this] call SB_fnc_rangeValue) / 100", [1, 0.45, 0.1, 1], [0, 0, 0, 0], 0.98] call _gauge;
 [14.4, 6.9, "", _red, {
     (_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0
     && {(_this getVariable ["SB_lrfOn", false])} && {time >= (_this getVariable ["SB_lrfReadyAt", 0])}

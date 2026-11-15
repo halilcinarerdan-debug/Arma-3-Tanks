@@ -47,6 +47,7 @@ switch (_action) do {
     };
 
     case "lase": {
+        if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) exitWith { systemChat "Menzil kaynagi Arma lazeri: nisangahta lazer tusunu kullanin (CBA: Menzil kaynagi)." };
         if !(_veh getVariable ["SB_lrfOn", false]) exitWith { systemChat "T-72: LRF kapali (LRF ACIK salterini acin)." };
         if (time < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF hazir degil." };
         _veh setVariable ["SB_lrfReadyAt", time + 3];
@@ -81,14 +82,14 @@ switch (_action) do {
         private _cur = _veh currentWeaponTurret _turret;
         private _target = if (_cur == _main) then {_coax} else {_main};
         if (_target == "") exitWith { systemChat "T-72: bu taretde TOP/PKT secimi icin ikinci silah bulunamadi." };
-        player selectWeapon _target;
+        [_veh, _turret, _target, _target] call SB_fnc_selectWeapon;
         [{
             params ["_veh", "_turret", "_target"];
             if ((_veh currentWeaponTurret _turret) != _target) then {
                 systemChat "Silah secilemedi (selectWeapon etkisiz kaldi). RPT'ye bakin.";
                 diag_log format ["[SB_TankUI] TOP/PKT secimi basarisiz: istenen=%1 mevcut=%2", _target, _veh currentWeaponTurret _turret];
             };
-        }, [_veh, _turret, _target], 0.4] call CBA_fnc_waitAndExecute;
+        }, [_veh, _turret, _target], 0.9] call CBA_fnc_waitAndExecute;
     };
     case "automan": { _veh setVariable ["SB_manual", !(_veh getVariable ["SB_manual", false])] };
     case "mirror":  { _veh setVariable ["SB_mirror", !(_veh getVariable ["SB_mirror", false])] };
@@ -104,6 +105,8 @@ switch (_action) do {
         private _on = !(_veh getVariable ["SB_hydr", false]);
         _veh setVariable ["SB_hydr", _on];
         if (_on) then { _veh setVariable ["SB_hydrOn", time] } else { _veh setVariable ["SB_stab", false] };
+        // hidrolik kapanınca taret kilitlenir (elle krank yok), açılınca serbest kalır
+        if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, !_on] call SB_fnc_turretLock };
     };
     case "stab": {
         if (_veh getVariable ["SB_hydr", false]) then {

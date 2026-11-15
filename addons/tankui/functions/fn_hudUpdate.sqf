@@ -2,6 +2,8 @@
  * Nişangâh plakalarını göster/gizle ve güncelle (CBA PFH, 0.3 sn).
  * Gösterim koşulu: ayar açık, menü kapalı, oyuncu tankta nişancı/komutan koltuğunda ve optiğe bakıyor (cameraView == "GUNNER").
  */
+call SB_fnc_applyEffects;
+
 private _want = false;
 private _veh = vehicle player;
 if (missionNamespace getVariable ["SB_TankUI_hud", true] && {isNull (uiNamespace getVariable ["SB_TankUI_display", displayNull])}) then {

@@ -103,7 +103,7 @@ _modeTxt setVariable ["sb_fn", {
 private _hC = 6.0;
 [_x0R, _yTop, _colW, _hC] call _hplate;
 ["display", 4.5, 2.6, 6.2, 2.7, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
-[2.475, 2.6, compile "_this getVariable ['SB_lrfText', '----']"] call _sevenSeg;
+[2.475, 2.6, compile "[_this] call SB_fnc_rangeText"] call _sevenSeg;
 [4.5, 4.9, 7, 0.6, "RANGE_M" call _L, _dimTxt, 2, 0.5] call _txt;
 
 // ================= D (sağ): kalan mermi sayıları =================

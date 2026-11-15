@@ -42,6 +42,11 @@ class CfgFunctions {
             class findWeapon {};
             class weaponRoles {};
             class coaxCount {};
+            class rangeValue {};
+            class rangeText {};
+            class turretLock {};
+            class applyEffects {};
+            class selectWeapon {};
             class hudBuild {};
             class hudUpdate {};
         };

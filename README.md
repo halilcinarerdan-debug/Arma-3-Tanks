@@ -108,3 +108,14 @@ CBA ayarları: "Nisangah plakalari" (aç/kapa), "Nisangah plaka boyutu (%)". Arm
 - **Sürücü (ISTASYON):** hız kadranı + 7 segment, yakıt, motor çalışıyor lambası, arıza lambaları (motor/paletler/gövde, hasar >= %30), şalterler: MOTOR (aç/kapa), FARLAR, KAPAK (aç/kapat). Steel Beasts kılavuzunda T-72M1 sürücü paneli modellenmediği için tasarım gerçek T-72 sürücü göstergelerine ve Arma'nın verebildiği verilere göre.
 - **Komutan (ISTASYON):** mürettebat (isim + sağlık), PKT / NSVT / duman sayıları, arıza lambaları, KAPAK şalteri, DUMAN düğmesi (902A fırlatıcı).
 - Motor aç/kapa (`engineOn`) kesin; farlar, kapak ve duman atışı (`action lightOn/TurnOut`, `fire`) wiki'den doğrulanamadı. Bu eylemler `fn_t72ActionX.sqf` içinde yalıtıldı (hata nişancı istasyonunu bozmaz); duman atışı sonucu sohbette bildirilir.
+
+## Wiki ile doğrulanan etkiler (v2)
+| Özellik | Komut (wiki'de doğrulandı) | Davranış |
+|---|---|---|
+| Menzil ekranları | `player currentZeroing [silah]` -> `[mesafe, indeks]` (mesafe lazer menzilini içerir, Arma 2.20+; araç değil birim ister) | İstasyon ve nişangâh plakasındaki menzil artık Arma'nın kendi lazer menzili (nişangâhtaki sayı). CBA "Menzil kaynagi" ile panel lazerine (LAZER düğmesi) dönülebilir |
+| Hidrolik -> taret | `araç setTurretLimits [taret, minDönüş, maxDönüş, minYükseliş, maxYükseliş]`, sıfırlama `[taret]` | HIDROLIK kapanınca taret mevcut yönünde kilitlenir, açılınca serbest. Araçtan inince kilit kalkar. CBA: "Hidrolik kapaliyken taret kilitlenir" |
+| Ayna kilidi -> optik | `araç enableDirectionStabilization [bool, taret]` | Hidrolik açık + ayna açık + 120 sn ısınma tamamsa optik yön stabilizasyonu açık, değilse kapalı. Yalnızca optik modunda `directionStabilized` config'te varsa etkili. CBA: "Ayna kilidi optik stabilizasyonu etkiler" |
+| Silah seçimi | `unit selectWeapon [silah, namlu, atışModu]` (araç silahları da), atış modu `weaponState` ile | TOP/PKT şalteri ve MUHIMMAT'taki SEC; etkisizse eski tek argümanlı biçim denenir |
+| Duman atışı | `unit fire muzzle` (yerel birim, `selectWeapon` ile birlikte) | Komutan/nişancı DUMAN düğmesi kendi taretindeki fırlatıcıyı seçip oyuncuya ateş ettirir, ardından eski silaha döner |
+
+Hâlâ doğrulanmadı: `action ["TurnOut"/"TurnIn"/"lightOn"/"lightOff"]` (kapak ve farlar; Category:Actions sayfası gerekir).
