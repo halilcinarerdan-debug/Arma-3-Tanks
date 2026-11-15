@@ -45,3 +45,32 @@ class SB_RscButton {
     soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick", 0.09, 1};
     soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape", 0.09, 1};
 };
+
+// Resim kontrolü (ctrlSetText ile doku, ctrlSetTextColor ile renk, ctrlSetAngle ile döndürme)
+class SB_RscPicture {
+    access = 0;
+    idc = -1;
+    type = 0;
+    style = 48; // ST_PICTURE
+    x = 0; y = 0; w = 0.1; h = 0.1;
+    font = "RobotoCondensed";
+    sizeEx = 0;
+    colorBackground[] = {0, 0, 0, 0};
+    colorText[] = {1, 1, 1, 1};
+    text = "";
+    shadow = 0;
+    lineSpacing = 0;
+    fixedWidth = 0;
+};
+
+// Görünmez tıklama alanı (şalter, düğme, seçici konumu üstüne konur)
+class SB_RscButtonInvisible: SB_RscButton {
+    colorText[] = {0, 0, 0, 0};
+    colorDisabled[] = {0, 0, 0, 0};
+    colorBackground[] = {0, 0, 0, 0};
+    colorBackgroundDisabled[] = {0, 0, 0, 0};
+    colorBackgroundActive[] = {1, 1, 1, 0.12};
+    colorFocused[] = {0, 0, 0, 0};
+    colorBorder[] = {0, 0, 0, 0};
+    soundEnter[] = {"", 0, 1};
+};

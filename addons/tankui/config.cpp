@@ -32,6 +32,7 @@ class CfgFunctions {
             class drawStation {};
             class drawStationT72 {};
             class t72Action {};
+            class placeRect {};
         };
     };
 };
@@ -53,6 +54,8 @@ class Extended_PostInit_EventHandlers {
  * İlk eşleşen profil kullanılır; hiçbiri uymazsa Generic.
  */
 class CfgSBTankUI {
+    // ctrlSetAngle yönü: 1 = pozitif açı saat yönü. Oyunda ibreler ters dönerse -1 yapın.
+    angleSign = 1;
     class Profiles {
         class M1A2 {
             title = "M1A2 ABRAMS - CREW DISPLAY";
