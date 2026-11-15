@@ -1,6 +1,6 @@
 /*
  * Sürücü/komutan istasyonu eylemleri. Ayrı dosyada tutulur ki bir hata nişancı istasyonunu (SB_fnc_t72Action) etkilemesin.
- * Doğrulanmış sözdizimleri: docs/reference/arma3-verified-commands.md (action TurnIn/TurnOut/LightOn/LightOff, fire, selectWeapon).
+ * Doğrulanmış sözdizimleri: docs/arma-ref/arma3-verified-commands.md (action TurnIn/TurnOut/LightOn/LightOff, fire, selectWeapon).
  * Hâlâ doğrulanmayan: durum okuyucular isLightOn / isTurnedOut (aşağıda compile içinde).
  * Not (wiki): TurnIn/TurnOut için birim, aracın ETKİN KOMUTANI olan bir oyuncu olmalıdır; yalnızca turn-in/out koltuklarında kullanılmalı.
  * params: [eylem]  ->  engine | lights | hatch | smoke
