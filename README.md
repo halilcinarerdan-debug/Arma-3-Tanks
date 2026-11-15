@@ -118,4 +118,5 @@ CBA ayarları: "Nisangah plakalari" (aç/kapa), "Nisangah plaka boyutu (%)". Arm
 | Silah seçimi | `unit selectWeapon [silah, namlu, atışModu]` (araç silahları da), atış modu `weaponState` ile | TOP/PKT şalteri ve MUHIMMAT'taki SEC; etkisizse eski tek argümanlı biçim denenir |
 | Duman atışı | `unit fire muzzle` (yerel birim, `selectWeapon` ile birlikte) | Komutan/nişancı DUMAN düğmesi kendi taretindeki fırlatıcıyı seçip oyuncuya ateş ettirir, ardından eski silaha döner |
 
-Hâlâ doğrulanmadı: `action ["TurnOut"/"TurnIn"/"lightOn"/"lightOff"]` (kapak ve farlar; Category:Actions sayfası gerekir).
+`action ["TurnOut"/"TurnIn"/"LightOn"/"LightOff"]` artık wiki'de doğrulandı (kapak yalnızca aracın etkin komutanı olan oyuncuda çalışır, yani sürücü koltuğunda çalışmayabilir). Hâlâ doğrulanmayan: durum okuyucular `isLightOn` / `isTurnedOut`.
+Tüm doğrulanmış sözdizimleri: `docs/reference/arma3-verified-commands.md`; ham eylem listesi: `docs/reference/arma3-actions-raw.txt`.
