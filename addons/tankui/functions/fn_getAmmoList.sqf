@@ -1,6 +1,6 @@
 /*
  * params: [araç]
- * döner: [[turretPath, magClass, displayName, toplamMermi, aktifMi, silahAdı], ...]
+ * döner: [[turretPath, magClass, displayName, toplamMermi, aktifMi, silahAdı, silahSınıfı], ...]
  */
 params ["_veh"];
 private _result = [];
@@ -11,6 +11,7 @@ private _result = [];
         if (_idx < 0) then {
             private _weapons = _veh weaponsTurret _turret;
             private _wName = "";
+            private _wClass = "";
             {
                 private _w = _x;
                 private _muz = getArray (configFile >> "CfgWeapons" >> _w >> "muzzles");
@@ -19,6 +20,7 @@ private _result = [];
                     private _m = if (_x == "this") then {_w} else {_x};
                     if (_wName == "" && {_mag in compatibleMagazines [_w, _m]}) then {
                         _wName = getText (configFile >> "CfgWeapons" >> _w >> "displayName");
+                        _wClass = _w;
                     };
                 } forEach _muz;
             } forEach _weapons;
@@ -28,7 +30,7 @@ private _result = [];
             _result pushBack [
                 _turret, _mag,
                 getText (configFile >> "CfgMagazines" >> _mag >> "displayName"),
-                _count, false, _wName
+                _count, false, _wName, _wClass
             ];
         } else {
             private _row = _result select _idx;
@@ -38,6 +40,8 @@ private _result = [];
 } forEach (magazinesAllTurrets _veh);
 
 {
-    _x set [4, (_veh currentMagazineTurret (_x select 0)) isEqualTo (_x select 1)];
+    _x params ["_t", "_m", "", "", "", "", "_wc"];
+    // aktif = o taretin AKTİF silahı bu satırın silahı VE yüklü mermi bu satırın mermisi
+    _x set [4, ((_veh currentMagazineTurret _t) isEqualTo _m) && {(_veh currentWeaponTurret _t) isEqualTo _wc}];
 } forEach _result;
 _result
