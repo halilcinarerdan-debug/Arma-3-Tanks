@@ -100,7 +100,7 @@ private _lw = _sw * 0.12;
 private _st = ["SB_RscText", _x0 + _lw * 1.6, _y0 + _rowH * 7.6, _lw * 2.4, _rowH * 0.9, ""] call _mk;
 _st setVariable ["sb_fn", {
     params ["_c", "_veh"];
-    _c ctrlSetText (["OTOMATIK YUKLEYICI: HAZIR", "OTOMATIK YUKLEYICI: YUKLUYOR..."] select (_veh getVariable ["SB_loading", false]));
+    _c ctrlSetText (["YUKLEYICI: HAZIR", "YUKLEYICI: YUKLUYOR"] select (_veh getVariable ["SB_loading", false]));
 }];
 [_st, _veh] call (_st getVariable "sb_fn");
 

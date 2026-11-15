@@ -42,7 +42,7 @@ class SB_TankUI_Main {
             idc = 7403;
             x = SB_X + SB_W * 0.05; y = SB_Y + SB_H * 0.05;
             w = SB_W * 0.55; h = SB_H * 0.06;
-            sizeEx = safeZoneH * 0.04;
+            sizeEx = safeZoneH * 0.034;
             text = "TANK";
         };
         class VehicleName: SB_RscText {
@@ -58,6 +58,7 @@ class SB_TankUI_Main {
             x = SB_X + SB_W * 0.05; y = SB_Y + SB_H * 0.12;
             w = SB_W * 0.16; h = SB_H * 0.05;
             text = "MUHIMMAT";
+            sizeEx = safeZoneH * 0.028;
             action = "[0] call SB_fnc_setTab;";
         };
         class TabStatus: TabAmmo {
