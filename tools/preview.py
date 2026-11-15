@@ -22,6 +22,7 @@ bx, by = sx + 0.8 * u, sy + 0.4 * u
 FONT = "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf"
 _cache = {}
 
+PAL = ""      # "leo" = Leopard 2 iç mekan paleti (kit.sqf _pal ile aynı)
 def tex(name):
     if name not in _cache:
         _cache[name] = Image.open(os.path.join(DATA, name + "_ca.png")).convert("RGBA")
@@ -70,23 +71,24 @@ def frame(S, active, labels):
     labels = [(lbl({2: "SCR_STATION", 0: "SCR_AMMO", 1: "SCR_STATUS"}[tab]), tab) for _, tab in labels]
     sc = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     S.paste(RECT, sx + sw / 2, sy + sh / 2, sw, sh, (0.012, 0.018, 0.014, 1))
-    S.paste(tex("housing"), SX + SW / 2, SY + SH / 2, SW, SH)
+    S.paste(tex("housing_leo" if PAL else "housing"), SX + SW / 2, SY + SH / 2, SW, SH)
     d = ImageDraw.Draw(S.im)
     f = ImageFont.truetype(FONT, int(H * 0.011 * 1.1))
     for i, (name, tab) in enumerate(labels):
         x0, y0 = SX + SW * 0.022, SY + SH * (0.20 + 0.12 * i)
         col = (36, 77, 33) if tab == active else (18, 20, 15)
         d.rounded_rectangle([x0, y0, x0 + SW * 0.076, y0 + SH * 0.075], radius=10, fill=col)
-        d.text((x0 + SW * 0.038, y0 + SH * 0.0375), name, font=f, fill=(158, 199, 148), anchor="mm")
+        d.text((x0 + SW * 0.038, y0 + SH * 0.0375), name, font=f, fill=(235, 240, 235) if PAL else (158, 199, 148), anchor="mm")
     x0, y0 = SX + SW * 0.022, SY + SH * 0.80
     d.rounded_rectangle([x0, y0, x0 + SW * 0.076, y0 + SH * 0.075], radius=10, fill=(18, 20, 15))
-    d.text((x0 + SW * 0.038, y0 + SH * 0.0375), lbl("CLOSE"), font=f, fill=(158, 199, 148), anchor="mm")
+    d.text((x0 + SW * 0.038, y0 + SH * 0.0375), lbl("CLOSE"), font=f, fill=(235, 240, 235) if PAL else (158, 199, 148), anchor="mm")
 
 def header(S, left, right):
     w = sw / u - 1.6
-    S.txt(0, 0.45, w * 0.6, 0.7, left, dim, 0)
-    S.txt(w * 0.6, 0.45, w * 0.4, 0.7, right, dim, 1)
-    S.rect(w / 2, 1.1, w, 0.05, (0.35, 0.45, 0.33, 1))
+    ac = (0.9, 0.92, 0.9, 1) if PAL else dim
+    S.txt(0, 0.45, w * 0.6, 0.7, left, ac, 0)
+    S.txt(w * 0.6, 0.45, w * 0.4, 0.7, right, ac, 1)
+    S.rect(w / 2, 1.1, w, 0.05, (0.55, 0.57, 0.55, 1) if PAL else (0.35, 0.45, 0.33, 1))
 
 def lamp(S, ox, oy, name, col, on, pw=3.4):
     S.spr("label", ox, oy, pw, 0.95)
@@ -99,7 +101,7 @@ def lamp(S, ox, oy, name, col, on, pw=3.4):
 def lamp_round(S, ox, oy, name, col, on, side="below"):
     k = col if on else tuple(c * 0.14 for c in col[:3]) + (1,)
     S.spr("@dot", ox, oy, 1.5, 1.5, (col[0], col[1], col[2], 0.25 if on else 0))
-    S.spr("ring", ox, oy, 1.25, 1.25); S.spr("lens", ox, oy, 0.85, 0.85, k); S.spr("gloss", ox - 0.14, oy - 0.16, 0.7, 0.7)
+    S.spr("ring_sq" if PAL else "ring", ox, oy, 1.25, 1.25); S.spr("lens_sq" if PAL else "lens", ox, oy, 0.85, 0.85, k); S.spr("gloss", ox - 0.14, oy - 0.16, 0.7, 0.7)
     if name:
         if side == "right": S.txt(ox + 0.9, oy, 3.2, 0.5, name, style=0, size=0.4)
         else: S.txt(ox, oy + 1.05, 2.6, 0.5, name, size=0.38)
@@ -239,8 +241,10 @@ def cmdr():
     finish(S); return S
 
 # ---------------------------------------------------------------- LEOPARD 2 AILESI
-DIMG = (0.62, 0.78, 0.58, 1)
+DIMG = (0.9, 0.92, 0.9, 1)
 def leo_gunner():
+    global PAL
+    PAL = "leo"
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
     header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
     S.spr("display", 4.9, 2.6, 7.6, 2.7); seven(S, 2.2, 2.6, "F196A", 5, 1.0); S.txt(4.9, 4.4, 7, 0.5, lbl("GPS_T"), DIMG, size=0.4)
@@ -258,9 +262,11 @@ def leo_gunner():
     toggle(S, 18.4, 11.0, lbl("T_LRFON"), 180)
     toggle(S, 2.2, 14.2, lbl("T_RMODE"), 0); push(S, 5.6, 14.0, lbl("P_RDN"), (0.45, 0.45, 0.45, 1)); push(S, 8.8, 14.0, lbl("P_RUP"), (0.45, 0.45, 0.45, 1))
     S.spr("display", 14.4, 14.2, 5.6, 1.9); seven(S, 12.4, 14.2, "1100", 4, 0.8); S.txt(18.0, 14.2, 3, 0.5, lbl("AVST_T"), DIMG, size=0.38)
-    finish(S); return S
+    finish(S); PAL = ""; return S
 
 def leo_cmdr():
+    global PAL
+    PAL = "leo"
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
     header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_commander"))
     for i, (r, n, hp) in enumerate([("driver", "Baranov", 100), ("gunner", "hcinar33", 100), ("commander", "Sudakov", 85)]):
@@ -274,9 +280,11 @@ def leo_cmdr():
         S.txt(cx, 10.4, 5, 0.5, lbl(k), size=0.5); S.spr("display", cx, 11.7, 4.6, 1.8); seven(S, cx - 1.1, 11.7, v, 3, 0.8)
     for x, k, on in ((1.6, "F_ENG", 0), (4.2, "F_LTR", 1), (6.8, "F_RTR", 0), (9.4, "F_HULL", 0)): lamp_round(S, x, 13.6, lbl(k), RED, on)
     toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
-    finish(S); return S
+    finish(S); PAL = ""; return S
 
 def leo_driver():
+    global PAL
+    PAL = "leo"
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
     header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_driver"))
     D = 2.9 * 2 / 0.9; S.spr("gauge_speed", 4.4, 5.8, D, D); L = 2.9 * 0.82 * u; S.bar(S.U(4.4), S.V(5.8), L, L * 0.16, -120 + 240 * 34 / 80, (0.85, 0.15, 0.1, 1)); S.spr("knob", 4.4, 5.8, 0.55, 0.55, (0.7, 0.7, 0.7, 1))
@@ -290,7 +298,7 @@ def leo_driver():
         S.rect(cx, 7.3 + d * 0.14 / 2, 1.0, d * 0.14, col); S.txt(cx, 10.1, 1.6, 0.5, "%d m" % d, size=0.4)
     for x, k, c, on in [(10.6, "L_RUN", GREEN, 1), (12.8, "F_ENG", RED, 0), (15.0, "F_LTR", RED, 1), (17.2, "F_RTR", RED, 0), (19.4, "F_HULL", RED, 0)]: lamp_round(S, x, 11.3, lbl(k), c, on)
     toggle(S, 12.0, 13.9, lbl("T_ENGINE"), 0); toggle(S, 15.2, 13.9, lbl("T_LIGHT"), 180); toggle(S, 18.4, 13.9, lbl("T_HATCH"), 180)
-    finish(S); return S
+    finish(S); PAL = ""; return S
 
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():

@@ -14,7 +14,7 @@ private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 _veh setVariable ["SB_armed", true, true];
 private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 [_vehName + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
-private _dim = [0.62, 0.78, 0.58, 1];
+private _dim = _accent;
 
 // ---- GPS alt satırı ----
 ["display", 4.9, 2.6, 7.6, 2.7, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;

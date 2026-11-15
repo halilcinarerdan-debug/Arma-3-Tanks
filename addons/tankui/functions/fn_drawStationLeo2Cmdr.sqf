@@ -9,7 +9,7 @@ private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\z\tank33\addons\tankui\kit.sqf"
 
 [getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
-private _dim = [0.62, 0.78, 0.58, 1];
+private _dim = _accent;
 
 {
     private _y = 2.8 + _forEachIndex * 1.6;

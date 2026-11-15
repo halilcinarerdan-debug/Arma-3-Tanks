@@ -14,6 +14,13 @@ private _u = _sh / 17;
 private _bx = _sx + _u * _asp * 0.8;
 private _by = _sy + _u * 0.4;
 private _ctrls = [];
+// Palet: profildeki palette ("leo" = Leopard 2 iç mekanı: açık gri boya, beyaz yazı, kare LED düğmeler)
+private _profCfg = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'dan önce çözülür
+private _pal = getText (_profCfg >> "palette");
+private _leo = _pal == "leo";
+private _accent = [[0.62, 0.78, 0.58, 1], [0.9, 0.92, 0.9, 1]] select _leo;
+private _ringN = ["ring", "ring_sq"] select _leo;
+private _lensN = ["lens", "lens_sq"] select _leo;
 private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "other"])) call _L;
 
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
@@ -92,9 +99,9 @@ private _invH = {
 private _header = {
     params ["_left", "_right"];
     private _w = (_sw / (_u * _asp)) - 1.6;
-    [0, 0.45, _w * 0.6, 0.7, _left, [0.62, 0.78, 0.58, 1], 0] call _txt;
-    [_w * 0.6, 0.45, _w * 0.4, 0.7, _right, [0.62, 0.78, 0.58, 1], 1] call _txt;
-    [_w / 2, 1.1, _w, 0.05, [0.35, 0.45, 0.33, 1]] call _rect;
+    [0, 0.45, _w * 0.6, 0.7, _left, _accent, 0] call _txt;
+    [_w * 0.6, 0.45, _w * 0.4, 0.7, _right, _accent, 1] call _txt;
+    [_w / 2, 1.1, _w, 0.05, [[0.35, 0.45, 0.33, 1], [0.55, 0.57, 0.55, 1]] select _leo] call _rect;
 };
 
 // ---- Etiket kutulu LED lamba: etiket solda, LED sağda ----
@@ -124,8 +131,8 @@ private _lamp = {
 private _lampRound = {
     params ["_ox", "_oy", "_name", "_col", "_code", ["_lensText", ""], ["_labelSide", "below"]];
     private _glow = [_ox call _fx, _oy call _fy, 1.5, 1.5, _dotTex, [_col select 0, _col select 1, _col select 2, 0]] call _pic;
-    ["ring", _ox, _oy, 1.25, 1.25, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
-    private _lens = ["lens", _ox, _oy, 0.85, 0.85, _col, _dotTex, _col] call _spr;
+    [_ringN, _ox, _oy, 1.25, 1.25, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
+    private _lens = [_lensN, _ox, _oy, 0.85, 0.85, _col, _dotTex, _col] call _spr;
     ["gloss", _ox - 0.14, _oy - 0.16, 0.7, 0.7, [1, 1, 1, 1], _dotTex, [1, 1, 1, 0]] call _spr;
     if (_lensText != "") then { [_ox, _oy, 1.1, 0.5, _lensText, [0.06, 0.05, 0.02, 1], 2, 0.4] call _txt };
     if (_name != "") then {

@@ -19,6 +19,15 @@ uiNamespace setVariable ["SB_TankUI_sig", ""];
 (_display displayCtrl 7413) ctrlSetText (["SCR_STATION"] call SB_fnc_lbl);
 (_display displayCtrl 7499) ctrlSetText (["CLOSE"] call SB_fnc_lbl);
 
+// Palet (Leopard 2: açık gri iç mekan): gövde dokusu ve yan düğme yazıları
+private _pal = getText (_profile >> "palette");
+if (_pal != "") then {
+    if (missionNamespace getVariable ["SB_TankUI_useTextures", true]) then {
+        (_display displayCtrl 7405) ctrlSetText format ["\z\tank33\addons\tankui\data\housing_%1_ca.paa", _pal];
+    };
+    { (_display displayCtrl _x) ctrlSetTextColor [0.92, 0.94, 0.92, 1] } forEach [7411, 7412, 7413, 7499];
+};
+
 // Doku kapalıysa zemin zeytin yeşili yedek gövde olur; açıkken koyu zemin kalır (gövdenin arkasından dünya görünmesin)
 if !(missionNamespace getVariable ["SB_TankUI_useTextures", true]) then { (_display displayCtrl 7401) ctrlSetBackgroundColor [0.25, 0.30, 0.20, 1] };
 // Tanılama: fileExists sonucu (RPT)

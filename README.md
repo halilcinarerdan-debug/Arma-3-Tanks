@@ -140,3 +140,9 @@ Strv 122 (Leo 2S) CUP'ta bulunmayabilir; bu yüzden ayrı bir araç sınıfına 
 - Panel durumları (STAB, HIDR, mermi seçimi, yükleme zamanı, lazer/menzil, ayna vb.) araç üzerinde **herkese yayınlanan** değişkenlerdir; aynı araçtaki iki nişancı aynı durumu görür. Zamanlayıcılar `serverTime` ile tutulur.
 - Aynı taretteki başka bir oyuncu veya bot mermiyi değiştirirse seçici ve lambalar oyunun gerçek durumuna 0,3 sn içinde uyar (`SB_fnc_syncSel`).
 - ACE Advanced Vehicle Damage ile uyum: hasar ekranı hitpoint değerlerini okur (ACE bunları günceller); ayrıca ACE'in kendi tamir/yangın sistemi bu paneldeki lambaların yerine geçmez.
+
+## Leopard 2 paleti (`palette = "leo"`)
+
+Leopard 2 / Strv 122 profili, Steel Beasts Strv 122 kılavuzundaki iç mekan görsellerinden esinlenen kendi paletini kullanır:
+açık gri-krem boya + kenarlarda astar/pas sıyrığı (`housing_leo`), siyah lastik tamponlar, beyaz gravür yazı, **kare basmalı LED düğmeler** (`lens_sq`, `ring_sq`).
+Yeni PNG'leri (`housing_leo_ca.png`, `lens_sq_ca.png`, `ring_sq_ca.png`) PAA'ya çevirmeyi unutmayın. Başka bir araç için palet eklemek: profile `palette = "ad"` + `housing_<ad>_ca.paa`.

@@ -27,7 +27,7 @@ def font(size, bold=False):
 
 # ad -> (kir şiddeti, çizik sayısı, sararma). Ölçek kolay ayar için tek yerde.
 WEAR = {
-    "housing": (1.0, 55, 0.0), "gauge_ammo": (0.8, 26, 0.12), "gauge_fuel": (0.8, 26, 0.12), "gauge_speed": (0.8, 26, 0.12),
+    "housing": (1.0, 55, 0.0), "housing_leo": (0.45, 30, 0.02), "ring_sq": (0.4, 4, 0.0), "lens_sq": (0.2, 0, 0.0), "gauge_ammo": (0.8, 26, 0.12), "gauge_fuel": (0.8, 26, 0.12), "gauge_speed": (0.8, 26, 0.12),
     "gauge_range": (0.6, 30, 0.0), "gauge_arc": (0.6, 30, 0.0), "knob": (0.6, 10, 0.0),
     "ring": (0.5, 6, 0.0), "recess": (0.4, 0, 0.0), "label": (0.9, 14, 0.0), "display": (0.5, 8, 0.0),
     "lever": (0.4, 4, 0.0), "tank_trackL": (0.3, 0, 0.0), "tank_trackR": (0.3, 0, 0.0), "tank_hull": (0.3, 0, 0.0),
@@ -126,12 +126,12 @@ def blur(a, r):
 
 
 # ------------------------------------------------------------------ kasa
-def housing():
+def housing(name="housing", col=(86, 98, 72), metal=(138, 138, 132), chips_b=None, slot=(18, 20, 17), slot_edge=(60, 66, 52)):
     W, H = 1152, 907
     base = np.zeros((H, W, 4), np.float32)
     yy, xx = np.mgrid[0:H, 0:W]
     light = 1.10 - 0.22 * (xx / W * 0.5 + yy / H * 0.5)             # sol-üstten ışık
-    col = np.array([86, 98, 72], np.float32)                         # zeytin yeşili sert plastik
+    col = np.array(col, np.float32)                                  # taban boya rengi
     base[..., :3] = col * light[..., None]
     grain = rng.normal(0, 3.2, (H, W))                               # ince tane
     base[..., :3] += grain[..., None] + smooth_noise(W, H, 40, 4.0)[..., None]
@@ -166,17 +166,22 @@ def housing():
     # kenar/köşe boya sıyrığı: gri metal
     band = np.clip(blur(outer, 2) - blur(outer, 14), 0, 1)
     chips = (smooth_noise(W, H, 14, 1.0) + rng.normal(0, 0.25, (H, W)) > 0.55) & (band > 0.12)
-    metal = np.array([138, 138, 132], np.float32)
+    metal = np.array(metal, np.float32)
     for c in range(3):
         base[..., c] = np.where(chips, base[..., c] * 0.25 + metal[c] * 0.75, base[..., c])
+    if chips_b is not None:                                          # ikinci tip sıyrık (ör. pas / astar)
+        chips2 = (smooth_noise(W, H, 9, 1.0) + rng.normal(0, 0.3, (H, W)) > 0.62) & (band > 0.10) & ~chips
+        cb = np.array(chips_b, np.float32)
+        for c in range(3):
+            base[..., c] = np.where(chips2, base[..., c] * 0.3 + cb[c] * 0.7, base[..., c])
     img = to_img(base)
     d = ImageDraw.Draw(img, "RGBA")
 
     # sol taraftaki donanım düğmesi yuvaları (config ile aynı konumlar)
     for i in range(3):
         y = int(H * (0.20 + 0.12 * i))
-        d.rounded_rectangle([int(W * 0.022), y, int(W * 0.098), y + int(H * 0.075)], radius=12, fill=(18, 20, 17, 255), outline=(60, 66, 52, 255), width=2)
-    d.rounded_rectangle([int(W * 0.022), int(H * 0.80), int(W * 0.098), int(H * 0.875)], radius=12, fill=(18, 20, 17, 255), outline=(60, 66, 52, 255), width=2)
+        d.rounded_rectangle([int(W * 0.022), y, int(W * 0.098), y + int(H * 0.075)], radius=12, fill=slot + (255,), outline=slot_edge + (255,), width=2)
+    d.rounded_rectangle([int(W * 0.022), int(H * 0.80), int(W * 0.098), int(H * 0.875)], radius=12, fill=slot + (255,), outline=slot_edge + (255,), width=2)
 
     # LED yuvaları (üst-sol, tablet gibi)
     for i in range(4):
@@ -196,7 +201,7 @@ def housing():
     # dış kenar alfa (yuvarlak köşeler) ve ekran deliği şeffaf
     out = np.asarray(img).astype(np.float32).copy()
     out[..., 3] = 255 * outer * (1 - hole)
-    save(to_img(out), "housing")
+    save(to_img(out), name)
 
 
 # ------------------------------------------------------------------ cam
@@ -358,6 +363,33 @@ def lens():
     save(to_img(a), "lens")
 
 
+def lens_sq():
+    """Yuvarlatılmış kare lamba başlığı (Leopard kontrol ünitesi basmalı LED düğmeleri); renk oyunda tint ile verilir."""
+    S = 128
+    m = rrect_mask(S, S, (2, 2, S - 3, S - 3), 14)
+    yy, xx = np.mgrid[0:S, 0:S]
+    a = np.zeros((S, S, 4), np.float32)
+    top = 1.0 - 0.28 * (yy / S)                                   # üstten ışık
+    edge = np.clip(blur(m, 3), 0, 1)
+    a[..., :3] = (255 * top * (0.80 + 0.20 * edge))[..., None]
+    a[..., 3] = m * 255
+    save(to_img(a), "lens_sq")
+
+
+def ring_sq():
+    S = 128
+    m = rrect_mask(S, S, (1, 1, S - 2, S - 2), 18)
+    inner = rrect_mask(S, S, (20, 20, S - 21, S - 21), 10)
+    yy, xx = np.mgrid[0:S, 0:S]
+    a = np.zeros((S, S, 4), np.float32)
+    sh = 0.78 + 0.26 * np.cos(np.radians((np.arctan2(yy - S / 2, xx - S / 2) * 180 / np.pi) + 135))
+    a[..., :3] = np.array([120, 122, 118], np.float32) * sh[..., None]
+    for ch, v in enumerate((14, 14, 13)):
+        a[..., ch] = a[..., ch] * (1 - inner) + v * inner
+    a[..., 3] = m * 255
+    save(to_img(a), "ring_sq")
+
+
 def gloss():
     S = 128
     yy, xx = np.mgrid[0:S, 0:S]
@@ -494,6 +526,9 @@ def tank_parts():
 
 if __name__ == "__main__":
     housing(); glass(); dirt()
+    # Leopard 2 / Strv 122 iç mekan paleti: açık gri-krem boya, siyah lastik, kenarlarda astar/pas sıyrığı
+    housing("housing_leo", col=(190, 192, 184), metal=(104, 106, 100), chips_b=(140, 96, 62), slot=(24, 25, 24), slot_edge=(96, 98, 92))
+    lens_sq(); ring_sq()
     gauge("gauge_ammo", 11, -115, 115, 2, (236, 233, 220), (24, 24, 22))
     gauge("gauge_range", 30, -100, 100, 5, (14, 15, 14), (232, 232, 224), sub=4)
     gauge("gauge_fuel", 4, -60, 60, 1, (236, 233, 220), (24, 24, 22), labels=["E", "1/4", "1/2", "3/4", "F"], sub=3)

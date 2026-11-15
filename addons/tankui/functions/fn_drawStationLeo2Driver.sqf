@@ -8,7 +8,7 @@ private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\z\tank33\addons\tankui\kit.sqf"
 
 [getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
-private _dim = [0.62, 0.78, 0.58, 1];
+private _dim = _accent;
 
 // hız + yakıt
 [4.4, 5.8, 2.9, "gauge_speed", 80, -120, 120, compile "abs speed _this", [0.85, 0.15, 0.1, 1], [0.9, 0.9, 0.85, 1]] call _gauge;
