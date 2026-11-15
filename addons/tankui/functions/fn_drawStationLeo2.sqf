@@ -11,7 +11,7 @@ params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\z\tank33\addons\tankui\kit.sqf"
 
-_veh setVariable ["SB_armed", true];
+_veh setVariable ["SB_armed", true, true];
 private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 [_vehName + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
 private _dim = [0.62, 0.78, 0.58, 1];

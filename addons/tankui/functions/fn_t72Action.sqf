@@ -48,15 +48,15 @@ switch (_action) do {
 
     // ---- Leopard 2 ailesi: ateş kontrol modu, mermi (seç + yükle), savaş nişanı ----
     case "fc_normal": {
-        _veh setVariable ["SB_hydr", true];
-        _veh setVariable ["SB_hydrOn", time - 120, true];        // Leopard stabilizasyonu anında hazır (T-72'deki 120 sn ısınma yok)
-        _veh setVariable ["SB_stab", true];
+        _veh setVariable ["SB_hydr", true, true];
+        _veh setVariable ["SB_hydrOn", serverTime - 120, true];        // Leopard stabilizasyonu anında hazır (T-72'deki 120 sn ısınma yok)
+        _veh setVariable ["SB_stab", true, true];
         _veh setVariable ["SB_stabOn", serverTime, true];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
     };
     case "fc_emerg": {
-        _veh setVariable ["SB_hydr", true];
-        _veh setVariable ["SB_hydrOn", time - 120, true];
+        _veh setVariable ["SB_hydr", true, true];
+        _veh setVariable ["SB_hydrOn", serverTime - 120, true];
         _veh setVariable ["SB_stab", false, true];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
     };

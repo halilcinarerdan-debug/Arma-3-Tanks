@@ -9,7 +9,7 @@ params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\z\tank33\addons\tankui\kit.sqf"
 
-_veh setVariable ["SB_armed", true];       // panel etkileri (atış sapması) bu araçta artık devrede
+_veh setVariable ["SB_armed", true, true];       // panel etkileri (atış sapması) bu araçta artık devrede
 private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 [_vehName + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
 
