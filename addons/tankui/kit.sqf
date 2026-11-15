@@ -17,7 +17,7 @@ private _ctrls = [];
 // Palet: profildeki palette ("leo" = Leopard 2 iç mekanı: açık gri boya, beyaz yazı, kare LED düğmeler)
 private _profCfg = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'dan önce çözülür
 private _pal = getText (_profCfg >> "palette");
-private _leo = _pal == "leo";
+private _leo = _pal != "";
 private _accent = [[0.62, 0.78, 0.58, 1], [0.9, 0.92, 0.9, 1]] select _leo;
 private _ringN = ["ring", "ring_sq"] select _leo;
 private _lensN = ["lens", "lens_sq"] select _leo;

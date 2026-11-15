@@ -66,6 +66,15 @@ switch (_action) do {
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, true] call SB_fnc_turretLock };
     };
     case "am_KE": { _veh setVariable ["SB_selType", "KE", true]; [_veh, _turret] call SB_fnc_leoMain; ["load"] call SB_fnc_t72Action };
+    case "am_HEAT": {
+        // HEAT / MPAT: HEAT yoksa HE'ye düş
+        private _hasHEAT = (([_veh] call SB_fnc_getAmmoList) findIf {
+            (_x select 0) isEqualTo _turret && {([_x select 1] call SB_fnc_ammoClass) == "HEAT"}
+        }) >= 0;
+        _veh setVariable ["SB_selType", ["HE", "HEAT"] select _hasHEAT, true];
+        [_veh, _turret] call SB_fnc_leoMain;
+        ["load"] call SB_fnc_t72Action;
+    };
     case "am_HE": {
         // HE-T: HE yoksa HEAT mermisine düş (CUP sürümüne göre değişir)
         private _hasHE = (([_veh] call SB_fnc_getAmmoList) findIf {

@@ -27,7 +27,7 @@ def font(size, bold=False):
 
 # ad -> (kir şiddeti, çizik sayısı, sararma). Ölçek kolay ayar için tek yerde.
 WEAR = {
-    "housing": (1.0, 55, 0.0), "housing_leo": (0.45, 30, 0.02), "ring_sq": (0.4, 4, 0.0), "lens_sq": (0.2, 0, 0.0), "gauge_ammo": (0.8, 26, 0.12), "gauge_fuel": (0.8, 26, 0.12), "gauge_speed": (0.8, 26, 0.12),
+    "housing": (1.0, 55, 0.0), "housing_leo": (0.45, 30, 0.02), "housing_m1": (0.5, 32, 0.03), "ring_sq": (0.4, 4, 0.0), "lens_sq": (0.2, 0, 0.0), "gauge_ammo": (0.8, 26, 0.12), "gauge_fuel": (0.8, 26, 0.12), "gauge_speed": (0.8, 26, 0.12),
     "gauge_range": (0.6, 30, 0.0), "gauge_arc": (0.6, 30, 0.0), "knob": (0.6, 10, 0.0),
     "ring": (0.5, 6, 0.0), "recess": (0.4, 0, 0.0), "label": (0.9, 14, 0.0), "display": (0.5, 8, 0.0),
     "lever": (0.4, 4, 0.0), "tank_trackL": (0.3, 0, 0.0), "tank_trackR": (0.3, 0, 0.0), "tank_hull": (0.3, 0, 0.0),
@@ -528,6 +528,8 @@ if __name__ == "__main__":
     housing(); glass(); dirt()
     # Leopard 2 / Strv 122 iç mekan paleti: açık gri-krem boya, siyah lastik, kenarlarda astar/pas sıyrığı
     housing("housing_leo", col=(190, 192, 184), metal=(104, 106, 100), chips_b=(140, 96, 62), slot=(24, 25, 24), slot_edge=(96, 98, 92))
+    # M1 Abrams iç mekanı: sıcak kum-gri boya (açık), siyah lastik
+    housing("housing_m1", col=(198, 192, 172), metal=(108, 106, 98), chips_b=(128, 88, 58), slot=(24, 25, 24), slot_edge=(96, 98, 92))
     lens_sq(); ring_sq()
     gauge("gauge_ammo", 11, -115, 115, 2, (236, 233, 220), (24, 24, 22))
     gauge("gauge_range", 30, -100, 100, 5, (14, 15, 14), (232, 232, 224), sub=4)

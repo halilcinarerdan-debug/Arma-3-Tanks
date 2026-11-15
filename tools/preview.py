@@ -71,7 +71,7 @@ def frame(S, active, labels):
     labels = [(lbl({2: "SCR_STATION", 0: "SCR_AMMO", 1: "SCR_STATUS"}[tab]), tab) for _, tab in labels]
     sc = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     S.paste(RECT, sx + sw / 2, sy + sh / 2, sw, sh, (0.012, 0.018, 0.014, 1))
-    S.paste(tex("housing_leo" if PAL else "housing"), SX + SW / 2, SY + SH / 2, SW, SH)
+    S.paste(tex("housing_" + PAL if PAL else "housing"), SX + SW / 2, SY + SH / 2, SW, SH)
     d = ImageDraw.Draw(S.im)
     f = ImageFont.truetype(FONT, int(H * 0.011 * 1.1))
     for i, (name, tab) in enumerate(labels):
@@ -264,11 +264,11 @@ def leo_gunner():
     S.spr("display", 14.4, 14.2, 5.6, 1.9); seven(S, 12.4, 14.2, "1100", 4, 0.8); S.txt(18.0, 14.2, 3, 0.5, lbl("AVST_T"), DIMG, size=0.38)
     finish(S); PAL = ""; return S
 
-def leo_cmdr():
+def leo_cmdr(pal="leo", mg2="W_MG2", veh="Leopard 2A6"):
     global PAL
-    PAL = "leo"
+    PAL = pal
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
-    header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_commander"))
+    header(S, veh + "  |  " + lbl("SCR_STATION"), lbl("ROLE_commander"))
     for i, (r, n, hp) in enumerate([("driver", "Baranov", 100), ("gunner", "hcinar33", 100), ("commander", "Sudakov", 85)]):
         y = 2.8 + i * 1.6
         S.spr("label", 7.4, y, 14.2, 1.3); S.txt(0.9, y, 13, 0.7, lbl("ROLE_" + r) + ":  " + n + "   %d%%" % hp, style=0, size=0.5)
@@ -276,17 +276,17 @@ def leo_cmdr():
     S.spr("display", 10.4, 8.8, 18.6, 1.25)
     for i, n in enumerate([6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6]):
         S.txt(1.9 + i * 1.4, 8.8, 1.3, 0.7, str(n), (1, 0.72, 0.15, 1) if i == 6 else (0.45, 0.55, 0.43, 1), size=0.55)
-    for cx, k, v in ((3.5, "W_COAX", "250"), (9.0, "W_MG2", "60"), (14.5, "SMOKE", "16")):
+    for cx, k, v in ((3.5, "W_COAX", "250"), (9.0, mg2, "60"), (14.5, "SMOKE", "16")):
         S.txt(cx, 10.4, 5, 0.5, lbl(k), size=0.5); S.spr("display", cx, 11.7, 4.6, 1.8); seven(S, cx - 1.1, 11.7, v, 3, 0.8)
     for x, k, on in ((1.6, "F_ENG", 0), (4.2, "F_LTR", 1), (6.8, "F_RTR", 0), (9.4, "F_HULL", 0)): lamp_round(S, x, 13.6, lbl(k), RED, on)
     toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
     finish(S); PAL = ""; return S
 
-def leo_driver():
+def leo_driver(pal="leo", veh="Leopard 2A6"):
     global PAL
-    PAL = "leo"
+    PAL = pal
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
-    header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_driver"))
+    header(S, veh + "  |  " + lbl("SCR_STATION"), lbl("ROLE_driver"))
     D = 2.9 * 2 / 0.9; S.spr("gauge_speed", 4.4, 5.8, D, D); L = 2.9 * 0.82 * u; S.bar(S.U(4.4), S.V(5.8), L, L * 0.16, -120 + 240 * 34 / 80, (0.85, 0.15, 0.1, 1)); S.spr("knob", 4.4, 5.8, 0.55, 0.55, (0.7, 0.7, 0.7, 1))
     S.txt(4.4, 9.4, 4, 0.5, lbl("SPEED"), size=0.45); S.spr("display", 4.4, 11.6, 5.0, 2.2); seven(S, 3.185, 11.6, "34", 3, 0.9)
     D = 1.2 * 2 / 0.9; S.spr("gauge_fuel", 9.2, 4.0, D, D); L = 1.2 * 0.82 * u; S.bar(S.U(9.2), S.V(4.0), L, L * 0.16, -60 + 120 * 3 / 4, (0.05, 0.05, 0.05, 1)); S.txt(9.2, 6.0, 3, 0.5, lbl("FUEL"), size=0.45)
@@ -299,6 +299,32 @@ def leo_driver():
     for x, k, c, on in [(10.6, "L_RUN", GREEN, 1), (12.8, "F_ENG", RED, 0), (15.0, "F_LTR", RED, 1), (17.2, "F_RTR", RED, 0), (19.4, "F_HULL", RED, 0)]: lamp_round(S, x, 11.3, lbl(k), c, on)
     toggle(S, 12.0, 13.9, lbl("T_ENGINE"), 0); toggle(S, 15.2, 13.9, lbl("T_LIGHT"), 180); toggle(S, 18.4, 13.9, lbl("T_HATCH"), 180)
     finish(S); PAL = ""; return S
+
+
+def m1_gunner():
+    global PAL
+    PAL = "m1"
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "M1A2 Abrams  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
+    S.spr("display", 4.9, 2.6, 7.6, 2.7); seven(S, 2.875, 2.6, "1960", 4, 1.0); S.txt(4.9, 4.4, 7, 0.5, lbl("RANGE_M"), DIMG, size=0.4)
+    for x, k, c, on in [(11.2, "L_READY", GREEN, 1), (13.5, "L_LRF", RED, 1), (15.8, "W_COAX", AMBER, 0), (18.1, "LED_STAB", GREEN, 1)]:
+        lamp_round(S, x, 2.6, lbl(k), c, on)
+    S.txt(0.9, 5.1, 8, 0.5, lbl("M1_FC_T"), DIMG, 0, 0.45)
+    for k, y, on in [("M1_FC_ON", 6.3, 1), ("M1_FC_PWR", 7.7, 0), ("M1_FC_MAN", 9.1, 0)]:
+        S.spr("label", 4.4, y, 7.4, 1.15); lamp_round(S, 1.3, y, "", GREEN, on); S.txt(2.4, y, 6.5, 0.55, lbl(k), style=0, size=0.4)
+    S.txt(10.6, 5.1, 7, 0.5, lbl("SEL_TITLE"), DIMG, 0, 0.45)
+    for k, y, on, n, nd in [("AM_SABOT", 6.3, 1, "18", 2), ("AM_HEATM", 7.7, 0, "10", 2), ("W_COAXM", 9.1, 0, "3600", 4)]:
+        S.spr("label", 15.2, y, 8.8, 1.15); lamp_round(S, 10.9, y, "", AMBER, on); S.txt(12.0, y, 5, 0.55, lbl(k), style=0, size=0.4)
+        S.spr("display", 17.9, y, 3.0, 1.0); seven(S, 16.79 if nd == 4 else 17.53, y, n, nd, 0.55)
+    push(S, 2.2, 10.8, lbl("LOAD"), (0.2, 0.6, 0.25, 1)); push(S, 5.4, 10.8, lbl("LASE")); push(S, 8.6, 10.8, lbl("RESET"), (0.15, 0.15, 0.15, 1))
+    toggle(S, 18.4, 11.0, lbl("T_LRFON"), 180)
+    toggle(S, 2.2, 14.2, lbl("T_RMODE"), 0); push(S, 5.6, 14.0, lbl("P_RDN"), (0.45, 0.45, 0.45, 1)); push(S, 8.8, 14.0, lbl("P_RUP"), (0.45, 0.45, 0.45, 1))
+    S.spr("display", 14.4, 14.2, 5.6, 1.9); seven(S, 12.4, 14.2, "1100", 4, 0.8); S.txt(18.0, 14.2, 3, 0.5, lbl("AVST_T"), DIMG, size=0.38)
+    finish(S); PAL = ""; return S
+
+
+def m1_cmdr(): return leo_cmdr("m1", "W_M2", "M1A2 Abrams")
+def m1_driver(): return leo_driver("m1", "M1A2 Abrams")
 
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():
@@ -345,5 +371,5 @@ def hud():
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver), ("m1_nisanci", m1_gunner), ("m1_komutan", m1_cmdr), ("m1_surucu", m1_driver)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

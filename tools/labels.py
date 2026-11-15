@@ -120,6 +120,15 @@ L.update({
     "P_RUP":     {"tr": "+100", "en": "+100", "de": "+100", "sv": "+100", "ru": "+100"},
     "T_TURRETPOS": {"tr": "TARET YONU (GOVDEYE GORE)", "en": "TURRET DIRECTION (RELATIVE TO HULL)", "de": "TURMRICHTUNG (ZUR WANNE)", "sv": "TORNRIKTNING (MOT SKROV)"},
     "REAR_T":    {"tr": "GERI GORUS", "en": "REAR VIEW", "de": "RÜCKFAHRKAMERA", "sv": "BACKKAMERA"},
+    "M1_FC_T":   {"tr": "TARET / TOP KONTROLU", "en": "TURRET / GUN CONTROL"},
+    "M1_FC_ON":  {"tr": "GUC + STAB ACIK", "en": "POWER + STAB ON"},
+    "M1_FC_PWR": {"tr": "GUC ACIK / STAB KAPALI", "en": "POWER ON / STAB OFF"},
+    "M1_FC_MAN": {"tr": "GUC KAPALI (MANUEL)", "en": "POWER OFF (MANUAL)"},
+    "AM_SABOT":  {"tr": "SABOT (KE)", "en": "SABOT (KE)"},
+    "AM_HEATM":  {"tr": "HEAT / MPAT", "en": "HEAT / MPAT"},
+    "W_COAXM":   {"tr": "KOAKS M240", "en": "COAX M240"},
+    "W_M2":      {"tr": ".50 CAL (CWS)", "en": ".50 CAL (CWS)"},
+    "W_M240L":   {"tr": "M240 (YUKLEYICI)", "en": "M240 (LOADER)"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 

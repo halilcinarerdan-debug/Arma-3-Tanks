@@ -11,6 +11,13 @@ switch (_station) do {
             default { [_display] call SB_fnc_drawStationT72 };
         };
     };
+    case "M1": {
+        switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
+            case "driver": { [_display] call SB_fnc_drawStationLeo2Driver };
+            case "commander": { [_display] call SB_fnc_drawStationM1Cmdr };
+            default { [_display] call SB_fnc_drawStationM1 };
+        };
+    };
     case "LEO2": {
         switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
             case "driver": { [_display] call SB_fnc_drawStationLeo2Driver };

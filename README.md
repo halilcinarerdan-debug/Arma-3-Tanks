@@ -146,3 +146,10 @@ Strv 122 (Leo 2S) CUP'ta bulunmayabilir; bu yüzden ayrı bir araç sınıfına 
 Leopard 2 / Strv 122 profili, Steel Beasts Strv 122 kılavuzundaki iç mekan görsellerinden esinlenen kendi paletini kullanır:
 açık gri-krem boya + kenarlarda astar/pas sıyrığı (`housing_leo`), siyah lastik tamponlar, beyaz gravür yazı, **kare basmalı LED düğmeler** (`lens_sq`, `ring_sq`).
 Yeni PNG'leri (`housing_leo_ca.png`, `lens_sq_ca.png`, `ring_sq_ca.png`) PAA'ya çevirmeyi unutmayın. Başka bir araç için palet eklemek: profile `palette = "ad"` + `housing_<ad>_ca.paa`.
+
+## M1 Abrams ailesi (`station = "M1"`, `palette = "m1"`)
+
+`m1a2`, `m1a1`, `m1_abrams`, `m1a2_tusk` eşleşir. Nişancı: menzil ekranı, READY/LASER/COAX/STAB lambaları, taret/top kontrolü (GÜÇ+STAB / GÜÇ AÇIK / MANUEL),
+SABOT / HEAT-MPAT / koaksiyel seçimi + YÜKLE, LRF, elle menzil. Komutan: mürettebat, taret yönü saat şeridi, M240 / .50 cal / duman sayıları. Sürücü: Leopard sürücü ekranıyla ortak.
+**Not:** Steel Beasts M1A2 kılavuzu henüz incelenmedi; ekran gerçek Abrams kumandalarının yaklaşık uyarlamasıdır. Kılavuz gelince inceltilecek.
+Yeni doku: `housing_m1_ca.png` (PAA'ya çevirin). Dil: İngilizce.

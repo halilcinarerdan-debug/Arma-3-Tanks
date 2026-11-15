@@ -36,6 +36,8 @@ class CfgFunctions {
             class drawStationLeo2 {};
             class drawStationLeo2Cmdr {};
             class drawStationLeo2Driver {};
+            class drawStationM1 {};
+            class drawStationM1Cmdr {};
             class gpsText {};
             class leoSetRange {};
             class leoMain {};
@@ -96,6 +98,8 @@ class CfgSBTankUI {
             title = "M1A2 ABRAMS - CREW DISPLAY";
             language = "en";
             match[] = {"m1a2", "m1a1", "m1_abrams", "m1a2_tusk"};
+            palette = "m1";
+            station = "M1";
         };
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
