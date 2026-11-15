@@ -7,7 +7,7 @@
  */
 params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
-#include "\sb\tankui\kit.sqf"
+#include "\z\tank33\addons\tankui\kit.sqf"
 
 private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 [_vehName + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;

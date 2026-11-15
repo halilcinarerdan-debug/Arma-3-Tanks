@@ -2,7 +2,7 @@
 """
 Steel Tank UI doku üretici (PNG). Arma için .paa'ya dönüştürülmelidir:
   Arma 3 Tools > ImageToPAA   (veya HEMTT/Mikero ile derlemede otomatik)
-Dosya adı son ekleri: _ca = renk+alfa. Oyun kodu \\sb\\tankui\\data\\<ad>.paa yolunu arar;
+Dosya adı son ekleri: _ca = renk+alfa. Oyun kodu \\z\\tank33\\addons\\tankui\\data\\<ad>.paa yolunu arar;
 yoksa düz renk yedeğine düşer.
 
 Kullanım:  python3 tools/gen_textures.py [çıktı klasörü]

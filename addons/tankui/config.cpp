@@ -13,7 +13,7 @@ class CfgPatches {
 class CfgFunctions {
     class SB {
         class TankUI {
-            file = "sb\tankui\functions";
+            file = "z\tank33\addons\tankui\functions";
             class openMenu {};
             class getProfile {};
             class getRole {};
@@ -40,13 +40,13 @@ class CfgFunctions {
 
 class Extended_PreInit_EventHandlers {
     class SB_TankUI {
-        init = "call compile preprocessFileLineNumbers 'sb\tankui\XEH_preInit.sqf'";
+        init = "call compile preprocessFileLineNumbers 'z\tank33\addons\tankui\XEH_preInit.sqf'";
     };
 };
 
 class Extended_PostInit_EventHandlers {
     class SB_TankUI {
-        clientInit = "call compile preprocessFileLineNumbers 'sb\tankui\XEH_postInit.sqf'";
+        clientInit = "call compile preprocessFileLineNumbers 'z\tank33\addons\tankui\XEH_postInit.sqf'";
     };
 };
 

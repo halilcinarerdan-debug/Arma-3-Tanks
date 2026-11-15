@@ -34,7 +34,7 @@ class SB_TankUI_Main {
         class Housing: SB_RscPicture {
             idc = 7405;
             x = DEV_X; y = DEV_Y; w = DEV_W; h = DEV_H;
-            text = "\sb\tankui\data\housing_ca.paa";
+            text = "\z\tank33\addons\tankui\data\housing_ca.paa";
         };
         // Donanım düğmeleri (gövdedeki yuvalarla aynı konum)
         class BtnAmmo: SB_RscButton {

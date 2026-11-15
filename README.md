@@ -34,7 +34,7 @@ Bu ekranlar **yer tutucudur**; Steel Beasts görselleri geldikçe araç başına
 
 ## Kurulum / derleme
 
-`addons/tankui` klasörünü PBO'ya paketleyin (prefix `sb\tankui`, bkz. `$PBOPREFIX$`; HEMTT veya Mikero pboProject). Hedef yapı: `@SB_TankUI/addons/sb_tankui.pbo` + `mod.cpp`.
+`addons/tankui` klasörünü PBO'ya paketleyin (prefix `z\tank33\addons\tankui`, bkz. `$PBOPREFIX$`; HEMTT veya Mikero pboProject). Hedef yapı: `@SB_TankUI/addons/sb_tankui.pbo` + `mod.cpp`.
 
 Oyun içi test: bir CUP tankına binin, Ctrl+T.
 
@@ -45,7 +45,7 @@ Ortak ekipman widget'ları (`addons/tankui/kit.sqf`): etiket kutulu LED, kollu �
 
 Dokular `addons/tankui/data/*.png` olarak üretilir (`python3 tools/gen_textures.py`). Oyun `.paa` bekler:
 1. Arma 3 Tools > ImageToPAA ile her `*_ca.png` dosyasını aynı adla `.paa`'ya çevirin (veya HEMTT ile derlemede otomatik).
-2. `.paa` dosyaları PBO'ya `\sb\tankui\data\` altına girmelidir.
+2. `.paa` dosyaları PBO'ya `\z\tank33\addons\tankui\data\` altına girmelidir.
 
 Dokular yoksa kod düz renk yedeğine düşer (çalışır, ama kadran çentikleri ve gövde dokusu görünmez).
 
@@ -67,4 +67,7 @@ Doku kiri `tools/gen_textures.py` içindeki `WEAR` / `WEAR_SCALE` ile ayarlanır
 
 ## Derleme notu (pboProject / Pal2Pace)
 Tüm dokular 2'nin kuvveti boyutlarda üretilir (`tools/gen_textures.py` bunu otomatik yapar); aksi hâlde `Pal2Pace failed` hatası alınır.
-PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`sb\tankui`). Dosya projeye kopyalanmazsa pboProject ön eki klasör yolundan türetir ve koddaki `\sb\tankui\...` yolları (doku, kit.sqf) bozulur.
+PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`z\tank33\addons\tankui`). Dosya projeye kopyalanmazsa pboProject ön eki klasör yolundan türetir ve koddaki `\z\tank33\addons\tankui\...` yolları (doku, kit.sqf) bozulur.
+
+**Ön eki değiştirmek:** pboProject dosyaları P: sürücüsünde ön ekle arar, proje `P:\<ön ek>` altında durmalıdır (şu an `z\tank33\addons\tankui`). Başka bir yerde derlenecekse:
+`python3 tools/set_prefix.py "yeni\on\ek"` tüm yolları ve `$PBOPREFIX$` dosyasını birlikte günceller.

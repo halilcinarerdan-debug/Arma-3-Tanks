@@ -2,7 +2,7 @@
  * Ortak ekipman takımı. Ekran fonksiyonlarına #include ile gömülür.
  * Beklenen değişkenler: _display, _veh.
  * Birim "U": ekran yüksekliğinin 1/17'si. Genişlik asp ile çevrilir, daireler yuvarlak kalır.
- * Dokular \sb\tankui\data\*.paa; yoksa düz renk yedeği kullanılır (tools/gen_textures.py).
+ * Dokular \z\tank33\addons\tankui\data\*.paa; yoksa düz renk yedeği kullanılır (tools/gen_textures.py).
  */
 (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
 private _res = getResolution;
@@ -19,7 +19,7 @@ private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "oth
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
 private _rectTex = "#(argb,8,8,3)color(1,1,1,1)";
 private _ink = [0.84, 0.86, 0.8, 1];
-private _tex = { private _p = format ["\sb\tankui\data\%1.paa", _this]; ["", _p] select (fileExists _p) };
+private _tex = { private _p = format ["\z\tank33\addons\tankui\data\%1.paa", _this]; ["", _p] select (fileExists _p) };
 private _fx = { _bx + _this * _u * _asp };
 private _fy = { _by + _this * _u };
 

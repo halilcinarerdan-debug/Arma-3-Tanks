@@ -1,7 +1,7 @@
 /* DURUM ekranı (ekipman dili): taret/gövde şeması (hasara göre renk), bölge LED'leri, hız 7 segment, yakıt kadranı. */
 params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
-#include "\sb\tankui\kit.sqf"
+#include "\z\tank33\addons\tankui\kit.sqf"
 
 [getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_STATUS" call _L), _roleLabel] call _header;
 

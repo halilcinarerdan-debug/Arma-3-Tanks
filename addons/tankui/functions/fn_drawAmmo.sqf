@@ -3,7 +3,7 @@ params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 private _list = [_veh] call SB_fnc_getAmmoList;
 uiNamespace setVariable ["SB_TankUI_sig", str _list];
-#include "\sb\tankui\kit.sqf"
+#include "\z\tank33\addons\tankui\kit.sqf"
 
 [getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_AMMO" call _L), _roleLabel] call _header;
 
