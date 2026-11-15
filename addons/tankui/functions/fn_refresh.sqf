@@ -5,6 +5,9 @@ if (isNull _display) exitWith {};
 private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull];
 if (isNull _veh || {!alive player} || {!(player in _veh)}) exitWith { closeDialog 0 };
 
+// Koltuk değiştirildiyse menüyü kapat (rol değişti)
+if (([_veh, player] call SB_fnc_getRole) != (uiNamespace getVariable ["SB_TankUI_role", ""])) exitWith { closeDialog 0 };
+
 private _tab = uiNamespace getVariable ["SB_TankUI_tab", 0];
 if (_tab == 0) then {
     // Mühimmat değiştiyse listeyi yeniden çiz

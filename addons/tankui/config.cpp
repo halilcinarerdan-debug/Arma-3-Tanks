@@ -16,6 +16,7 @@ class CfgFunctions {
             file = "sb\tankui\functions";
             class openMenu {};
             class getProfile {};
+            class getRole {};
             class getAmmoList {};
             class getHit {};
             class bar {};
@@ -67,6 +68,15 @@ class CfgSBTankUI {
     };
     class Generic {
         title = "TANK - CREW DISPLAY";
+    };
+
+    // Koltuk bazlı ekranlar. Roller CBA/Arma fullCrew rolleriyle aynı: driver, gunner, commander.
+    // tabs[]: "ammo" (mühimmat), "status" (durum). Steel Beasts ekranları geldikçe her rol genişletilecek.
+    class Roles {
+        class driver    { label = "DRIVER";    tabs[] = {"status"}; };
+        class gunner    { label = "GUNNER";    tabs[] = {"ammo", "status"}; };
+        class commander { label = "COMMANDER"; tabs[] = {"ammo", "status"}; };
+        class other     { label = "CREW";      tabs[] = {"status"}; };
     };
 };
 
