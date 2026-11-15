@@ -41,7 +41,7 @@ if (!hasInterface) exitWith {};
 ["SB_TankUI_labelLang", "LIST",
     ["Etiket dili", "Panel etiketlerinin dili. 'Arac dili' her arac icin kendi dilini kullanir (T-72: Rusca, Leopard: Almanca, M1/Challenger: Ingilizce)."],
     "Steel Tank UI",
-    [[0, 1, 2, 3, 4], ["Arac dili (otomatik)", "Turkce", "English", "Русский", "Deutsch"], 0],
+    [[0, 1, 2, 3, 4, 5], ["Arac dili (otomatik)", "Turkce", "English", "Русский", "Deutsch", "Svenska"], 0],
     0
 ] call CBA_fnc_addSetting;
 

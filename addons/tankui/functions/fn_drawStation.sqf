@@ -11,6 +11,13 @@ switch (_station) do {
             default { [_display] call SB_fnc_drawStationT72 };
         };
     };
+    case "LEO2": {
+        switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
+            case "driver": { [_display] call SB_fnc_drawStationT72Driver };   // sürücü göstergeleri ortak (hız, yakıt, motor, farlar, kapak)
+            case "commander": { [_display] call SB_fnc_drawStationLeo2Cmdr };
+            default { [_display] call SB_fnc_drawStationLeo2 };
+        };
+    };
     default {
         (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
         private _c = _display ctrlCreate ["SB_RscText", -1];

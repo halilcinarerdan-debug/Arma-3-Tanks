@@ -46,6 +46,37 @@ switch (_action) do {
         }, [_veh, _turret, _mag], _delay] call CBA_fnc_waitAndExecute;
     };
 
+    // ---- Leopard 2 ailesi: ateş kontrol modu, mermi (seç + yükle), savaş nişanı ----
+    case "fc_normal": {
+        _veh setVariable ["SB_hydr", true];
+        _veh setVariable ["SB_hydrOn", time - 120];        // Leopard stabilizasyonu anında hazır (T-72'deki 120 sn ısınma yok)
+        _veh setVariable ["SB_stab", true];
+        _veh setVariable ["SB_stabOn", time];
+        if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
+    };
+    case "fc_emerg": {
+        _veh setVariable ["SB_hydr", true];
+        _veh setVariable ["SB_hydrOn", time - 120];
+        _veh setVariable ["SB_stab", false];
+        if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
+    };
+    case "fc_manual": {
+        _veh setVariable ["SB_hydr", false];
+        _veh setVariable ["SB_stab", false];
+        if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, true] call SB_fnc_turretLock };
+    };
+    case "am_KE": { _veh setVariable ["SB_selType", "KE"]; ["load"] call SB_fnc_t72Action };
+    case "am_HE": {
+        // HE-T: HE yoksa HEAT mermisine düş (CUP sürümüne göre değişir)
+        private _hasHE = (([_veh] call SB_fnc_getAmmoList) findIf {
+            (_x select 0) isEqualTo _turret && {([_x select 1] call SB_fnc_ammoClass) == "HE"}
+        }) >= 0;
+        _veh setVariable ["SB_selType", ["HEAT", "HE"] select _hasHE];
+        ["load"] call SB_fnc_t72Action;
+    };
+    case "bs_1100": { _veh setVariable ["SB_range", 1100]; _veh setVariable ["SB_lrfText", "1100"]; if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) then { systemChat "BS 1100: menzil gostergesi Arma kaynagini kullaniyor (CBA: Menzil kaynagi = panel lazeri yapin)." } };
+    case "bs_1500": { _veh setVariable ["SB_range", 1500]; _veh setVariable ["SB_lrfText", "1500"]; if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) then { systemChat "SS 1500: menzil gostergesi Arma kaynagini kullaniyor (CBA: Menzil kaynagi = panel lazeri yapin)." } };
+
     case "lase": {
         if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) exitWith { systemChat "Menzil kaynagi Arma lazeri: nisangahta lazer tusunu kullanin (CBA: Menzil kaynagi)." };
         if !(_veh getVariable ["SB_lrfOn", false]) exitWith { systemChat "T-72: LRF kapali (LRF ACIK salterini acin)." };

@@ -33,6 +33,8 @@ class CfgFunctions {
             class drawStationT72 {};
             class drawStationT72Driver {};
             class drawStationT72Cmdr {};
+            class drawStationLeo2 {};
+            class drawStationLeo2Cmdr {};
             class t72ActionX {};
             class t72Action {};
             class placeRect {};
@@ -93,7 +95,8 @@ class CfgSBTankUI {
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
             language = "de";
-            match[] = {"leopard2", "leopard_2", "leo2"};
+            match[] = {"leopard2", "leopard_2", "leo2", "strv122", "strv_122", "strv"};
+            station = "LEO2"; // Leopard 2 ailesi (Strv 122 mantığı); gunner/commander için ISTASYON sekmesi
         };
         class Challenger2 {
             title = "CHALLENGER 2 - CREW DISPLAY";

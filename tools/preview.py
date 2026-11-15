@@ -7,12 +7,12 @@ import sys, os, math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.dirname(__file__))
-from labels import L as LABELS, LANGS
+from labels import L as LABELS, LANGS, text as _ltext
 
 OUTDIR = sys.argv[1] if len(sys.argv) > 1 else "."
 LANG = sys.argv[2] if len(sys.argv) > 2 else "ru"          # tr | en | ru | de
 DIRT = float(sys.argv[3]) if len(sys.argv) > 3 else 0.6      # kir katmanı opaklığı (CBA ayarı karşılığı)
-def lbl(key): return LABELS[key][LANGS.index(LANG)]
+def lbl(key): return _ltext(key, LANG)
 DATA = os.path.join(os.path.dirname(__file__), "..", "addons", "tankui", "data")
 W, H = 1920, 1080
 SX, SY, SW, SH = W * 0.2, H * 0.08, W * 0.6, H * 0.84
@@ -238,6 +238,42 @@ def cmdr():
     toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
     finish(S); return S
 
+# ---------------------------------------------------------------- LEOPARD 2 AILESI
+def leo_gunner():
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
+    for x, k, c, on in [(1.3, "LED_BER", GREEN, 1), (4.0, "LED_ELD", RED, 1), (6.7, "LED_KSP", AMBER, 0), (9.4, "LED_STAB", GREEN, 1)]:
+        lamp_round(S, x, 2.6, lbl(k), c, on)
+    S.txt(0.9, 5.2, 8, 0.5, lbl("FC_TITLE"), (0.62, 0.78, 0.58, 1), 0, 0.45)
+    for k, y, on in [("FC_NORMAL", 6.6, 1), ("FC_EMERG", 8.2, 0), ("FC_MANUAL", 9.8, 0)]:
+        lamp_round(S, 1.3, y, "", GREEN, on); S.txt(2.4, y, 6.5, 0.55, lbl(k), style=0, size=0.45)
+    S.txt(10.6, 5.2, 7, 0.5, lbl("SEL_TITLE"), (0.62, 0.78, 0.58, 1), 0, 0.45)
+    for k, y, on, n in [("AM_APFSDS", 6.6, 1, "18"), ("AM_HET", 8.2, 0, "10")]:
+        lamp_round(S, 10.9, y, "", AMBER, on); S.txt(12.0, y, 5, 0.55, lbl(k), style=0, size=0.42)
+        S.spr("display", 18.7, y, 3.0, 1.5); seven(S, 17.8, y, n, 2, 0.6)
+    push(S, 14.2, 10.0, lbl("LOAD"), (0.2, 0.6, 0.25, 1))
+    S.spr("display", 14.6, 2.6, 5.6, 2.7); seven(S, 12.575, 2.6, "1273")
+    lamp_round(S, 19.2, 2.6, lbl("L_LRF"), GREEN, 1)
+    toggle(S, 2.2, 12.8, lbl("T_KANKSP"), 0)
+    push(S, 5.6, 12.6, lbl("P_BS"), (0.45, 0.45, 0.45, 1)); push(S, 8.8, 12.6, lbl("P_SS1500"), (0.45, 0.45, 0.45, 1))
+    push(S, 12.2, 12.6, lbl("LASE")); push(S, 15.4, 12.6, lbl("RESET"), (0.15, 0.15, 0.15, 1))
+    toggle(S, 18.8, 12.8, lbl("T_LRFON"), 180)
+    S.txt(2.2, 15.5, 3.5, 0.5, lbl("W_MAIN"), size=0.42); S.spr("display", 5.6, 15.5, 3.4, 1.5); seven(S, 4.7, 15.5, "28", 2, 0.6)
+    S.txt(11.0, 15.5, 3.5, 0.5, lbl("W_COAX"), size=0.42); S.spr("display", 15.3, 15.5, 5.0, 1.5); seven(S, 13.1, 15.5, "3600", 4, 0.6)
+    finish(S); return S
+
+def leo_cmdr():
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "Leopard 2A6  |  " + lbl("SCR_STATION"), lbl("ROLE_commander"))
+    for i, (r, n, hp) in enumerate([("driver", "Baranov", 100), ("gunner", "hcinar33", 100), ("commander", "Sudakov", 85)]):
+        y = 2.8 + i * 1.7
+        S.spr("label", 7.4, y, 14.2, 1.35); S.txt(0.9, y, 13, 0.7, lbl("ROLE_" + r) + ":  " + n + "   %d%%" % hp, style=0, size=0.5)
+    for cx, k, v in ((3.5, "W_COAX", "250"), (9.0, "W_MG2", "60"), (14.5, "SMOKE", "16")):
+        S.txt(cx, 8.6, 5, 0.5, lbl(k), size=0.5); S.spr("display", cx, 10.2, 4.6, 2.0); seven(S, cx - 1.2, 10.2, v, 3, 0.9)
+    for x, k, on in ((1.6, "F_ENG", 0), (4.2, "F_LTR", 1), (6.8, "F_RTR", 0), (9.4, "F_HULL", 0)): lamp_round(S, x, 13.4, lbl(k), RED, on)
+    toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
+    finish(S); return S
+
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():
     global u, bx, by
@@ -283,5 +319,5 @@ def hud():
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

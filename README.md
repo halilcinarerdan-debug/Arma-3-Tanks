@@ -123,3 +123,15 @@ Tüm doğrulanmış sözdizimleri: `docs/arma-ref/arma3-verified-commands.md`; h
 
 ## Gerçek top stabilizasyonu (Arma 2.22+)
 STAB şalteri artık `enableGunStabilization` ile **gerçekten** top stabilizasyonunu (mod 3: iki düzlem) açıp kapatır: STAB etkin = şalter açık + hidrolik açık + 120 sn ısınma tamam + 55 dk aşırı ısınma yok; değilse mod 0. Araçtan inince geçersiz kılma (-1) ile eski hâline döner. CBA "Stabilizasyon yontemi": gerçek stabilizasyon (varsayılan) ya da eski atış sapması simülasyonu; Arma 2.22 altında otomatik olarak sapma simülasyonuna düşer. Balistik anahtarı sapması her durumda uygulanır.
+
+
+## Leopard 2 ailesi (Strv 122 mantığı)
+
+Strv 122 (Leo 2S) CUP'ta bulunmayabilir; bu yüzden ayrı bir araç sınıfına değil **Leopard 2 profiline** bağlanır
+(`leopard2`, `leo2`, `strv122`, `strv` eşleşir). İstasyon ekranı (`station = "LEO2"`):
+
+- **Nişancı:** BER/ELD/KSP/STAB lambaları, ateş kontrol modu (NORMAL = hidrolik + stab, ACİL/OBSERVATION = hidrolik, MANUEL = güç yok),
+  APFSDS-T / HE-T seçimi + YÜKLE (HE yoksa HEAT'e düşer), top/MG şalteri, LRF, savaş nişanı BS 1100 / SS 1500, kalan mermi sayaçları.
+- **Komutan:** mürettebat, MG/duman sayıları, arıza lambaları, kapak, duman atışı.
+- **Sürücü:** T-72 sürücü ekranıyla ortak (hız, yakıt, motor, farlar, kapak).
+- Dil: araç dili Almanca (`de`); CBA ayarından **Svenska** (`sv`) seçilebilir (Strv 122 terimleri: STAB TILL, OBSERVATION, TORN FRÅN, SLPILPRJ 95...).

@@ -4,7 +4,7 @@ Etiket sözlüğü: anahtar -> (tr, en, ru, de). stringtable.xml ve önizleme bu
 NOT: Rusça/Almanca etiketler en iyi bilgiyle yazıldı; Steel Beasts/kılavuz görselleriyle doğrulanmalı
 (özellikle T_DELTA, L_TC, L_DELTA, SEL_OFF).
 """
-LANGS = ["tr", "en", "ru", "de"]
+LANGS = ["tr", "en", "ru", "de", "sv"]
 L = {
     # koltuk rolleri / ekran adları / yan düğmeler
     "ROLE_driver":    ("SURUCU", "DRIVER", "МЕХАНИК-ВОДИТЕЛЬ", "FAHRER"),
@@ -88,3 +88,54 @@ L = {
     "FUEL":      ("YAKIT", "FUEL", "ТОПЛИВО", "KRAFTSTOFF"),
     "ENGINE":    ("MOTOR", "ENGINE", "ДВИГАТЕЛЬ", "MOTOR"),
 }
+
+
+# ---------------------------------------------------------------- Strv 122 (Leo2S) nişancı istasyonu
+# Yeni anahtarlar sözlük biçiminde (yalnızca ihtiyaç duyulan diller; eksik dil için en -> tr yedeği kullanılır).
+# Kılavuzdan (Steel Beasts Strv 122, s.6-14) alınanlar: İsveççe terimler (STAB TILL, OBSERVATION, TORN FRÅN, BER, ELD, RK, KSP,
+# SLPILPRJ 95, SLSGR 95, EMES/HW/WBG Almanca kısaltmaları). Diğer çeviriler en iyi bilgiyle yazıldı, doğrulanmadı.
+L.update({
+    "GPS_T":     {"tr": "GPS NISANGAH", "en": "GPS SIGHT", "de": "EMES", "sv": "SKYTTENS SIKTE"},
+    "FC_TITLE":  {"tr": "ATIS KONTROL MODU", "en": "FIRE CONTROL MODE", "de": "FEUERLEITMODUS", "sv": "ELDLEDNINGSLÄGE"},
+    "FC_NORMAL": {"tr": "NORMAL", "en": "NORMAL", "de": "STAB EIN", "sv": "STAB TILL"},
+    "FC_EMERG":  {"tr": "ACIL", "en": "EMERGENCY", "de": "BEOBACHTEN", "sv": "OBSERVATION"},
+    "FC_MANUAL": {"tr": "MANUEL", "en": "MANUAL", "de": "TURM AUS", "sv": "TORN FRÅN"},
+    "AM_APFSDS": {"tr": "APFSDS-T", "en": "APFSDS-T", "de": "APFSDS-T", "sv": "SLPILPRJ 95"},
+    "AM_HET":    {"tr": "HE-T", "en": "HE-T", "de": "HE-T", "sv": "SLSGR 95"},
+    "LED_BER":   {"tr": "HAZIR", "en": "RDY", "de": "BER", "sv": "BER"},
+    "LED_ELD":   {"tr": "ATES", "en": "FIRE", "de": "FEUER", "sv": "ELD"},
+    "LED_RK":    {"tr": "KMT", "en": "TC", "de": "KH", "sv": "RK"},
+    "LED_KSP":   {"tr": "MG", "en": "MG", "de": "MG", "sv": "KSP"},
+    "LED_STAB":  {"tr": "STAB", "en": "STAB", "de": "STAB", "sv": "STAB"},
+    "T_KANKSP":  {"tr": "TOP/MG", "en": "GUN/MG", "de": "HW/MG", "sv": "KAN/KSP"},
+    "T_FUSE":    {"tr": "SPOLET", "en": "FUSE", "de": "ZÜNDER", "sv": "TÄNDRÖR"},
+    "T_RMODE":   {"tr": "OTO/EL", "en": "AUTO/MAN", "de": "AUT/MAN", "sv": "AUTOM/MAN"},
+    "T_IRV":     {"tr": "TIS", "en": "TIS", "de": "WBG", "sv": "IRV"},
+    "T_POL":     {"tr": "POL B/S", "en": "POL W/B", "de": "POL W/S", "sv": "POL V/S"},
+    "P_SS1500":  {"tr": "SS 1500", "en": "SS 1500", "de": "SS 1500", "sv": "SS 1500"},
+    "P_BS":      {"tr": "BS 1100", "en": "BS 1100", "de": "BS 1100", "sv": "BS 1100"},
+    "W_MG2":     {"tr": "MG 2", "en": "MG 2", "de": "MG3 (LADER)", "sv": "KSP 2"},
+    "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
+})
+
+# Svenska: ortak anahtarlar
+_SV = {"CLOSE": "STÄNG", "ROLE_driver": "FÖRARE", "ROLE_gunner": "SKYTT", "ROLE_commander": "VAGNCHEF", "ROLE_other": "BESÄTTNING",
+       "SCR_STATION": "STATION", "SCR_AMMO": "AMMUNITION", "SCR_STATUS": "STATUS", "LOAD": "LADDA", "LOADING": "LADDAR...",
+       "FUEL": "BRÄNSLE", "SMOKE": "RÖK", "KMH": "KM/H", "ENGINE": "MOTOR", "COL_WEAPON": "VAPEN", "COL_AMMO": "AMMUNITION",
+       "COL_COUNT": "ANTAL", "LASE": "LASRA", "RESET": "AVST 0", "W_MAIN": "KAN", "W_COAX": "KSP", "T_LRFON": "LRF PÅ", "L_LRF": "LASER", "T_HATCH": "LUCKA", "L_READY": "KLAR", "L_LOADED": "LADDAD", "RANGE_M": "AVST m", "CREW_EMPTY": "TOM", "SELECT": "VÄLJ", "NO_AMMO": "INGEN AMMUNITION", "SEL_TITLE": "AMMUNITIONSVAL"}
+for _k, _v in _SV.items():
+    if isinstance(L[_k], tuple):
+        L[_k] = dict(zip(LANGS, L[_k]))
+    L[_k]["sv"] = _v
+
+
+def variants(key):
+    """key -> {dil: metin} (yalnızca tanımlı olanlar)."""
+    v = L[key]
+    return v if isinstance(v, dict) else dict(zip(LANGS, v))
+
+
+def text(key, lang):
+    """Yedekli metin: dil -> en -> tr -> anahtar."""
+    d = variants(key)
+    return d.get(lang) or d.get("en") or d.get("tr") or key
