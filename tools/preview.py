@@ -6,8 +6,13 @@ Arma'daki ctrlSetTextColor gibi dokuyu renkle çarpar. Kullanım: python3 tools/
 import sys, os, math
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+sys.path.insert(0, os.path.dirname(__file__))
+from labels import L as LABELS, LANGS
 
 OUTDIR = sys.argv[1] if len(sys.argv) > 1 else "."
+LANG = sys.argv[2] if len(sys.argv) > 2 else "ru"          # tr | en | ru | de
+DIRT = float(sys.argv[3]) if len(sys.argv) > 3 else 0.6      # kir katmanı opaklığı (CBA ayarı karşılığı)
+def lbl(key): return LABELS[key][LANGS.index(LANG)]
 DATA = os.path.join(os.path.dirname(__file__), "..", "addons", "tankui", "data")
 W, H = 1920, 1080
 SX, SY, SW, SH = W * 0.2, H * 0.08, W * 0.6, H * 0.84
@@ -51,6 +56,7 @@ class Scene:
         cx = bx_ + math.sin(a) * length / 2; cy = by_ - math.cos(a) * length / 2
         self.paste(tex(name), cx, cy, thick, length, tint, ang)
     def txt(self, ox, oy, wU, hU, t, col=(0.84, 0.86, 0.8, 1), style=2, size=0.46):
+        t = str(t)
         f = ImageFont.truetype(FONT, int(u * size * 1.0))
         d = ImageDraw.Draw(self.im)
         x = self.U(ox); y = self.V(oy)
@@ -63,11 +69,12 @@ dim = (0.62, 0.78, 0.58, 1)
 GREEN = (0.25, 0.95, 0.35, 1); AMBER = (1, 0.72, 0.15, 1); RED = (0.95, 0.2, 0.15, 1)
 
 def frame(S, active, labels):
+    labels = [(lbl({2: "SCR_STATION", 0: "SCR_AMMO", 1: "SCR_STATUS"}[tab]), tab) for _, tab in labels]
     sc = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     S.paste(RECT, sx + sw / 2, sy + sh / 2, sw, sh, (0.012, 0.018, 0.014, 1))
     S.paste(tex("housing"), SX + SW / 2, SY + SH / 2, SW, SH)
     d = ImageDraw.Draw(S.im)
-    f = ImageFont.truetype(FONT, int(H * 0.013 * 1.1))
+    f = ImageFont.truetype(FONT, int(H * 0.011 * 1.1))
     for i, (name, tab) in enumerate(labels):
         x0, y0 = SX + SW * 0.022, SY + SH * (0.20 + 0.12 * i)
         col = (36, 77, 33) if tab == active else (18, 20, 15)
@@ -75,7 +82,7 @@ def frame(S, active, labels):
         d.text((x0 + SW * 0.038, y0 + SH * 0.0375), name, font=f, fill=(158, 199, 148), anchor="mm")
     x0, y0 = SX + SW * 0.022, SY + SH * 0.80
     d.rounded_rectangle([x0, y0, x0 + SW * 0.076, y0 + SH * 0.075], radius=10, fill=(18, 20, 15))
-    d.text((x0 + SW * 0.038, y0 + SH * 0.0375), "KAPAT", font=f, fill=(158, 199, 148), anchor="mm")
+    d.text((x0 + SW * 0.038, y0 + SH * 0.0375), lbl("CLOSE"), font=f, fill=(158, 199, 148), anchor="mm")
 
 def header(S, left, right):
     w = sw / u - 1.6
@@ -89,14 +96,20 @@ def lamp(S, ox, oy, name, col, on, pw=3.4):
     lx = ox + pw / 2 - 0.62
     k = col if on else tuple(c * 0.14 for c in col[:3]) + (1,)
     S.spr("@dot", lx, oy, 1.15, 1.15, (col[0], col[1], col[2], 0.22 if on else 0))
-    S.spr("ring", lx, oy, 0.95, 0.95)
-    S.spr("lens", lx, oy, 0.62, 0.62, k)
-    S.spr("gloss", lx - 0.1, oy - 0.12, 0.55, 0.55)
+    S.spr("ring", lx, oy, 0.95, 0.95); S.spr("lens", lx, oy, 0.62, 0.62, k); S.spr("gloss", lx - 0.1, oy - 0.12, 0.55, 0.55)
+
+def lamp_round(S, ox, oy, name, col, on, side="below"):
+    k = col if on else tuple(c * 0.14 for c in col[:3]) + (1,)
+    S.spr("@dot", ox, oy, 1.5, 1.5, (col[0], col[1], col[2], 0.25 if on else 0))
+    S.spr("ring", ox, oy, 1.25, 1.25); S.spr("lens", ox, oy, 0.85, 0.85, k); S.spr("gloss", ox - 0.14, oy - 0.16, 0.7, 0.7)
+    if name:
+        if side == "right": S.txt(ox + 0.9, oy, 3.2, 0.5, name, style=0, size=0.4)
+        else: S.txt(ox, oy + 1.05, 2.6, 0.5, name, size=0.38)
 
 def toggle(S, ox, oy, name, ang):
     S.spr("recess", ox, oy, 1.7, 1.7); S.spr("ring", ox, oy, 1.15, 1.15)
-    S.bar(S.U(ox), S.V(oy), u * 1.25, u * 0.3, ang, (1, 1, 1, 1), "lever")
-    S.txt(ox, oy + 1.75, 2.6, 0.5, name)
+    S.bar(S.U(ox), S.V(oy), u * 1.0, u * 0.3, ang, (1, 1, 1, 1), "lever")
+    S.txt(ox, oy + 1.55, 2.6, 0.5, name, size=0.4)
 
 def rotary(S, ox, oy, pos, idx):
     S.spr("recess", ox, oy, 3.3, 3.3); S.spr("knob", ox, oy, 2.6, 2.6); S.spr("recess", ox, oy, 1.5, 1.5)
@@ -129,44 +142,58 @@ def seven(S, ox, oy, text, n=4, k=1.0):
 
 def finish(S):
     S.paste(tex("glass"), sx + sw / 2, sy + sh / 2, sw, sh)
+    if DIRT > 0: S.paste(tex("dirt"), sx + sw / 2, sy + sh / 2, sw, sh, (1, 1, 1, DIRT))
 
 # ---------------------------------------------------------------- ISTASYON
+VIOLET = (0.6, 0.35, 1, 1)
 def station():
-    S = Scene(); frame(S, 2, [("ISTASYON", 2), ("MUHIMMAT", 0), ("DURUM", 1)])
-    header(S, "T-72B (Russian)  |  ISTASYON", "GUNNER")
-    lamp(S, 1.8, 2.5, "STAB", GREEN, 1); lamp(S, 1.8, 3.7, "AYNA", GREEN, 1); lamp(S, 1.8, 4.9, "HIDR", GREEN, 1)
-    lamp(S, 5.4, 2.5, "TC", AMBER, 0); lamp(S, 5.4, 3.7, "DELTA", AMBER, 0); lamp(S, 5.4, 4.9, "YUKLU", RED, 1)
-    S.txt(1.8, 6.5, 3.4, 0.5, "BALISTIK", dim)
-    for i, (t, on) in enumerate([("BPS", 1), ("OFS", 0), ("BKS", 0)]): lamp(S, 1.7 + 3.4 * i, 7.5, t, AMBER, on, 3.1)
-    rotary(S, 3.0, 11.4, [("KAPALI", "", -75), ("BPS", "", -25), ("BKS", "", 25), ("OFS", "", 75)], 1)
-    S.txt(3.0, 14.2, 4, 0.5, "MERMI SECICI"); push(S, 7.2, 14.0, "YUKLE", (0.2, 0.6, 0.25, 1))
-    gauge(S, 9.4, 11.1, 1.5, "gauge_ammo", 11, -115, 115, 7, (0.05, 0.05, 0.05, 1)); S.txt(9.4, 13.0, 3.4, 0.5, "MERMI SAYAC")
-    S.spr("display", 13.5, 2.6, 5.6, 2.7); seven(S, 11.475, 2.6, "1273"); lamp(S, 18.6, 2.6, "HAZIR", RED, 1, 2.8)
-    gauge(S, 14.4, 8.5, 3.0, "gauge_range", 30, -100, 100, 12.7, (1, 0.5, 0.12, 1)); S.txt(14.4, 12.15, 5, 0.5, "MENZIL x100 m")
-    push(S, 18.8, 6.6, "LAZER"); push(S, 18.8, 9.8, "MENZIL 0", (0.15, 0.15, 0.15, 1))
-    toggle(S, 11.6, 14.0, "DELTA-D", 180); toggle(S, 14.0, 14.0, "STAB", 0); toggle(S, 16.4, 14.0, "HIDR", 0); toggle(S, 19.0, 14.0, "LRF MOD", 0)
-    S.txt(18.0, 12.7, 1.4, 0.5, "1200"); S.txt(20.0, 12.7, 1.4, 0.5, "1800")
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "T-72B (Russian)  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
+    # durum lambaları (kılavuz s.25)
+    for (x, y, k, c, on) in [(0.9, 2.6, "L_STAB", GREEN, 1), (3.0, 2.6, "L_MIRROR", RED, 1), (5.1, 2.6, "L_HYDR", GREEN, 1),
+                             (0.9, 4.8, "L_TC", RED, 0), (3.0, 4.8, "L_DELTA", RED, 1), (5.1, 4.8, "L_LOADED", VIOLET, 1)]:
+        lamp_round(S, x, y, lbl(k), c, on)
+    # balistik üçgen + manuel anahtar
+    S.txt(8.0, 1.8, 3.6, 0.5, lbl("BALL"), (0.62, 0.78, 0.58, 1))
+    lamp_round(S, 8.0, 3.2, lbl("AM_KE"), AMBER, 1, "right"); lamp_round(S, 6.9, 5.0, lbl("AM_HE"), AMBER, 0); lamp_round(S, 8.0, 6.8, lbl("AM_HEAT"), AMBER, 0, "right")
+    S.spr("knob", 10.2, 5.0, 1.5, 1.5); S.txt(10.2, 6.1, 2.6, 0.5, lbl("BALL_OVR"), size=0.38)
+    toggle(S, 7.0, 9.0, lbl("T_AUTO"), 0); toggle(S, 9.6, 9.0, lbl("T_MIRROR"), 0)
+    # mermi seçici, yükle, sayaç
+    rotary(S, 3.0, 12.3, [(lbl("SEL_OFF"), "", -75), (lbl("AM_KE"), "", -25), (lbl("AM_HEAT"), "", 25), (lbl("AM_HE"), "", 75)], 1)
+    S.txt(3.0, 15.2, 5, 0.5, lbl("SEL_TITLE")); push(S, 6.9, 14.4, lbl("LOAD"), (0.2, 0.6, 0.25, 1))
+    gauge(S, 9.8, 13.3, 1.4, "gauge_ammo", 11, -115, 115, 7, (0.05, 0.05, 0.05, 1)); S.txt(9.8, 15.2, 3.4, 0.5, lbl("AMMO_COUNT"), size=0.4)
+    # LRF ekranı ve lambalar
+    S.spr("display", 13.6, 2.6, 5.6, 2.7); seven(S, 11.575, 2.6, "1273")
+    lamp_round(S, 18.0, 2.3, lbl("L_LRF"), GREEN, 1); lamp_round(S, 19.6, 2.3, lbl("L_READY"), RED, 1)
+    # yay biçimli menzil çarkı + ateşe hazır lambası
+    gauge(S, 14.4, 8.4, 3.1, "gauge_arc", 30, -80, 80, 12.7, (1, 0.45, 0.1, 1)) if False else None
+    D = 3.1 * 2 / 0.9; S.spr("gauge_arc", 14.4, 8.4, D, D)
+    L = 3.1 * 0.98 * u; S.bar(S.U(14.4), S.V(8.4), L, L * 0.16, -80 + 160 * 12.7 / 30, (1, 0.45, 0.1, 1)); S.spr("knob", 14.4, 8.4, 0.55, 0.55, (0.7, 0.7, 0.7, 1))
+    lamp_round(S, 14.4, 6.9, "", RED, 1); S.txt(14.4, 9.6, 6, 0.5, lbl("RANGE"), size=0.42)
+    push(S, 12.4, 11.6, lbl("LASE")); push(S, 15.4, 11.6, lbl("RESET"), (0.15, 0.15, 0.15, 1))
+    toggle(S, 19.0, 11.3, lbl("T_MODE"), 0); S.txt(18.0, 9.9, 1.4, 0.5, "1200", size=0.4); S.txt(20.0, 9.9, 1.4, 0.5, "1800", size=0.4)
+    toggle(S, 12.5, 14.5, lbl("T_DELTA"), 180); toggle(S, 14.8, 14.5, lbl("T_STAB"), 0); toggle(S, 17.1, 14.5, lbl("T_HYDR"), 0); toggle(S, 19.4, 14.5, lbl("T_LRFON"), 0)
     finish(S); return S
 
 # ---------------------------------------------------------------- MUHIMMAT
 def ammo():
     S = Scene(); frame(S, 0, [("ISTASYON", 2), ("MUHIMMAT", 0), ("DURUM", 1)])
-    header(S, "T-72B (Russian)  |  MUHIMMAT", "GUNNER")
-    S.txt(2.4, 1.9, 4.8, 0.5, "SILAH", dim); S.txt(7.5, 1.9, 4.9, 0.5, "MUHIMMAT", dim); S.txt(12.4, 1.9, 4.5, 0.5, "ADET", dim)
-    rows = [("125MM 2A46", "BPS (APFSDS)", 7, 1), ("125MM 2A46", "BKS (HEAT)", 8, 0), ("125MM 2A46", "OFS (HE-FRAG)", 7, 0), ("PKT 7.62MM", "7.62MM PKT", 250, 0), ("NSVT 12.7MM", "12.7MM NSVT", 60, 0)]
+    header(S, "T-72B (Russian)  |  " + lbl("SCR_AMMO"), lbl("ROLE_gunner"))
+    S.txt(2.4, 1.9, 4.8, 0.5, lbl("COL_WEAPON"), dim); S.txt(7.5, 1.9, 4.9, 0.5, lbl("COL_AMMO"), dim); S.txt(12.4, 1.9, 4.5, 0.5, lbl("COL_COUNT"), dim)
+    rows = [("125MM 2A46", lbl("AM_KE_FULL"), 7, 1), ("125MM 2A46", lbl("AM_HEAT_FULL"), 8, 0), ("125MM 2A46", lbl("AM_HE_FULL"), 7, 0), ("PKT 7.62MM", "7.62MM PKT", 250, 0), ("NSVT 12.7MM", "12.7MM NSVT", 60, 0)]
     for i, (w, n, c, cur) in enumerate(rows):
         y = 3.5 + i * 2.3
         S.spr("label", 2.4, y, 4.8, 1.5); S.txt(2.4, y, 4.4, 0.6, w)
         S.spr("label", 7.5, y, 4.9, 1.5); S.txt(7.5, y, 4.5, 0.6, n, (1, 0.8, 0.3, 1) if cur else (0.84, 0.86, 0.8, 1))
         S.spr("display", 12.4, y, 4.5, 1.9); seven(S, 11.25, y, str(c), 3, 0.85)
         lx = 15.5; S.spr("ring", lx, y, 1.05, 1.05); S.spr("lens", lx, y, 0.68, 0.68, AMBER if cur else (0.14, 0.1, 0.02, 1)); S.spr("gloss", lx - 0.1, y - 0.12, 0.55, 0.55)
-        S.spr("label", 18.2, y, 3.0, 1.4); S.txt(18.2, y, 2.8, 0.6, "SEC", (0.6, 0.9, 0.6, 1))
+        S.spr("label", 18.2, y, 3.0, 1.4); S.txt(18.2, y, 2.8, 0.6, lbl("SELECT"), (0.6, 0.9, 0.6, 1))
     finish(S); return S
 
 # ---------------------------------------------------------------- DURUM
 def status():
     S = Scene(); frame(S, 1, [("ISTASYON", 2), ("MUHIMMAT", 0), ("DURUM", 1)])
-    header(S, "T-72B (Russian)  |  DURUM", "GUNNER")
+    header(S, "T-72B (Russian)  |  " + lbl("SCR_STATUS"), lbl("ROLE_gunner"))
     dmg = {"hithull": 0.05, "hitengine": 0.0, "hitltrack": 0.35, "hitrtrack": 0.0, "hitturret": 0.0, "hitgun": 0.7, "hitfuel": 0.0}
     def col(d):
         h = 1 - d
@@ -174,18 +201,18 @@ def status():
     S.spr("display", 5.0, 8.7, 9.8, 14.6)
     for t, hp in [("tank_trackL", "hitltrack"), ("tank_trackR", "hitrtrack"), ("tank_hull", "hithull"), ("tank_engine", "hitengine"), ("tank_turret", "hitturret"), ("tank_gun", "hitgun")]:
         S.spr(t, 5.0, 8.7, 8.667, 13.0, col(dmg[hp]))
-    zones = [("GOVDE", "hithull"), ("MOTOR", "hitengine"), ("SOL PALET", "hitltrack"), ("SAG PALET", "hitrtrack"), ("TARET", "hitturret"), ("TOP", "hitgun"), ("YAKIT DEPOSU", "hitfuel")]
+    zones = [(lbl("Z_hull"), "hithull"), (lbl("Z_engine"), "hitengine"), (lbl("Z_ltrack"), "hitltrack"), (lbl("Z_rtrack"), "hitrtrack"), (lbl("Z_turret"), "hitturret"), (lbl("Z_gun"), "hitgun"), (lbl("Z_fuel"), "hitfuel")]
     for i, (n, hp) in enumerate(zones):
         y = 2.7 + i * 1.35
         S.spr("label", 13.9, y, 5.6, 1.1); S.txt(11.3, y, 4.4, 0.6, n, style=0)
         S.txt(16.9, y, 2.3, 0.6, "%d%%" % round((1 - dmg[hp]) * 100), style=1)
         lx = 19.9; S.spr("ring", lx, y, 0.95, 0.95); S.spr("lens", lx, y, 0.62, 0.62, col(dmg[hp])); S.spr("gloss", lx - 0.1, y - 0.12, 0.5, 0.5)
-    S.spr("display", 16.2, 13.5, 5.0, 2.3); seven(S, 15.1, 13.5, "32", 3, 0.85); S.txt(19.1, 13.5, 1.8, 0.5, "KM/H", dim)
-    gauge(S, 11.9, 14.0, 1.5, "gauge_fuel", 4, -60, 60, 3.1, (0.05, 0.05, 0.05, 1)); S.txt(11.9, 16.0, 3.0, 0.5, "YAKIT", dim)
-    lamp(S, 17.2, 16.0, "MOTOR", GREEN, 1)
+    S.spr("display", 16.2, 13.5, 5.0, 2.3); seven(S, 15.1, 13.5, "32", 3, 0.85); S.txt(19.1, 13.5, 1.8, 0.5, lbl("KMH"), dim)
+    gauge(S, 11.9, 14.0, 1.5, "gauge_fuel", 4, -60, 60, 3.1, (0.05, 0.05, 0.05, 1)); S.txt(11.9, 16.0, 3.0, 0.5, lbl("FUEL"), dim)
+    lamp(S, 17.2, 16.0, lbl("ENGINE"), GREEN, 1, 3.8)
     finish(S); return S
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
     for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status)]:
-        fn().im.convert("RGB").save(os.path.join(OUTDIR, name + ".png")); print("yazildi", name)
+        fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

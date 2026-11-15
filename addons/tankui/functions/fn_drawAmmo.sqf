@@ -5,14 +5,14 @@ private _list = [_veh] call SB_fnc_getAmmoList;
 uiNamespace setVariable ["SB_TankUI_sig", str _list];
 #include "\sb\tankui\kit.sqf"
 
-[getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  MUHIMMAT", _roleLabel] call _header;
+[getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_AMMO" call _L), _roleLabel] call _header;
 
 private _dim = [0.62, 0.78, 0.58, 1];
-[2.4, 1.9, 4.8, 0.5, "SILAH", _dim] call _txt;
-[7.5, 1.9, 4.9, 0.5, "MUHIMMAT", _dim] call _txt;
-[12.4, 1.9, 4.5, 0.5, "ADET", _dim] call _txt;
+[2.4, 1.9, 4.8, 0.5, "COL_WEAPON" call _L, _dim] call _txt;
+[7.5, 1.9, 4.9, 0.5, "COL_AMMO" call _L, _dim] call _txt;
+[12.4, 1.9, 4.5, 0.5, "COL_COUNT" call _L, _dim] call _txt;
 
-private _names = createHashMapFromArray [["KE", "BPS (APFSDS)"], ["HEAT", "BKS (HEAT)"], ["HE", "OFS (HE-FRAG)"]];
+private _names = createHashMapFromArray [["KE", "AM_KE_FULL" call _L], ["HEAT", "AM_HEAT_FULL" call _L], ["HE", "AM_HE_FULL" call _L]];
 
 {
     _x params ["_turret", "_mag", "_name", "_count", "_isCurrent", "_wName"];
@@ -40,13 +40,13 @@ private _names = createHashMapFromArray [["KE", "BPS (APFSDS)"], ["HEAT", "BKS (
 
         // SEC düğmesi (etiket plakası + görünmez tıklama alanı)
         ["label", 18.2, _y, 3.0, 1.4, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
-        [18.2, _y, 2.8, 0.6, "SEC", [0.6, 0.9, 0.6, 1]] call _txt;
+        [18.2, _y, 2.8, 0.6, "SELECT" call _L, [0.6, 0.9, 0.6, 1]] call _txt;
         [18.2, _y, 3.0, 1.5, [_turret, _mag], { (_this select 0) call SB_fnc_selectAmmo }] call _invH;
     };
 } forEach _list;
 
 if (_list isEqualTo []) then {
-    [9.5, 6.0, 12, 0.7, "MUHIMMAT BULUNAMADI", _ink] call _txt;
+    [9.5, 6.0, 12, 0.7, "NO_AMMO" call _L, _ink] call _txt;
 };
 
 call _finish;

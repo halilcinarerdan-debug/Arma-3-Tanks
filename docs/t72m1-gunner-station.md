@@ -54,3 +54,10 @@ Bu dosya kendi cümlelerimizle yazılmış fonksiyonel özettir. Görsel ve meti
 - Tablet dokusu hissi: zeytin yeşili sert plaka, siyah dış çerçeve, açık üst-sol / koyu alt-sağ kabartma, oluklu vidalar.
 - Düzen: düz 2D plakalar (Iron Warriors tarzı HUD plakaları); lambalar etiket kutulu LED.
 - Tüm çizim ctrlCreate ile (daire dokusu + renkli dikdörtgen); ek texture gerekmez. Texture sonradan eklenirse yalnızca `_plate` ve `_dot` değişir.
+
+## Kılavuza sadakat notları (v2 düzeni)
+- Durum lambaları (s.25): üst sıra stab (yeşil), GPS ayna (kırmızı), hidrolik (yeşil); alt sıra TC müdahalesi (kırmızı), Delta-d (kırmızı), top yüklü (mor).
+- Balistik (s.26): üçgen dizilim, üst KE, sol HE, alt HEAT; sağda manuel indeks anahtarı (otomatik -> KE -> HE -> HEAT).
+- Menzil çarkı (s.15): yay biçimli, ateşe hazır lambası yayın içinde.
+- Eklenen kontroller (s.26-28): LRF açma şalteri, AUT/MAN yükleyici şalteri (MAN = elle krank, ~65 sn), GPS ayna kilidi (hidrolikten 2 dk sonra AYNA lambası yanar), LRF açık/hazır lambaları.
+- LAZER yalnızca LRF açıkken ve hazırken çalışır (açıldıktan 4 sn ısınma, her atımdan sonra 3 sn soğuma).

@@ -3,7 +3,7 @@ params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\sb\tankui\kit.sqf"
 
-[getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  DURUM", _roleLabel] call _header;
+[getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  " + ("SCR_STATUS" call _L), _roleLabel] call _header;
 
 // hasar -> renk (kalan sağlık yüksek: yeşil, orta: amber, düşük: kırmızı, hitpoint yok: gri)
 private _dmgCol = {
@@ -33,14 +33,14 @@ uiNamespace setVariable ["SB_dmgCol", _dmgCol];
 ];
 
 // ---- Bölge listesi: etiket plakası + yüzde + LED ----
-private _zones = [["GOVDE", "hithull"], ["MOTOR", "hitengine"], ["SOL PALET", "hitltrack"], ["SAG PALET", "hitrtrack"], ["TARET", "hitturret"], ["TOP", "hitgun"], ["YAKIT DEPOSU", "hitfuel"]];
+private _zones = [["Z_hull", "hithull"], ["Z_engine", "hitengine"], ["Z_ltrack", "hitltrack"], ["Z_rtrack", "hitrtrack"], ["Z_turret", "hitturret"], ["Z_gun", "hitgun"], ["Z_fuel", "hitfuel"]];
 private _row = 0;
 {
     _x params ["_name", "_hp"];
     if (([_veh, _hp] call SB_fnc_getHit) >= 0) then {
         private _y = 2.7 + _row * 1.35;
         ["label", 13.9, _y, 5.6, 1.1, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
-        [11.3, _y, 4.4, 0.6, _name, _ink, 0] call _txt;
+        [11.3, _y, 4.4, 0.6, _name call _L, _ink, 0] call _txt;
         private _val = [16.9, _y, 2.3, 0.6, "", _ink, 1] call _txt;
         private _lx = 19.9;
         ["ring", _lx, _y, 0.95, 0.95, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
@@ -62,11 +62,11 @@ private _row = 0;
 // ---- Hız (7 segment) ----
 ["display", 16.2, 13.5, 5.0, 2.3, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
 [15.1, 13.5, compile "str round abs speed _this", 3, 0.85] call _sevenSeg;
-[19.1, 13.5, 1.8, 0.5, "KM/H", [0.62, 0.78, 0.58, 1]] call _txt;
+[19.1, 13.5, 1.8, 0.5, "KMH" call _L, [0.62, 0.78, 0.58, 1]] call _txt;
 
 // ---- Yakıt kadranı + motor lambası ----
 [11.9, 14.0, 1.5, "gauge_fuel", 4, -60, 60, compile "(fuel _this) * 4", [0.05, 0.05, 0.05, 1], [0.9, 0.9, 0.85, 1]] call _gauge;
-[11.9, 16.0, 3.0, 0.5, "YAKIT", [0.62, 0.78, 0.58, 1]] call _txt;
-[17.2, 16.0, "MOTOR", _green, {isEngineOn _this}] call _lamp;
+[11.9, 16.0, 3.0, 0.5, "FUEL" call _L, [0.62, 0.78, 0.58, 1]] call _txt;
+[17.2, 16.0, "ENGINE" call _L, _green, {isEngineOn _this}, 3.8] call _lamp;
 
 call _finish;

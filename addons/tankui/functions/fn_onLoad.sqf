@@ -13,6 +13,12 @@ uiNamespace setVariable ["SB_TankUI_turret", if (_crew isEqualTo []) then {[0]} 
 uiNamespace setVariable ["SB_TankUI_ctrls", []];
 uiNamespace setVariable ["SB_TankUI_sig", ""];
 
+// Yan donanım düğmelerinin etiketleri (araç dili)
+(_display displayCtrl 7411) ctrlSetText (["SCR_AMMO"] call SB_fnc_lbl);
+(_display displayCtrl 7412) ctrlSetText (["SCR_STATUS"] call SB_fnc_lbl);
+(_display displayCtrl 7413) ctrlSetText (["SCR_STATION"] call SB_fnc_lbl);
+(_display displayCtrl 7499) ctrlSetText (["CLOSE"] call SB_fnc_lbl);
+
 // Gövde dokusu varsa yedek düz gövdeyi gizle
 if (fileExists "\sb\tankui\data\housing_ca.paa") then { (_display displayCtrl 7401) ctrlShow false };
 

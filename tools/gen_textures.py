@@ -25,7 +25,21 @@ def font(size, bold=False):
         return ImageFont.load_default()
 
 
+# ad -> (kir şiddeti, çizik sayısı, sararma). Ölçek kolay ayar için tek yerde.
+WEAR = {
+    "housing": (1.0, 55, 0.0), "gauge_ammo": (0.8, 26, 0.12), "gauge_fuel": (0.8, 26, 0.12),
+    "gauge_range": (0.6, 30, 0.0), "gauge_arc": (0.6, 30, 0.0), "knob": (0.6, 10, 0.0),
+    "ring": (0.5, 6, 0.0), "recess": (0.4, 0, 0.0), "label": (0.9, 14, 0.0), "display": (0.5, 8, 0.0),
+    "lever": (0.4, 4, 0.0), "tank_trackL": (0.3, 0, 0.0), "tank_trackR": (0.3, 0, 0.0), "tank_hull": (0.3, 0, 0.0),
+    "tank_turret": (0.3, 0, 0.0), "tank_gun": (0.3, 0, 0.0), "tank_engine": (0.3, 0, 0.0),
+}
+WEAR_SCALE = 1.0   # genel kir çarpanı (0 = temiz)
+
+
 def save(img, name):
+    if name in WEAR and WEAR_SCALE > 0:
+        st, sc, ye = WEAR[name]
+        img = wear(img, st * WEAR_SCALE, int(sc * WEAR_SCALE), ye)
     img.save(os.path.join(OUT, name + "_ca.png"))
     print("yazildi", name + "_ca.png", img.size)
 
@@ -42,6 +56,43 @@ def smooth_noise(w, h, scale, amp):
     small = rng.normal(0, 1, (max(2, h // scale), max(2, w // scale)))
     im = Image.fromarray(((small - small.min()) / (np.ptp(small) + 1e-6) * 255).astype(np.uint8)).resize((w, h), Image.BICUBIC)
     return (np.asarray(im).astype(np.float32) / 255 - 0.5) * 2 * amp
+
+
+def wear(img, s, scratches=0, yellow=0.0):
+    """Toz/yağ lekeleri (kahverengimsi koyulaşma), çizikler, toz benekleri, hafif sararma. Alfa korunur."""
+    a = arr(img)
+    H, W = a.shape[:2]
+    big = smooth_noise(W, H, max(6, W // 9), 1.0)
+    mid = smooth_noise(W, H, max(3, W // 30), 1.0)
+    D = np.clip(big * 0.9 + mid * 0.7 - 0.12, 0, 1) * min(1.0, s)
+    a[..., :3] *= (1 - 0.48 * D)[..., None]
+    a[..., 0] += 9 * D; a[..., 1] += 5 * D; a[..., 2] -= 7 * D               # kahverengi kir tonu
+    a[..., :3] *= (1 - 0.05 * min(1.0, s))
+    a[..., 2] *= (1 - yellow)                                                # eskimiş kadran sararması
+    # damlama izleri: dikey koyu çizgiler
+    if s > 0.5:
+        L = Image.new("L", (W, H), 0)
+        dr = ImageDraw.Draw(L)
+        for _ in range(int(max(2, W // 60 * s))):
+            x = int(rng.uniform(0, W)); y0 = int(rng.uniform(0, H * 0.7)); ln = int(rng.uniform(H * 0.05, H * 0.3))
+            dr.line([x, y0, x + int(rng.normal(0, 2)), y0 + ln], fill=int(rng.uniform(14, 30)), width=int(rng.integers(1, 3)))
+        m = np.asarray(L.filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32)
+        a[..., :3] *= (1 - m / 255)[..., None]
+    # çizikler: ince açık çizgiler
+    if scratches:
+        L = Image.new("L", (W, H), 0)
+        dr = ImageDraw.Draw(L)
+        for _ in range(scratches):
+            x, y = rng.uniform(0, W), rng.uniform(0, H)
+            ang = rng.uniform(0, math.pi); ln = rng.uniform(0.02, 0.12) * max(W, H)
+            dr.line([x, y, x + math.cos(ang) * ln, y + math.sin(ang) * ln], fill=int(rng.uniform(40, 120) * min(1.0, s + 0.3)), width=1)
+        m = np.asarray(L.filter(ImageFilter.GaussianBlur(0.5))).astype(np.float32)
+        a[..., :3] += m[..., None] * 0.9
+    # toz benekleri
+    sp = rng.random((H, W))
+    a[..., :3] *= (1 - (sp > 0.9992) * 0.5)[..., None]
+    a[..., :3] += ((sp < 0.0006) * 60)[..., None]
+    return to_img(a)
 
 
 def rrect_mask(w, h, box, radius, ss=3):
@@ -98,6 +149,12 @@ def housing():
         for c in range(3):
             base[..., c] = base[..., c] * (1 - m) + rub[..., c] * m
 
+    # kenar/köşe boya sıyrığı: gri metal
+    band = np.clip(blur(outer, 2) - blur(outer, 14), 0, 1)
+    chips = (smooth_noise(W, H, 14, 1.0) + rng.normal(0, 0.25, (H, W)) > 0.55) & (band > 0.12)
+    metal = np.array([138, 138, 132], np.float32)
+    for c in range(3):
+        base[..., c] = np.where(chips, base[..., c] * 0.25 + metal[c] * 0.75, base[..., c])
     img = to_img(base)
     d = ImageDraw.Draw(img, "RGBA")
 
@@ -143,7 +200,46 @@ def glass():
     v = np.zeros_like(a)
     v[..., 3] = vig * 255
     out = Image.alpha_composite(to_img(v), to_img(a))
+    # parmak izi/yağ lekeleri ve cam çizikleri
+    sm = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(sm)
+    for _ in range(14):
+        cx, cy = rng.uniform(0.1, 0.9) * W, rng.uniform(0.1, 0.9) * H
+        rx, ry = rng.uniform(25, 90), rng.uniform(18, 60)
+        d.ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=(220, 220, 210, int(rng.uniform(8, 26))))
+    sm = sm.filter(ImageFilter.GaussianBlur(7))
+    sc = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(sc)
+    for _ in range(36):
+        x, y = rng.uniform(0, W), rng.uniform(0, H)
+        ang = rng.uniform(0, math.pi); ln = rng.uniform(30, 260)
+        d.line([x, y, x + math.cos(ang) * ln, y + math.sin(ang) * ln], fill=(235, 235, 225, int(rng.uniform(14, 48))), width=1)
+    out = Image.alpha_composite(Image.alpha_composite(out, sm), sc)
     save(out, "glass")
+
+
+def dirt():
+    """Ayrı kir katmanı (cam üstü): köşelerde yağ/kurum, lekeler, toz. Oyunda CBA ayarıyla opaklığı değişir."""
+    W, H = 1024, 800
+    yy, xx = np.mgrid[0:H, 0:W]
+    ex = np.minimum(xx, W - 1 - xx) / (W * 0.5)
+    ey = np.minimum(yy, H - 1 - yy) / (H * 0.5)
+    corner = np.clip(1 - np.minimum(ex, ey) * 3.2, 0, 1) ** 1.4
+    blot = np.clip(smooth_noise(W, H, 70, 1.0) * 0.9 + smooth_noise(W, H, 18, 1.0) * 0.5 - 0.1, 0, 1)
+    streak = np.clip(smooth_noise(W, H, 6, 1.0) * 0.4, 0, 1)
+    A = np.clip(corner * 0.65 + blot * 0.30 + streak * 0.10, 0, 1)
+    a = np.zeros((H, W, 4), np.float32)
+    a[..., 0], a[..., 1], a[..., 2] = 30, 24, 16
+    a[..., 3] = A * 215
+    L = Image.new("L", (W, H), 0)
+    d = ImageDraw.Draw(L)
+    for _ in range(120):
+        x, y = rng.uniform(0, W), rng.uniform(0, H)
+        r = rng.uniform(1, 3.2)
+        d.ellipse([x - r, y - r, x + r, y + r], fill=int(rng.uniform(40, 140)))
+    sp = np.asarray(L.filter(ImageFilter.GaussianBlur(0.8))).astype(np.float32)
+    a[..., 3] = np.clip(a[..., 3] + sp, 0, 255)
+    save(to_img(a), "dirt")
 
 
 # ------------------------------------------------------------------ gösterge kadranı
@@ -193,6 +289,35 @@ def gauge(name, vmax, a0, a1, label_step, face, ink, labels=None, sub=0, ring=(1
             bb = d.textbbox((0, 0), txt, font=f_)
             d.text((tx - (bb[2] - bb[0]) / 2, ty - (bb[3] - bb[1]) / 2 - bb[1]), txt, font=f_, fill=ink)
     save(img, name)
+
+
+# ------------------------------------------------------------------ yay biçimli menzil çarkı (kılavuz s.15)
+def gauge_arc(name="gauge_arc", vmax=30, a0=-80, a1=80, step=5):
+    S = 512
+    c = S / 2
+    R = S / 2 - 4
+    img = Image.new("RGBA", (S * 2, S * 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    cc = S                                                     # 2x süper örnekleme
+    r_out, r_in = R * 2 * 0.98, R * 2 * 0.60
+    # yay bandı: siyah, metal kenarlı
+    d.pieslice([cc - r_out - 8, cc - r_out - 8, cc + r_out + 8, cc + r_out + 8], 270 + a0 - 3, 270 + a1 + 3, fill=(120, 122, 116, 255))
+    d.pieslice([cc - r_out, cc - r_out, cc + r_out, cc + r_out], 270 + a0, 270 + a1, fill=(12, 13, 12, 255))
+    d.pieslice([cc - r_in, cc - r_in, cc + r_in, cc + r_in], 270 + a0 - 1, 270 + a1 + 1, fill=(0, 0, 0, 0))
+    ink = (232, 232, 224, 255)
+    for i in range(vmax + 1):
+        a = a0 + (a1 - a0) * i / vmax
+        s_, c_ = math.sin(math.radians(a)), -math.cos(math.radians(a))
+        major = i % step == 0
+        r0 = r_in + (r_out - r_in) * (0.55 if major else 0.72)
+        d.line([cc + s_ * r0, cc + c_ * r0, cc + s_ * (r_out - 12), cc + c_ * (r_out - 12)], fill=ink, width=8 if major else 4)
+        if major:
+            t = str(i)
+            f_ = font(64, True)
+            tx, ty = cc + s_ * (r_in + (r_out - r_in) * 0.30), cc + c_ * (r_in + (r_out - r_in) * 0.30)
+            bb = d.textbbox((0, 0), t, font=f_)
+            d.text((tx - (bb[2] - bb[0]) / 2, ty - (bb[3] - bb[1]) / 2 - bb[1]), t, font=f_, fill=ink)
+    save(img.resize((S, S), Image.LANCZOS), name)
 
 
 # ------------------------------------------------------------------ ibre
@@ -353,8 +478,8 @@ def tank_parts():
 
 
 if __name__ == "__main__":
-    housing(); glass()
+    housing(); glass(); dirt()
     gauge("gauge_ammo", 11, -115, 115, 2, (236, 233, 220), (24, 24, 22))
     gauge("gauge_range", 30, -100, 100, 5, (14, 15, 14), (232, 232, 224), sub=4)
     gauge("gauge_fuel", 4, -60, 60, 1, (236, 233, 220), (24, 24, 22), labels=["E", "1/4", "1/2", "3/4", "F"], sub=3)
-    needle(); lens(); gloss(); ring(); knob(); recess(); lever(); label(); display(); tank_parts()
+    gauge_arc(); needle(); lens(); gloss(); ring(); knob(); recess(); lever(); label(); display(); tank_parts()

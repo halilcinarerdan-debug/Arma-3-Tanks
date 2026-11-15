@@ -51,3 +51,16 @@ Dokular yoksa kod düz renk yedeğine düşer (çalışır, ama kadran çentikle
 
 Önizleme (oyun içi görüntü değil): `python3 tools/preview.py <çıktı klasörü>`.
 `ctrlSetAngle` ters dönerse `config.cpp` içinde `angleSign = -1` yapın.
+
+## CBA ayarları (Addon Options > Steel Tank UI)
+| Ayar | Açıklama |
+|---|---|
+| Etiket dili | Araç dili (otomatik) / Türkçe / English / Русский / Deutsch. Otomatik: T-72 Rusça, Leopard Almanca, M1/Challenger İngilizce, diğerleri Türkçe (profildeki `language`) |
+| Cihaz kirliliği | Cam üstü kir katmanının opaklığı, 0-100 (varsayılan 60) |
+| Otomatik yükleyici süresi | T-72 yükleme gecikmesi, sn (varsayılan 6; AUT/MAN "MAN" iken 65 sn) |
+| İbre yönü | `ctrlSetAngle` ters dönüyorsa "Ters" |
+
+Etiketler `tools/labels.py` içinde; `python3 tools/gen_stringtable.py` ile `stringtable.xml` üretilir. Her dil ayrı anahtardır (`STR_SB_<dil>_<ANAHTAR>`), bu yüzden oyun dilinden bağımsız araç dili gösterilebilir.
+**Rusça/Almanca etiketler en iyi bilgiyle yazıldı, doğrulanmadı** (özellikle `T_DELTA`, `L_TC`, `L_DELTA`, `SEL_OFF`). Steel Beasts görselleriyle kontrol edilmeli.
+
+Doku kiri `tools/gen_textures.py` içindeki `WEAR` / `WEAR_SCALE` ile ayarlanır (0 = temiz); cam kiri ayrıdır (`dirt_ca`) ve oyunda CBA ayarıyla değişir.

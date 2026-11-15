@@ -42,7 +42,7 @@ class SB_TankUI_Main {
             x = DEV_X + DEV_W * 0.022; y = DEV_Y + DEV_H * 0.20;
             w = DEV_W * 0.076; h = DEV_H * 0.075;
             text = "MUHIMMAT";
-            sizeEx = safeZoneH * 0.013;
+            sizeEx = safeZoneH * 0.011;
             colorBackground[] = {0.07, 0.08, 0.06, 1};
             colorBackgroundActive[] = {0.14, 0.22, 0.12, 1};
             colorFocused[] = {0.14, 0.22, 0.12, 1};

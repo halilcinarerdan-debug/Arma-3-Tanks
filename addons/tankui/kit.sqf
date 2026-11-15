@@ -7,13 +7,14 @@
 (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
 private _res = getResolution;
 private _asp = (_res select 1) / (_res select 0);
-private _sgn = getNumber (configFile >> "CfgSBTankUI" >> "angleSign");
+private _sgn = missionNamespace getVariable ["SB_TankUI_angleSign", getNumber (configFile >> "CfgSBTankUI" >> "angleSign")];
 if (_sgn == 0) then { _sgn = 1 };
+private _L = { [_this] call SB_fnc_lbl };
 private _u = _sh / 17;
 private _bx = _sx + _u * _asp * 0.8;
 private _by = _sy + _u * 0.4;
 private _ctrls = [];
-private _roleLabel = getText (configFile >> "CfgSBTankUI" >> "Roles" >> (uiNamespace getVariable ["SB_TankUI_role", "other"]) >> "label");
+private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "other"])) call _L;
 
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
 private _rectTex = "#(argb,8,8,3)color(1,1,1,1)";
@@ -51,11 +52,11 @@ private _bar = {
     [0 call _fx, 0 call _fy, 0.1, 0.1, _t, _col] call _pic
 };
 private _txt = {
-    params ["_ox", "_oy", "_wU", "_hU", "_text", ["_col", _ink], ["_style", 2]];
+    params ["_ox", "_oy", "_wU", "_hU", "_text", ["_col", _ink], ["_style", 2], ["_fs", 0.46]];
     private _c = _display ctrlCreate [["SB_RscText", "SB_RscTextR", "SB_RscTextC"] select _style, -1];
     _c ctrlSetPosition [(_ox call _fx) - ([0, _wU * _u * _asp / 2] select (_style == 2)), (_oy call _fy) - _hU * _u / 2, _wU * _u * _asp, _hU * _u];
     _c ctrlSetText _text;
-    _c ctrlSetFontHeight (_u * 0.46);
+    _c ctrlSetFontHeight (_u * _fs);
     _c ctrlSetTextColor _col;
     _c ctrlCommit 0;
     _ctrls pushBack _c;
@@ -113,13 +114,41 @@ private _lamp = {
     [_lens, _veh] call (_lens getVariable "sb_fn");
 };
 
+// ---- Düz yuvarlak lamba (kılavuza uygun): metal halka + lens; küçük gravür etiket altta, istenirse lens üstünde harf ----
+private _lampRound = {
+    params ["_ox", "_oy", "_name", "_col", "_code", ["_lensText", ""], ["_labelSide", "below"]];
+    private _glow = [_ox call _fx, _oy call _fy, 1.5, 1.5, _dotTex, [_col select 0, _col select 1, _col select 2, 0]] call _pic;
+    ["ring", _ox, _oy, 1.25, 1.25, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
+    private _lens = ["lens", _ox, _oy, 0.85, 0.85, _col, _dotTex, _col] call _spr;
+    ["gloss", _ox - 0.14, _oy - 0.16, 0.7, 0.7, [1, 1, 1, 1], _dotTex, [1, 1, 1, 0]] call _spr;
+    if (_lensText != "") then { [_ox, _oy, 1.1, 0.5, _lensText, [0.06, 0.05, 0.02, 1], 2, 0.4] call _txt };
+    if (_name != "") then {
+        switch (_labelSide) do {
+            case "right": { [_ox + 0.9, _oy, 3.2, 0.5, _name, _ink, 0, 0.4] call _txt };
+            case "left":  { [_ox - 0.9 - 3.2, _oy, 3.2, 0.5, _name, _ink, 1, 0.4] call _txt };
+            default       { [_ox, _oy + 1.05, 2.6, 0.5, _name, _ink, 2, 0.38] call _txt };
+        };
+    };
+    _lens setVariable ["sb_col", _col];
+    _lens setVariable ["sb_glow", _glow];
+    _lens setVariable ["sb_code", _code];
+    _lens setVariable ["sb_fn", {
+        params ["_c", "_veh"];
+        private _k = _c getVariable "sb_col";
+        private _on = _veh call (_c getVariable "sb_code");
+        _c ctrlSetTextColor (if (_on) then {_k} else {[(_k select 0) * 0.14, (_k select 1) * 0.14, (_k select 2) * 0.14, 1]});
+        (_c getVariable "sb_glow") ctrlSetTextColor [_k select 0, _k select 1, _k select 2, [0, 0.25] select _on];
+    }];
+    [_lens, _veh] call (_lens getVariable "sb_fn");
+};
+
 // ---- Kollu şalter: _angCode araç alır, kol açısı döner ----
 private _toggle = {
     params ["_ox", "_oy", "_name", "_act", "_angCode"];
     ["recess", _ox, _oy, 1.7, 1.7, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
     ["ring", _ox, _oy, 1.15, 1.15, [1, 1, 1, 1], _dotTex, [0.6, 0.62, 0.57, 1]] call _spr;
     private _lever = [[1, 1, 1, 1], "lever"] call _bar;
-    _lever setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.25, _u * 0.3, _asp, _sgn]];
+    _lever setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.0, _u * 0.3, _asp, _sgn]];
     _lever setVariable ["sb_ang", _angCode];
     _lever setVariable ["sb_fn", {
         params ["_c", "_veh"];
@@ -127,7 +156,7 @@ private _toggle = {
         [_c, _x0, _y0, _len, _th, _veh call (_c getVariable "sb_ang"), _a, _s] call SB_fnc_placeRect;
     }];
     [_lever, _veh] call (_lever getVariable "sb_fn");
-    [_ox, _oy + 1.75, 2.6, 0.5, _name] call _txt;
+    [_ox, _oy + 1.55, 2.6, 0.5, _name, _ink, 2, 0.4] call _txt;
     [_ox, _oy, 1.8, 2.3, _act] call _inv;
 };
 
@@ -159,11 +188,11 @@ private _rotary = {
 
 // ---- Gösterge: kadran dokuya pişirilmiştir (çentik/rakam), ibre dinamik ----
 private _gauge = {
-    params ["_ox", "_oy", "_r", "_texName", "_max", "_a0", "_a1", "_valCode", "_needleCol", "_faceCol"];
+    params ["_ox", "_oy", "_r", "_texName", "_max", "_a0", "_a1", "_valCode", "_needleCol", "_faceCol", ["_nl", 0.82]];
     private _D = _r * 2 / 0.9;
     [_texName, _ox, _oy, _D, _D, [1, 1, 1, 1], _dotTex, _faceCol] call _spr;
     private _n = [_needleCol] call _bar;
-    _n setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _r * 0.82 * _u, _r * 0.82 * _u * 0.16, _asp, _sgn, _a0, _a1, _max]];
+    _n setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _r * _nl * _u, _r * _nl * _u * 0.16, _asp, _sgn, _a0, _a1, _max]];
     _n setVariable ["sb_val", _valCode];
     _n setVariable ["sb_fn", {
         params ["_c", "_veh"];
@@ -232,6 +261,10 @@ private _sevenSeg = {
 // ---- Cam yansıması: en son çizilir (en üstte) ----
 private _finish = {
     ["glass", (_sx + _sw / 2 - _bx) / (_u * _asp), (_sy + _sh / 2 - _by) / _u, _sw / (_u * _asp), _sh / _u, [1, 1, 1, 1], _rectTex, [0, 0, 0, 0]] call _spr;
+    private _dk = (missionNamespace getVariable ["SB_TankUI_dirt", 60]) / 100;
+    if (_dk > 0) then {
+        ["dirt", (_sx + _sw / 2 - _bx) / (_u * _asp), (_sy + _sh / 2 - _by) / _u, _sw / (_u * _asp), _sh / _u, [1, 1, 1, _dk], _rectTex, [0, 0, 0, 0]] call _spr;
+    };
     uiNamespace setVariable ["SB_TankUI_ctrls", _ctrls];
 };
 

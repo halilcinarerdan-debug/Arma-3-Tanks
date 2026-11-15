@@ -33,6 +33,7 @@ class CfgFunctions {
             class drawStationT72 {};
             class t72Action {};
             class placeRect {};
+            class lbl {};
         };
     };
 };
@@ -59,24 +60,29 @@ class CfgSBTankUI {
     class Profiles {
         class M1A2 {
             title = "M1A2 ABRAMS - CREW DISPLAY";
+            language = "en";
             match[] = {"m1a2", "m1a1", "m1_abrams", "m1a2_tusk"};
         };
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
+            language = "de";
             match[] = {"leopard2", "leopard_2", "leo2"};
         };
         class Challenger2 {
             title = "CHALLENGER 2 - CREW DISPLAY";
+            language = "en";
             match[] = {"challenger2", "challenger_2"};
         };
         class T72 {
             title = "T-72 - CREW DISPLAY";
+            language = "ru";
             match[] = {"t72", "t90", "t80"};
             station = "T72"; // gunner için ISTASYON sekmesi (drawStationT72)
         };
     };
     class Generic {
         title = "TANK - CREW DISPLAY";
+        language = "tr";
     };
 
     // Koltuk bazlı ekranlar. Roller CBA/Arma fullCrew rolleriyle aynı: driver, gunner, commander.

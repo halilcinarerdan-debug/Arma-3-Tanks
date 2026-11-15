@@ -1,6 +1,6 @@
 /*
  * T-72 istasyon düğmeleri. params: [eylem]
- * sel_KE|sel_HEAT|sel_HE|sel_OFF, load, lase, reset, mode, delta, stab, hydr
+ * sel_KE|sel_HEAT|sel_HE|sel_OFF, load, lase, reset, mode, delta, stab, hydr, ball, lrfon, automan, mirror
  * Durumlar araç üzerinde (sadece bu client'ta) tutulur.
  */
 params ["_action"];
@@ -26,16 +26,18 @@ switch (_action) do {
 
         private _mag = (_row select 0) select 1;
         _veh setVariable ["SB_loading", true];
-        // Karusel dönüşü + mekanik yükleyici: ~6 sn (kılavuza göre normal durum)
+        // Karusel + mekanik yükleyici: CBA ayarı (varsayılan 6 sn); AUT/MAN "MAN" ise elle krank: ~65 sn (kılavuz s.33)
+        private _delay = if (_veh getVariable ["SB_manual", false]) then {65} else {missionNamespace getVariable ["SB_TankUI_loadTime", 6]};
         [{
             params ["_veh", "_turret", "_mag"];
             [_turret, _mag, _veh] call SB_fnc_selectAmmo;
             _veh setVariable ["SB_loading", false];
-        }, [_veh, _turret, _mag], 6] call CBA_fnc_waitAndExecute;
+        }, [_veh, _turret, _mag], _delay] call CBA_fnc_waitAndExecute;
     };
 
     case "lase": {
-        if (time < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF sogutuluyor." };
+        if !(_veh getVariable ["SB_lrfOn", false]) exitWith { systemChat "T-72: LRF kapali (LRF ACIK salterini acin)." };
+        if (time < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF hazir degil." };
         _veh setVariable ["SB_lrfReadyAt", time + 3];
 
         private _weapon = _veh currentWeaponTurret _turret;
@@ -57,6 +59,18 @@ switch (_action) do {
     };
 
     case "reset": { _veh setVariable ["SB_range", 0] };
+    case "lrfon": {
+        private _on = !(_veh getVariable ["SB_lrfOn", false]);
+        _veh setVariable ["SB_lrfOn", _on];
+        if (_on) then { _veh setVariable ["SB_lrfReadyAt", time + 4] };   // lazer ısınma süresi
+    };
+    case "automan": { _veh setVariable ["SB_manual", !(_veh getVariable ["SB_manual", false])] };
+    case "mirror":  { _veh setVariable ["SB_mirror", !(_veh getVariable ["SB_mirror", false])] };
+    case "ball": {
+        // balistik bilgisayara manuel mermi tipi indeksi: otomatik -> KE -> HE -> HEAT -> otomatik
+        private _seq = ["", "KE", "HE", "HEAT"];
+        _veh setVariable ["SB_ballOvr", _seq select (((_seq find (_veh getVariable ["SB_ballOvr", ""])) + 1) mod 4)];
+    };
     case "mode":  { _veh setVariable ["SB_lrfMode", ((_veh getVariable ["SB_lrfMode", 0]) + 1) mod 3] };
     case "delta": { _veh setVariable ["SB_delta", !(_veh getVariable ["SB_delta", false])] };
 
