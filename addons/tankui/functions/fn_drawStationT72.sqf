@@ -57,7 +57,7 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 [3.0, 15.2, 5, 0.5, "SEL_TITLE" call _L] call _txt;
 
 private _pl = [6.9, 14.4, "LOAD" call _L, "load", [0.2, 0.6, 0.25, 1]] call _push;
-_pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LOADING"] select (_veh getVariable ["SB_loading", false])) call SB_fnc_lbl) }];
+_pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LOADING"] select ([_veh] call SB_fnc_isLoading)) call SB_fnc_lbl) }];
 [_pl, _veh] call (_pl getVariable "sb_fn");
 
 // mermi sayacı: seçili tipin adedi (KAPALI iken boş yuva sayısı), maks 11

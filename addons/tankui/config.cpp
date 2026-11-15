@@ -49,6 +49,7 @@ class CfgFunctions {
             class selectWeapon {};
             class setGunStab {};
             class realStab {};
+            class isLoading {};
             class hudBuild {};
             class hudUpdate {};
         };

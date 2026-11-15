@@ -75,7 +75,7 @@ _wTxt setVariable ["sb_fn", {
 private _ldTxt = [0.8, 7.5, 7.4, 0.6, "", _dimTxt, 0, 0.45] call _txt;
 _ldTxt setVariable ["sb_fn", {
     params ["_c", "_veh"];
-    _c ctrlSetText (if (_veh getVariable ["SB_loading", false]) then {"LOADING" call SB_fnc_lbl} else {
+    _c ctrlSetText (if ([_veh] call SB_fnc_isLoading) then {"LOADING" call SB_fnc_lbl} else {
         if (_veh getVariable ["SB_manual", false]) then {"T_AUTO" call SB_fnc_lbl} else {""}
     });
 }];

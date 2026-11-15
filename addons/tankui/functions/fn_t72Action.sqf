@@ -17,7 +17,7 @@ switch (_action) do {
     // sürücü/komutan eylemleri ayrı (yalıtılmış) dosyada
     default { [_action] call SB_fnc_t72ActionX };
     case "load": {
-        if (_veh getVariable ["SB_loading", false]) exitWith {};
+        if ([_veh] call SB_fnc_isLoading) exitWith {};
         private _type = _veh getVariable ["SB_selType", ""];
         if (_type == "") exitWith { systemChat "T-72: mermi secici KAPALI." };
 
@@ -27,7 +27,6 @@ switch (_action) do {
         if (_row isEqualTo []) exitWith { systemChat format ["T-72: %1 mermisi kalmadi.", _type] };
 
         private _mag = (_row select 0) select 1;
-        _veh setVariable ["SB_loading", true];
         // Karusel + mekanik yükleyici: CBA ayarı (varsayılan 6 sn); AUT/MAN "MAN" ise elle krank: ~65 sn (kılavuz s.33)
         private _target = if (_veh getVariable ["SB_manual", false]) then {65} else {missionNamespace getVariable ["SB_TankUI_loadTime", 6]};
         // loadMagazine'den sonra Arma kendi yükleme süresini de uygular; çift beklemeyi önlemek için onu hedeften düşeriz.
@@ -39,10 +38,11 @@ switch (_action) do {
         };
         private _delay = (_target - _engine) max 0;
         systemChat format ["Yukleyici: hedef %1 sn (oyunun kendi yuklemesi ~%2 sn dahil, bekleme %3 sn)", _target, round _engine, round _delay];
+        // "yükleniyor" göstergesi zaman damgasıyla biter (geri çağrıma bağlı değil): toplam süre + 1 sn pay
+        _veh setVariable ["SB_loadEnd", time + (_target max _engine) + 1];
         [{
             params ["_veh", "_turret", "_mag"];
             [_turret, _mag, _veh] call SB_fnc_selectAmmo;
-            _veh setVariable ["SB_loading", false];
         }, [_veh, _turret, _mag], _delay] call CBA_fnc_waitAndExecute;
     };
 
