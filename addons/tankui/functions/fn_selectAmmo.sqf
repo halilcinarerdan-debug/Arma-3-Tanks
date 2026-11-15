@@ -20,5 +20,6 @@ if (_muzzleToUse isEqualTo "") exitWith {
     systemChat format ["Steel Tank UI: %1 için uyumlu silah bulunamadi.", _mag];
 };
 
-// loadMagazine araç sahibinde çalışmalı
-["SB_TankUI_loadMagazine", [_veh, _turret, _muzzleToUse, _mag], _veh] call CBA_fnc_targetEvent;
+// loadMagazine araç sahibinde çalışmalı; sonuç (başarılı/başarısız) isteyen oyuncuya bildirilir
+systemChat format ["Yukleniyor: %1", getText (configFile >> "CfgMagazines" >> _mag >> "displayName")];
+["SB_TankUI_loadMagazine", [_veh, _turret, _muzzleToUse, _mag, player], _veh] call CBA_fnc_targetEvent;

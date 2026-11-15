@@ -1,3 +1,26 @@
+// ---- Mühimmat yükleme: araç sahibinde (local) çalışmalı -> CBA targetEvent (remoteExec beyaz listesine takılmaz).
+// Bu olay TÜM makinelerde kayıtlıdır: araç MP'de sunucuda/başka istemcide yerel olabilir.
+["SB_TankUI_loadMagazine", {
+    params ["_veh", "_turret", "_weapon", "_mag", ["_caller", objNull]];
+    _veh loadMagazine [_turret, _weapon, _mag];
+    // 1,5 sn sonra gerçekten yüklendi mi? Sonucu isteyen oyuncuya bildir (tanılama + geri bildirim)
+    [{
+        params ["_veh", "_turret", "_weapon", "_mag", "_caller"];
+        ["SB_TankUI_loadResult", [_mag, _veh currentMagazineTurret _turret, _weapon, _turret], _caller] call CBA_fnc_targetEvent;
+    }, [_veh, _turret, _weapon, _mag, _caller], 1.5] call CBA_fnc_waitAndExecute;
+}] call CBA_fnc_addEventHandler;
+
+["SB_TankUI_loadResult", {
+    params ["_mag", "_cur", "_weapon", "_turret"];
+    private _ok = _cur isEqualTo _mag;
+    diag_log format ["[SB_TankUI] loadMagazine sonuc: istenen=%1 mevcut=%2 silah=%3 taret=%4 basarili=%5", _mag, _cur, _weapon, _turret, _ok];
+    systemChat (if (_ok) then {
+        format ["Yuklendi: %1", getText (configFile >> "CfgMagazines" >> _mag >> "displayName")]
+    } else {
+        format ["Yukleme basarisiz (istenen: %1, mevcut: %2). RPT'ye bakin.", _mag, _cur]
+    });
+}] call CBA_fnc_addEventHandler;
+
 if (!hasInterface) exitWith {};
 
 // Tuş ataması: Controls > Configure Addons > Steel Tank UI üzerinden değiştirilebilir.
@@ -7,12 +30,6 @@ if (!hasInterface) exitWith {};
     {},
     [0x14, [false, true, false]]
 ] call CBA_fnc_addKeybind;
-
-// Mühimmat seçimi araç sahibinde (local) çalışmalı -> CBA targetEvent (remoteExec beyaz listesine takılmaz).
-["SB_TankUI_loadMagazine", {
-    params ["_veh", "_turret", "_weapon", "_mag"];
-    _veh loadMagazine [_turret, _weapon, _mag];
-}] call CBA_fnc_addEventHandler;
 
 // ---- CBA ayarları (Addon Options > Steel Tank UI), istemci tarafı ----
 ["SB_TankUI_labelLang", "LIST",

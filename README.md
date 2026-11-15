@@ -90,3 +90,8 @@ PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`z\tank33\addons\ta
 
 Etkiler `Fired` olayıyla uygulanır ve istasyon ekranı bir araçta ilk açıldığında devreye girer (hiç açmayan oyuncuya sapma uygulanmaz). CBA ayarları: "Panel etkileri" (aç/kapa), "Sapma siddeti (%)".
 Henüz yapılmayanlar (komut sözdizimi doğrulanamadı): HIDROLIK ile taret kilidi, AYNA KILIDI ile optik stabilizasyon, LAZER ile gerçek nişan düzeltmesi, DELTA-D.
+
+## Mermi seçici ve balistik farkı
+- **Mermi seçici (MERMI SECICI):** Otomatik yükleyiciye **hangi mermi tipinin** yükleneceğini söyler (BPS/BKS/OFS). YUKLE'ye basınca o mermi namluya girer. Yalnızca seçici tek başına bir şey yüklemez.
+- **Balistik (BALISTIK lambaları + ELLE anahtarı):** Nişan bilgisayarının **hangi mermi tablosunu** kullandığını gösterir. Normalde yüklü mermiyi otomatik izler; ELLE yalnızca bilgisayar bozulduğunda elle indekslemek içindir. Yüklü mermiyle uyuşmazsa nişan o mermi için yanlış hesaplanır (atış sapar).
+- Yükleme sonucu oyunda sohbete yazılır ("Yuklendi: ..." / "Yukleme basarisiz ..."), ayrıntı RPT'de `[SB_TankUI] loadMagazine sonuc`.

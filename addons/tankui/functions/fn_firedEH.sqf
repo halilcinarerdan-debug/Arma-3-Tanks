@@ -5,7 +5,21 @@
  * Yalnızca istasyon ekranı bu araçta bir kez açıldıysa (SB_armed) devreye girer; CBA ayarı ile kapatılabilir/ölçeklenir.
  * Fired olayı silahın yerel olduğu makinede çalışır; mermi yerel olduğu için setVelocity geçerlidir.
  */
-params ["_veh", "_weapon", "_muzzle", "_mode", "_ammo", "_mag", "_proj", ["_gunner", objNull]];
+// Parametre sırasına güvenmeyiz (bir sürümde mermi yerine dizgi geldi): nesneleri ve dizgileri türüne göre ayıkla.
+// Nesneler sırayla: araç, mermi, (atan); dizgiler: ... ammo, magazine (son ikisi).
+private _objs = _this select { _x isEqualType objNull };
+private _strs = _this select { _x isEqualType "" };
+if (count _objs < 2 || {count _strs < 2}) exitWith {
+    if !(missionNamespace getVariable ["SB_firedLogged", false]) then {
+        missionNamespace setVariable ["SB_firedLogged", true];
+        diag_log format ["[SB_TankUI] firedEH beklenmeyen parametreler: %1", _this];
+    };
+};
+private _veh = _objs select 0;
+private _proj = _objs select 1;
+private _gunner = _objs param [2, objNull];
+private _ammo = _strs select (count _strs - 2);
+private _mag = _strs select (count _strs - 1);
 if (isNull _proj) exitWith {};
 if !(missionNamespace getVariable ["SB_TankUI_effects", true]) exitWith {};
 if !(_veh getVariable ["SB_armed", false]) exitWith {};
