@@ -64,3 +64,7 @@ Etiketler `tools/labels.py` içinde; `python3 tools/gen_stringtable.py` ile `str
 **Rusça/Almanca etiketler en iyi bilgiyle yazıldı, doğrulanmadı** (özellikle `T_DELTA`, `L_TC`, `L_DELTA`, `SEL_OFF`). Steel Beasts görselleriyle kontrol edilmeli.
 
 Doku kiri `tools/gen_textures.py` içindeki `WEAR` / `WEAR_SCALE` ile ayarlanır (0 = temiz); cam kiri ayrıdır (`dirt_ca`) ve oyunda CBA ayarıyla değişir.
+
+## Derleme notu (pboProject / Pal2Pace)
+Tüm dokular 2'nin kuvveti boyutlarda üretilir (`tools/gen_textures.py` bunu otomatik yapar); aksi hâlde `Pal2Pace failed` hatası alınır.
+PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`sb\tankui`). Dosya projeye kopyalanmazsa pboProject ön eki klasör yolundan türetir ve koddaki `\sb\tankui\...` yolları (doku, kit.sqf) bozulur.

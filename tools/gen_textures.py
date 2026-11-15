@@ -40,6 +40,16 @@ def save(img, name):
     if name in WEAR and WEAR_SCALE > 0:
         st, sc, ye = WEAR[name]
         img = wear(img, st * WEAR_SCALE, int(sc * WEAR_SCALE), ye)
+    # Arma/Pal2Pace yalnızca 2'nin kuvveti boyutları kabul eder (en/boy ayrı ayrı, azami 2048).
+    # Oyunda doku kontrol kutusuna gerildiği için en-boy oranı bozulmaz.
+    def p2(n):
+        p = 1
+        while p < n:
+            p *= 2
+        return min(2048, p)
+    nw, nh = p2(img.size[0]), p2(img.size[1])
+    if (nw, nh) != img.size:
+        img = img.resize((nw, nh), Image.LANCZOS)
     img.save(os.path.join(OUT, name + "_ca.png"))
     print("yazildi", name + "_ca.png", img.size)
 
