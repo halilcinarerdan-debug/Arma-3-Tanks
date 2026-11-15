@@ -137,13 +137,16 @@ def housing():
     base[..., :3] += grain[..., None] + smooth_noise(W, H, 40, 4.0)[..., None]
     base[..., 3] = 255
 
-    outer = rrect_mask(W, H, (0, 0, W - 1, H - 1), 70)
+    outer = np.ones((H, W), np.float32)      # dış silüet dikdörtgen: köşelerde şeffaf boşluk kalmaz
     # kenar kabartması: üst/sol açık, alt/sağ koyu
     edge_in = blur(outer, 5)
     ex = np.gradient(edge_in, axis=1)
     ey = np.gradient(edge_in, axis=0)
     bevel = (-(ex + ey)) * 60
     base[..., :3] += bevel[..., None]
+
+    base[:5, :, :3] += 26; base[:, :5, :3] += 18                   # üst/sol açık kenar
+    base[-5:, :, :3] -= 30; base[:, -5:, :3] -= 22                  # alt/sağ koyu kenar
 
     # ekran deliği + iç gölge
     sx0, sy0, sx1, sy1 = int(W * 0.115), int(H * 0.07), int(W * 0.96), int(H * 0.93)
@@ -153,8 +156,9 @@ def housing():
 
     # siyah lastik köşe tamponları
     bw, bh = int(W * 0.095), int(H * 0.115)
-    for (x0, y0) in [(0, 0), (W - bw, 0), (0, H - bh), (W - bw, H - bh)]:
-        m = rrect_mask(W, H, (x0 + 2, y0 + 2, x0 + bw - 2, y0 + bh - 2), 34)
+    ext = 60
+    for (bx0, by0, bx1, by1) in [(-ext, -ext, bw, bh), (W - bw, -ext, W + ext, bh), (-ext, H - bh, bw, H + ext), (W - bw, H - bh, W + ext, H + ext)]:
+        m = rrect_mask(W, H, (bx0, by0, bx1, by1), 34)
         rub = np.array([22, 23, 21], np.float32) + rng.normal(0, 2.2, (H, W))[..., None]
         for c in range(3):
             base[..., c] = base[..., c] * (1 - m) + rub[..., c] * m
