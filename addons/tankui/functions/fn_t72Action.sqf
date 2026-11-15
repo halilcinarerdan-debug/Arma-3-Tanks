@@ -10,7 +10,7 @@ private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
 if ((_action select [0, 4]) == "sel_") exitWith {
     private _t = _action select [4];
-    _veh setVariable ["SB_selType", ["", _t] select (_t != "OFF")];
+    _veh setVariable ["SB_selType", ["", _t] select (_t != "OFF"), true];
 };
 
 switch (_action) do {
@@ -39,7 +39,7 @@ switch (_action) do {
         private _delay = (_target - _engine) max 0;
         systemChat format ["Yukleyici: hedef %1 sn (oyunun kendi yuklemesi ~%2 sn dahil, bekleme %3 sn)", _target, round _engine, round _delay];
         // "yükleniyor" göstergesi zaman damgasıyla biter (geri çağrıma bağlı değil): toplam süre + 1 sn pay
-        _veh setVariable ["SB_loadEnd", time + (_target max _engine) + 1];
+        _veh setVariable ["SB_loadEnd", serverTime + (_target max _engine) + 1, true];
         [{
             params ["_veh", "_turret", "_mag"];
             [_turret, _mag, _veh] call SB_fnc_selectAmmo;
@@ -49,29 +49,29 @@ switch (_action) do {
     // ---- Leopard 2 ailesi: ateş kontrol modu, mermi (seç + yükle), savaş nişanı ----
     case "fc_normal": {
         _veh setVariable ["SB_hydr", true];
-        _veh setVariable ["SB_hydrOn", time - 120];        // Leopard stabilizasyonu anında hazır (T-72'deki 120 sn ısınma yok)
+        _veh setVariable ["SB_hydrOn", time - 120, true];        // Leopard stabilizasyonu anında hazır (T-72'deki 120 sn ısınma yok)
         _veh setVariable ["SB_stab", true];
-        _veh setVariable ["SB_stabOn", time];
+        _veh setVariable ["SB_stabOn", serverTime, true];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
     };
     case "fc_emerg": {
         _veh setVariable ["SB_hydr", true];
-        _veh setVariable ["SB_hydrOn", time - 120];
-        _veh setVariable ["SB_stab", false];
+        _veh setVariable ["SB_hydrOn", time - 120, true];
+        _veh setVariable ["SB_stab", false, true];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, false] call SB_fnc_turretLock };
     };
     case "fc_manual": {
-        _veh setVariable ["SB_hydr", false];
-        _veh setVariable ["SB_stab", false];
+        _veh setVariable ["SB_hydr", false, true];
+        _veh setVariable ["SB_stab", false, true];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, true] call SB_fnc_turretLock };
     };
-    case "am_KE": { _veh setVariable ["SB_selType", "KE"]; [_veh, _turret] call SB_fnc_leoMain; ["load"] call SB_fnc_t72Action };
+    case "am_KE": { _veh setVariable ["SB_selType", "KE", true]; [_veh, _turret] call SB_fnc_leoMain; ["load"] call SB_fnc_t72Action };
     case "am_HE": {
         // HE-T: HE yoksa HEAT mermisine düş (CUP sürümüne göre değişir)
         private _hasHE = (([_veh] call SB_fnc_getAmmoList) findIf {
             (_x select 0) isEqualTo _turret && {([_x select 1] call SB_fnc_ammoClass) == "HE"}
         }) >= 0;
-        _veh setVariable ["SB_selType", ["HEAT", "HE"] select _hasHE];
+        _veh setVariable ["SB_selType", ["HEAT", "HE"] select _hasHE, true];
         [_veh, _turret] call SB_fnc_leoMain;
         ["load"] call SB_fnc_t72Action;
     };
@@ -80,14 +80,14 @@ switch (_action) do {
     case "bs_1500": { [_veh, 1500] call SB_fnc_leoSetRange };
     case "rng_dn":  { [_veh, ((_veh getVariable ["SB_range", 1100]) - 100) max 200] call SB_fnc_leoSetRange };
     case "rng_up":  { [_veh, ((_veh getVariable ["SB_range", 1100]) + 100) min 9990] call SB_fnc_leoSetRange };
-    case "rngmode": { _veh setVariable ["SB_rngMan", !(_veh getVariable ["SB_rngMan", false])] };
+    case "rngmode": { _veh setVariable ["SB_rngMan", !(_veh getVariable ["SB_rngMan", false]), true] };
 
     case "lase": {
         if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) exitWith { systemChat "Menzil kaynagi Arma lazeri: nisangahta lazer tusunu kullanin (CBA: Menzil kaynagi)." };
         if !(_veh getVariable ["SB_lrfOn", false]) exitWith { systemChat "T-72: LRF kapali (LRF ACIK salterini acin)." };
-        if (time < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF hazir degil." };
-        _veh setVariable ["SB_lrfReadyAt", time + 3];
-        _veh setVariable ["SB_rngMan", false];     // lazer ölçümü otomatik menzile döner
+        if (serverTime < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF hazir degil." };
+        _veh setVariable ["SB_lrfReadyAt", serverTime + 3, true];
+        _veh setVariable ["SB_rngMan", false, true];     // lazer ölçümü otomatik menzile döner
 
         private _weapon = _veh currentWeaponTurret _turret;
         private _from = _veh modelToWorldWorld (_veh selectionPosition ["usti hlavne", "Memory"]);
@@ -99,19 +99,19 @@ switch (_action) do {
 
         if (_dist < 0 || {_dist > _limit}) then {
             // kötü dönüş / mod sınırı aşıldı -> battlesight 800 m (kılavuz)
-            _veh setVariable ["SB_lrfText", "----"];
-            _veh setVariable ["SB_range", 800];
+            _veh setVariable ["SB_lrfText", "----", true];
+            _veh setVariable ["SB_range", 800, true];
         } else {
-            _veh setVariable ["SB_lrfText", str round _dist];
-            _veh setVariable ["SB_range", _dist];
+            _veh setVariable ["SB_lrfText", str round _dist, true];
+            _veh setVariable ["SB_range", _dist, true];
         };
     };
 
-    case "reset": { _veh setVariable ["SB_range", 0]; _veh setVariable ["SB_rngMan", false] };
+    case "reset": { _veh setVariable ["SB_range", 0, true]; _veh setVariable ["SB_rngMan", false, true] };
     case "lrfon": {
         private _on = !(_veh getVariable ["SB_lrfOn", false]);
-        _veh setVariable ["SB_lrfOn", _on];
-        if (_on) then { _veh setVariable ["SB_lrfReadyAt", time + 4] };   // lazer ısınma süresi
+        _veh setVariable ["SB_lrfOn", _on, true];
+        if (_on) then { _veh setVariable ["SB_lrfReadyAt", serverTime + 4, true] };   // lazer ısınma süresi
     };
     case "weapon": {
         // TOP <-> PKT: aktif silahı değiştir (kılavuz: M tuşu, coax/main)
@@ -128,28 +128,28 @@ switch (_action) do {
             };
         }, [_veh, _turret, _target], 0.9] call CBA_fnc_waitAndExecute;
     };
-    case "automan": { _veh setVariable ["SB_manual", !(_veh getVariable ["SB_manual", false])] };
-    case "mirror":  { _veh setVariable ["SB_mirror", !(_veh getVariable ["SB_mirror", false])] };
+    case "automan": { _veh setVariable ["SB_manual", !(_veh getVariable ["SB_manual", false]), true] };
+    case "mirror":  { _veh setVariable ["SB_mirror", !(_veh getVariable ["SB_mirror", false]), true] };
     case "ball": {
         // balistik bilgisayara manuel mermi tipi indeksi: otomatik -> KE -> HE -> HEAT -> otomatik
         private _seq = ["", "KE", "HE", "HEAT"];
-        _veh setVariable ["SB_ballOvr", _seq select (((_seq find (_veh getVariable ["SB_ballOvr", ""])) + 1) mod 4)];
+        _veh setVariable ["SB_ballOvr", _seq select (((_seq find (_veh getVariable ["SB_ballOvr", ""])) + 1) mod 4), true];
     };
-    case "mode":  { _veh setVariable ["SB_lrfMode", ((_veh getVariable ["SB_lrfMode", 0]) + 1) mod 3] };
-    case "delta": { _veh setVariable ["SB_delta", !(_veh getVariable ["SB_delta", false])] };
+    case "mode":  { _veh setVariable ["SB_lrfMode", ((_veh getVariable ["SB_lrfMode", 0]) + 1) mod 3, true] };
+    case "delta": { _veh setVariable ["SB_delta", !(_veh getVariable ["SB_delta", false]), true] };
 
     case "hydr": {
         private _on = !(_veh getVariable ["SB_hydr", false]);
-        _veh setVariable ["SB_hydr", _on];
-        if (_on) then { _veh setVariable ["SB_hydrOn", time] } else { _veh setVariable ["SB_stab", false] };
+        _veh setVariable ["SB_hydr", _on, true];
+        if (_on) then { _veh setVariable ["SB_hydrOn", serverTime, true] } else { _veh setVariable ["SB_stab", false, true] };
         // hidrolik kapanınca taret kilitlenir (elle krank yok), açılınca serbest kalır
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, !_on] call SB_fnc_turretLock };
     };
     case "stab": {
         if (_veh getVariable ["SB_hydr", false]) then {
             private _stabNew = !(_veh getVariable ["SB_stab", false]);
-            _veh setVariable ["SB_stab", _stabNew];
-            if (_stabNew) then { _veh setVariable ["SB_stabOn", time] };      // aşırı ısınma sayacı
+            _veh setVariable ["SB_stab", _stabNew, true];
+            if (_stabNew) then { _veh setVariable ["SB_stabOn", serverTime, true] };      // aşırı ısınma sayacı
         } else {
             systemChat "T-72: stabilizasyon icin once hidrolik acilmali.";
         };

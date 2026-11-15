@@ -5,10 +5,10 @@
  * params: [araç] -> bool
  */
 params ["_veh"];
-private _now = time;
+private _now = serverTime;
 private _on = _veh getVariable ["SB_stab", false];
 if (_on && {_now - (_veh getVariable ["SB_stabOn", _now]) >= 3300}) then {
-    _veh setVariable ["SB_stab", false];
+    _veh setVariable ["SB_stab", false, true];
     _on = false;
     if (player in _veh) then { systemChat "T-72: hidrolik asiri isindi, stabilizasyon kayboldu (STAB'i yeniden acin)." };
 };

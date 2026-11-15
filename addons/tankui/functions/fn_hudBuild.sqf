@@ -48,7 +48,7 @@ private _hA = 8.4;
 }, "", "right"] call _lampRound;
 [5.6, 3.0, "L_READY" call _L, _red, {
     (_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]])))> 0
-    && {_this getVariable ["SB_lrfOn", false]} && {time >= (_this getVariable ["SB_lrfReadyAt", 0])}
+    && {_this getVariable ["SB_lrfOn", false]} && {serverTime >= (_this getVariable ["SB_lrfReadyAt", 0])}
 }, "", "right"] call _lampRound;
 
 // aktif silah | yüklü mermi tipi
@@ -88,7 +88,7 @@ private _yB = _yTop + (_hA + _gap) * _u;
 [1.3, 1.5, "L_STAB" call _L, _green, {[_this] call SB_fnc_stabEffective}, "", "right"] call _lampRound;
 [5.6, 1.5, "L_HYDR" call _L, _green, {_this getVariable ["SB_hydr", false]}, "", "right"] call _lampRound;
 [1.3, 3.0, "L_MIRROR" call _L, _red, {
-    (_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {time - (_this getVariable ["SB_hydrOn", 0]) >= 120}
+    (_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {serverTime - (_this getVariable ["SB_hydrOn", 0]) >= 120}
 }, "", "right"] call _lampRound;
 [5.6, 3.0, "L_DELTA" call _L, _red, {_this getVariable ["SB_delta", false]}, "", "right"] call _lampRound;
 [1.3, 4.5, "L_LRF" call _L, _green, {_this getVariable ["SB_lrfOn", false]}, "", "right"] call _lampRound;

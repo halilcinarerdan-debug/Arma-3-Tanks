@@ -39,6 +39,7 @@ class CfgFunctions {
             class gpsText {};
             class leoSetRange {};
             class leoMain {};
+            class syncSel {};
             class t72ActionX {};
             class t72Action {};
             class placeRect {};

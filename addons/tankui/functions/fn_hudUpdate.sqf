@@ -2,6 +2,7 @@
  * Nişangâh plakalarını göster/gizle ve güncelle (CBA PFH, 0.3 sn).
  * Gösterim koşulu: ayar açık, menü kapalı, oyuncu tankta nişancı/komutan koltuğunda ve optiğe bakıyor (cameraView == "GUNNER").
  */
+call SB_fnc_syncSel;
 call SB_fnc_applyEffects;
 
 private _want = false;

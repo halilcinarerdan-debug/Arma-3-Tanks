@@ -50,7 +50,7 @@ if (call SB_fnc_realStab) then {
 if (missionNamespace getVariable ["SB_TankUI_opticStab", true]) then {
     private _crew = (fullCrew _veh) select {(_x select 0) isEqualTo player};
     private _turret = if (_crew isEqualTo []) then {[0]} else {(_crew select 0) select 3};
-    private _want = (_veh getVariable ["SB_hydr", false]) && {_veh getVariable ["SB_mirror", false]} && {time - (_veh getVariable ["SB_hydrOn", 0]) >= 120};
+    private _want = (_veh getVariable ["SB_hydr", false]) && {_veh getVariable ["SB_mirror", false]} && {serverTime - (_veh getVariable ["SB_hydrOn", 0]) >= 120};
     private _flag = [0, 1] select _want;
     if ((_veh getVariable ["SB_dirStabApplied", -1]) != _flag) then {
         _veh enableDirectionStabilization [_want, _turret];

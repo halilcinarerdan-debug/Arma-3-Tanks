@@ -18,7 +18,7 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 
 // ---- Durum lambaları (kılavuz s.25) ----
 [0.9, 2.6, "L_STAB" call _L,   _green,  {[_this] call SB_fnc_stabEffective}] call _lampRound;
-[3.0, 2.6, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {time - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampRound;
+[3.0, 2.6, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {serverTime - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampRound;
 [5.1, 2.6, "L_HYDR" call _L,   _green,  {_this getVariable ["SB_hydr", false]}] call _lampRound;
 [0.9, 4.8, "L_TC" call _L,     _red,    {false}] call _lampRound;
 [3.0, 4.8, "L_DELTA" call _L,  _red,    {_this getVariable ["SB_delta", false]}] call _lampRound;
@@ -74,13 +74,13 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 ["display", 13.6, 2.6, 5.6, 2.7, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
 [11.575, 2.6, compile "[_this] call SB_fnc_rangeText"] call _sevenSeg;
 [18.0, 2.3, "L_LRF" call _L, _green, {_this getVariable ["SB_lrfOn", false]}] call _lampRound;
-[19.6, 2.3, "L_READY" call _L, _red, {(_this getVariable ["SB_lrfOn", false]) && {time >= (_this getVariable ["SB_lrfReadyAt", 0])}}] call _lampRound;
+[19.6, 2.3, "L_READY" call _L, _red, {(_this getVariable ["SB_lrfOn", false]) && {serverTime >= (_this getVariable ["SB_lrfReadyAt", 0])}}] call _lampRound;
 
 // ---- Yay biçimli menzil çarkı + ateşe hazır lambası (kılavuz s.15) ----
 [14.4, 8.4, 3.1, "gauge_arc", 30, -80, 80, compile "([_this] call SB_fnc_rangeValue) / 100", [1, 0.45, 0.1, 1], [0, 0, 0, 0], 0.98] call _gauge;
 [14.4, 6.9, "", _red, {
     (_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0
-    && {(_this getVariable ["SB_lrfOn", false])} && {time >= (_this getVariable ["SB_lrfReadyAt", 0])}
+    && {(_this getVariable ["SB_lrfOn", false])} && {serverTime >= (_this getVariable ["SB_lrfReadyAt", 0])}
 }] call _lampRound;
 [14.4, 9.6, 6, 0.5, "RANGE" call _L, _ink, 2, 0.42] call _txt;
 

@@ -27,7 +27,7 @@ private _dim = [0.62, 0.78, 0.58, 1];
 }] call _lampRound;
 [13.5, 2.6, "LED_ELD" call _L, _red, {
     (_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0
-    && {time >= (_this getVariable ["SB_lrfReadyAt", 0])} && {!([_this] call SB_fnc_isLoading)}
+    && {serverTime >= (_this getVariable ["SB_lrfReadyAt", 0])} && {!([_this] call SB_fnc_isLoading)}
 }] call _lampRound;
 [15.8, 2.6, "LED_KSP" call _L, _amber, {
     private _t = uiNamespace getVariable ["SB_TankUI_turret", [0]];

@@ -134,3 +134,9 @@ Strv 122 (Leo 2S) CUP'ta bulunmayabilir; bu yüzden ayrı bir araç sınıfına 
 - **Komutan:** mürettebat, taret yönü saat şeridi, MG/duman sayıları, arıza lambaları, kapak, duman.
 - **Sürücü:** hız, yakıt, arıza lambaları, geri görüş mesafe kılavuzu (5/10/15 m), motor/far/kapak.
 - Dil: araç dili Almanca; CBA'dan **Svenska** seçilebilir (STAB TILL, OBSERVATION, TORN FRÅN, SLPILPRJ 95 …).
+
+## Çok oyunculu / bot senkronu
+
+- Panel durumları (STAB, HIDR, mermi seçimi, yükleme zamanı, lazer/menzil, ayna vb.) araç üzerinde **herkese yayınlanan** değişkenlerdir; aynı araçtaki iki nişancı aynı durumu görür. Zamanlayıcılar `serverTime` ile tutulur.
+- Aynı taretteki başka bir oyuncu veya bot mermiyi değiştirirse seçici ve lambalar oyunun gerçek durumuna 0,3 sn içinde uyar (`SB_fnc_syncSel`).
+- ACE Advanced Vehicle Damage ile uyum: hasar ekranı hitpoint değerlerini okur (ACE bunları günceller); ayrıca ACE'in kendi tamir/yangın sistemi bu paneldeki lambaların yerine geçmez.

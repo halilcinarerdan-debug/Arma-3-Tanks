@@ -4,4 +4,4 @@
  * params: [araç] -> bool
  */
 params ["_veh"];
-time < (_veh getVariable ["SB_loadEnd", 0])
+serverTime < (_veh getVariable ["SB_loadEnd", 0])
