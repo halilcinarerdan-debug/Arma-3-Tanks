@@ -4,3 +4,6 @@
 *.biprivatekey
 .hemttout/
 build/
+
+# Lisanslı referans materyal (Steel Beasts kılavuz/görselleri) repoya girmez
+reference/
