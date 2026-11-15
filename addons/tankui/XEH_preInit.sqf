@@ -75,6 +75,6 @@ if (!hasInterface) exitWith {};
 ] call CBA_fnc_addSetting;
 
 ["SB_TankUI_hudScale", "SLIDER",
-    ["Nisangah plaka boyutu (%)", "Plakalarin olcegi (100 = varsayilan)."],
-    "Steel Tank UI", [50, 200, 100, 0], 0
+    ["Nisangah plaka boyutu (%)", "Plakalarin olcegi (115 = varsayilan, 100 = daha kucuk)."],
+    "Steel Tank UI", [50, 200, 115, 0], 0
 ] call CBA_fnc_addSetting;

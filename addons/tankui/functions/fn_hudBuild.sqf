@@ -10,7 +10,7 @@ private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", vehicle player];
 #include "\z\tank33\addons\tankui\kit.sqf"
 
 // Ölçek: 1 U = ekran genişliğinin %1,3'ü (yan şeritlere sığar). kit'in _u'su yükseklik oranıdır.
-_u = 0.013 * ((missionNamespace getVariable ["SB_TankUI_hudScale", 100]) / 100) / _asp;
+_u = 0.013 * ((missionNamespace getVariable ["SB_TankUI_hudScale", 115]) / 100) / _asp;
 
 private _colW = 9;
 private _gap = 0.6;
