@@ -259,7 +259,7 @@ private _turretPath = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
     if (_sel != '') then { [_this, _t, _sel] call SB_fnc_ammoCount } else {
         22 - (([_this, _t, 'KE'] call SB_fnc_ammoCount) + ([_this, _t, 'HEAT'] call SB_fnc_ammoCount) + ([_this, _t, 'HE'] call SB_fnc_ammoCount))
     }
-", 1, [0.9, 0.9, 0.85, 1], [0.1, 0.1, 0.1, 1], [0.05, 0.05, 0.05, 1]] call _gauge;
+", 2, [0.9, 0.9, 0.85, 1], [0.1, 0.1, 0.1, 1], [0.05, 0.05, 0.05, 1]] call _gauge;
 [9.9, 5.6, 3.0, 0.5, "MERMI SAYAC"] call _txt;
 
 [3.4, 11.1, [["KAPALI", "sel_OFF", -75], ["BPS", "sel_KE", -25], ["BKS", "sel_HEAT", 25], ["OFS", "sel_HE", 75]],
@@ -284,18 +284,18 @@ private _rx = 12.3;
 
 // menzil çarkı (x100 m, 3000 m sınırı)
 [_rx + 3.9, 7.0, 3.0, 30, -100, 100, compile "(_this getVariable ['SB_range', 0]) / 100", 5, [0.06, 0.07, 0.06, 1], [0.92, 0.92, 0.88, 1], [1, 0.45, 0.1, 1]] call _gauge;
-[_rx + 3.9, 10.55, 5, 0.5, "MENZIL x100 m"] call _txt;
+[_rx + 3.9, 10.45, 5, 0.5, "MENZIL x100 m"] call _txt;
 
 [_rx + 8.9, 5.6, "LAZER", "lase"] call _push;
 [_rx + 8.9, 8.7, "MENZIL 0", "reset", [0.15, 0.15, 0.15, 1]] call _push;
 
 // şalter sırası (DELTA-D / STAB / HIDROLIK)
-[_rx + 1.6, 11.6, "DELTA-D", "delta", {[180, 0] select (_this getVariable ["SB_delta", false])}] call _toggle;
-[_rx + 4.0, 11.6, "STAB", "stab", {[180, 0] select (_this getVariable ["SB_stab", false])}] call _toggle;
-[_rx + 6.4, 11.6, "HIDR", "hydr", {[180, 0] select (_this getVariable ["SB_hydr", false])}] call _toggle;
+[_rx + 1.6, 11.9, "DELTA-D", "delta", {[180, 0] select (_this getVariable ["SB_delta", false])}] call _toggle;
+[_rx + 4.0, 11.9, "STAB", "stab", {[180, 0] select (_this getVariable ["SB_stab", false])}] call _toggle;
+[_rx + 6.4, 11.9, "HIDR", "hydr", {[180, 0] select (_this getVariable ["SB_hydr", false])}] call _toggle;
 
 // LRF modu: 3 konumlu şalter (1200 / NORMAL / 1800)
-[_rx + 9.6, 11.6, "LRF MOD", "mode", {[0, -40, 40] select (_this getVariable ["SB_lrfMode", 0])}] call _toggle;
+[_rx + 9.6, 11.9, "LRF MOD", "mode", {[0, -40, 40] select (_this getVariable ["SB_lrfMode", 0])}] call _toggle;
 [_rx + 8.5, 10.7, 1.4, 0.5, "1200"] call _txt;
 [_rx + 10.7, 10.7, 1.4, 0.5, "1800"] call _txt;
 

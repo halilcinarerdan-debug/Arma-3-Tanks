@@ -48,4 +48,9 @@ Bu dosya kendi cümlelerimizle yazılmış fonksiyonel özettir. Görsel ve meti
 ## Açık sorular
 - CUP'taki T-72 varyantı (M1 değil, muhtemelen CUP_O_T72_*): sınıf adı ve mermi sınıfları alınacak.
 - Kılavuzdaki "1000 / 18000" ifadesi yazım hatası görünüyor; 1200 / 1800 esas alındı.
-- Seçicideki kiril işaretlerinin eşlemesi kılavuzda yazmıyor (KE/HE/HEAT olarak alındı).
+- ~~Seçicideki kiril işaretlerinin eşlemesi~~ çözüldü: Б = BPS (APFSDS/KE), О = OFS (HE-Frag), К = BKS (HEAT). Gerçek T-72 kısaltmaları; ekranda BPS / OFS / BKS etiketleri kullanılır.
+
+## Görsel dil
+- Tablet dokusu hissi: zeytin yeşili sert plaka, siyah dış çerçeve, açık üst-sol / koyu alt-sağ kabartma, oluklu vidalar.
+- Düzen: düz 2D plakalar (Iron Warriors tarzı HUD plakaları); lambalar etiket kutulu LED.
+- Tüm çizim ctrlCreate ile (daire dokusu + renkli dikdörtgen); ek texture gerekmez. Texture sonradan eklenirse yalnızca `_plate` ve `_dot` değişir.
