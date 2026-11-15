@@ -30,7 +30,7 @@ if !(_sim in ["shotshell", "shotbullet"]) exitWith {};
 
 private _scale = (missionNamespace getVariable ["SB_TankUI_effectScale", 100]) / 100;
 private _sigma = 0;
-if !([_veh] call SB_fnc_stabEffective) then {
+if (!(call SB_fnc_realStab) && {!([_veh] call SB_fnc_stabEffective)}) then {
     _sigma = ((abs speed _veh) / 30 min 1) * 0.5;          // derece (~8.7 mil azami)
 };
 

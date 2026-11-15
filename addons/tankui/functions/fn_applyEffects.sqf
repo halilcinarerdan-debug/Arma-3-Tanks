@@ -14,6 +14,12 @@ if (!isNull _last && {_last != _veh}) then {
         ["SB_TankUI_turretLimits", [_last, [_lt select 1]], _last] call CBA_fnc_targetEvent;
         uiNamespace setVariable ["SB_lockedTurret", []];
     };
+    if (uiNamespace getVariable ["SB_gunStabSet", false]) then {
+        // geçersiz kılmayı temizle (-1)
+        [_last, uiNamespace getVariable ["SB_effTurret", [0]], -1] call SB_fnc_setGunStab;
+        _last setVariable ["SB_gunStabApplied", nil];
+        uiNamespace setVariable ["SB_gunStabSet", false];
+    };
     if (uiNamespace getVariable ["SB_dirStabSet", false]) then {
         _last enableDirectionStabilization [true, uiNamespace getVariable ["SB_effTurret", [0]]];
         _last setVariable ["SB_dirStabApplied", nil];
@@ -27,6 +33,19 @@ if (!alive player || {!(missionNamespace getVariable ["SB_TankUI_effects", true]
 if (([_veh, player] call SB_fnc_getRole) != "gunner") exitWith {};
 
 uiNamespace setVariable ["SB_effVeh", _veh];
+
+// Gerçek top stabilizasyonu: STAB etkinse (şalter + hidrolik + 120 sn ısınma + aşırı ısınma yok) 3 (iki düzlem), değilse 0
+if (call SB_fnc_realStab) then {
+    private _crewS = (fullCrew _veh) select {(_x select 0) isEqualTo player};
+    private _turretS = if (_crewS isEqualTo []) then {[0]} else {(_crewS select 0) select 3};
+    private _gmode = [0, 3] select ([_veh] call SB_fnc_stabEffective);
+    if ((_veh getVariable ["SB_gunStabApplied", -9]) != _gmode) then {
+        [_veh, _turretS, _gmode] call SB_fnc_setGunStab;
+        _veh setVariable ["SB_gunStabApplied", _gmode];
+        uiNamespace setVariable ["SB_gunStabSet", true];
+        uiNamespace setVariable ["SB_effTurret", _turretS];
+    };
+};
 
 if (missionNamespace getVariable ["SB_TankUI_opticStab", true]) then {
     private _crew = (fullCrew _veh) select {(_x select 0) isEqualTo player};

@@ -24,6 +24,7 @@
 // Sürücü/komutan eylemleri: araç sahibinde çalışır (tüm makinelerde kayıtlı)
 ["SB_TankUI_engine", { params ["_veh", "_on"]; _veh engineOn _on }] call CBA_fnc_addEventHandler;
 ["SB_TankUI_turretLimits", { params ["_veh", "_lim"]; _veh setTurretLimits _lim }] call CBA_fnc_addEventHandler;
+["SB_TankUI_gunStab", compile "params ['_veh', '_turret', '_mode']; _veh enableGunStabilization [_mode, _turret];"] call CBA_fnc_addEventHandler;
 ["SB_TankUI_fire", { params ["_veh", "_weapon"]; _veh fire _weapon }] call CBA_fnc_addEventHandler;
 
 if (!hasInterface) exitWith {};
@@ -97,4 +98,9 @@ if (!hasInterface) exitWith {};
 ["SB_TankUI_opticStab", "CHECKBOX",
     ["Ayna kilidi optik stabilizasyonu etkiler", "Hidrolik acik + ayna acik + 120 sn isinma tamamsa optik yon stabilizasyonu acilir. Yalnizca optik modunda config'te directionStabilized varsa etkilidir."],
     "Steel Tank UI", true, 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_stabMode", "LIST",
+    ["Stabilizasyon yontemi", "STAB salterinin etkisi: gercek top stabilizasyonu (enableGunStabilization, Arma 2.22+) ya da hareket halinde atis sapmasi simulasyonu. 2.22 altinda otomatik olarak sapma simulasyonu kullanilir."],
+    "Steel Tank UI", [[0, 1], ["Gercek top stabilizasyonu (2.22+)", "Atis sapmasi simulasyonu"], 0], 0
 ] call CBA_fnc_addSetting;

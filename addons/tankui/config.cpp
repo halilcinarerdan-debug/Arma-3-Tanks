@@ -47,6 +47,8 @@ class CfgFunctions {
             class turretLock {};
             class applyEffects {};
             class selectWeapon {};
+            class setGunStab {};
+            class realStab {};
             class hudBuild {};
             class hudUpdate {};
         };

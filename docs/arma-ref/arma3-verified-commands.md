@@ -10,6 +10,7 @@ Ham eylem listesi: `arma3-actions-raw.txt`.
 |---|---|---|
 | `setTurretLimits` (2.12) | `vehicle setTurretLimits [turret, minTurn, maxTurn, minElev, maxElev, soft]` ; sıfırlama: `vehicle setTurretLimits [turret]` | Argüman **yerel**, etki **global**. Derece cinsinden, tareti **modelin yönüne göre**: minTurn 0..-açı (sol), maxTurn 0..+açı (sağ), minElev 0..-açı (aşağı), maxElev 0..+açı (yukarı). Yalnızca config sınırları içinde. `soft` (2.22, opsiyonel): true = sınıra yumuşak git, false = anında. |
 | `enableDirectionStabilization` (2.06) | `vehicle enableDirectionStabilization [enabled, turretPath]` | turretPath opsiyonel (verilmezse birincil taret). **Yalnızca seçili taretin mevcut optik modunda config'te `directionStabilized` varsa etkili.** Eşi: `directionStabilizationEnabled`. Sayfanın "See also" kısmında `enableGunStabilization` de var (aşağıya bakın). |
+| `enableGunStabilization` (2.22) | `vehicle enableGunStabilization [mode, turretPath]` -> önceki mod (hata: -1) | **Top stabilizasyonunu çalışma anında açıp kapatır.** mode: -1 geçersiz kılmayı temizle, 0 yok, 1 yükseliş, 2 yatay (traverse), 3 ikisi birden. Yerel/global bilgisi sayfada yok. Arma 2.22 öncesinde yoktur. |
 | `currentZeroing` | `currentZeroing object` -> sayı ; alternatif (2.04): `object currentZeroing [weaponClass, muzzleClass]` -> `[distance, zeroingIndex]` | **Birim ister, araç desteklenmez** (`currentZeroing myVehicle` çalışmaz, `currentZeroing gunner myVehicle` çalışır). `distance` lazer menzilini de içerir (Arma 2.20+); `zeroingIndex`: 0=50 m, 1=100 m, 2=150 m ..., lazer için -1. muzzleClass opsiyonel. |
 | `setWeaponZeroing` (2.04) | `object setWeaponZeroing [weaponClass, muzzleClass, zeroingIndex]` -> bool | Birim ya da araç. FCS'li araç taretlerinde etkisiz kalabildiğine dair bilinen hata: feedback.bistudio.com/T162056. |
 | `weaponState` | `weaponState unit` ; `weaponState [vehicle, turretPath, weapon, muzzle, firemode]` -> `[weapon, muzzle, firemode, magazine, ammoCount, roundReloadPhase, magazineReloadPhase]` | Syntax 2'de weapon/muzzle/firemode opsiyonel (varsayılan ""); yalnızca `[vehicle, turret]` seçili silahı sorgular. `magazineReloadPhase` (2.06): 1->0, 0 = yükleme tamam, >0 sürüyor. |
@@ -31,7 +32,7 @@ Genel: `unit action ["eylemAdı", parametreler]`; eylem adı büyük/küçük ha
 ## Henüz doğrulanmayanlar (kodda dikkat)
 
 - `isLightOn`, `isTurnedOut` (durum okuyucular): sayfaları görülmedi. Kodda `compile` içinde, hata yalnızca ilgili şalteri etkiler.
-- `enableGunStabilization`: `enableDirectionStabilization` sayfasının "See also" kısmında geçiyor. **Top stabilizasyonunu çalışma anında açıp kapatan komut olabilir (STAB şalteri için).** Sayfası alınırsa doğrulanmalı: https://community.bistudio.com/wiki/enableGunStabilization
+- (doğrulandı, yukarıya bakın) `enableGunStabilization`: `enableDirectionStabilization` sayfasının "See also" kısmında geçiyor. **Top stabilizasyonunu çalışma anında açıp kapatan komut olabilir (STAB şalteri için).** Sayfası alınırsa doğrulanmalı: https://community.bistudio.com/wiki/enableGunStabilization
 - `selectWeaponTurret`, `weaponsInfo` (2.10), `getTurretLimits`, `turretLocal`: sayfalarda "See also"da geçiyor; sözdizimi görülmedi.
 
 ## Projede nerede kullanılıyor
@@ -40,6 +41,6 @@ Genel: `unit action ["eylemAdı", parametreler]`; eylem adı büyük/küçük ha
 |---|---|
 | `fn_rangeValue.sqf` | `currentZeroing [weapon]` (oyuncu üzerinde) |
 | `fn_turretLock.sqf` | `setTurretLimits` (kilitle / sıfırla) |
-| `fn_applyEffects.sqf` | `enableDirectionStabilization`, `setTurretLimits [turret]` (sıfırlama) |
+| `fn_applyEffects.sqf` | `enableDirectionStabilization`, `setTurretLimits [turret]` (sıfırlama), `enableGunStabilization` (`fn_setGunStab.sqf` üzerinden; sürüm >= 2.22) |
 | `fn_selectWeapon.sqf` | `weaponState [veh, turret, weapon, muzzle]`, `selectWeapon [weapon, muzzle, firemode]` |
 | `fn_t72ActionX.sqf` | `action TurnIn/TurnOut/LightOn/LightOff`, `fire`, `selectWeapon` |

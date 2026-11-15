@@ -120,3 +120,6 @@ CBA ayarları: "Nisangah plakalari" (aç/kapa), "Nisangah plaka boyutu (%)". Arm
 
 `action ["TurnOut"/"TurnIn"/"LightOn"/"LightOff"]` artık wiki'de doğrulandı (kapak yalnızca aracın etkin komutanı olan oyuncuda çalışır, yani sürücü koltuğunda çalışmayabilir). Hâlâ doğrulanmayan: durum okuyucular `isLightOn` / `isTurnedOut`.
 Tüm doğrulanmış sözdizimleri: `docs/arma-ref/arma3-verified-commands.md`; ham eylem listesi: `docs/arma-ref/arma3-actions-raw.txt`.
+
+## Gerçek top stabilizasyonu (Arma 2.22+)
+STAB şalteri artık `enableGunStabilization` ile **gerçekten** top stabilizasyonunu (mod 3: iki düzlem) açıp kapatır: STAB etkin = şalter açık + hidrolik açık + 120 sn ısınma tamam + 55 dk aşırı ısınma yok; değilse mod 0. Araçtan inince geçersiz kılma (-1) ile eski hâline döner. CBA "Stabilizasyon yontemi": gerçek stabilizasyon (varsayılan) ya da eski atış sapması simülasyonu; Arma 2.22 altında otomatik olarak sapma simülasyonuna düşer. Balistik anahtarı sapması her durumda uygulanır.
