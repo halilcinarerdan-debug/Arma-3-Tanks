@@ -6,6 +6,7 @@
  * params: [araç] -> sayı (0 = menzil yok)
  */
 params ["_veh"];
+if (_veh getVariable ["SB_rngMan", false]) exitWith { _veh getVariable ["SB_range", 0] };   // Leopard: elle girilen menzil
 if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 1) exitWith { _veh getVariable ["SB_range", 0] };
 
 private _t = uiNamespace getVariable ["SB_TankUI_turret", [0]];

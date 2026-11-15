@@ -65,23 +65,29 @@ switch (_action) do {
         _veh setVariable ["SB_stab", false];
         if (missionNamespace getVariable ["SB_TankUI_turretLock", true]) then { [_veh, _turret, true] call SB_fnc_turretLock };
     };
-    case "am_KE": { _veh setVariable ["SB_selType", "KE"]; ["load"] call SB_fnc_t72Action };
+    case "am_KE": { _veh setVariable ["SB_selType", "KE"]; [_veh, _turret] call SB_fnc_leoMain; ["load"] call SB_fnc_t72Action };
     case "am_HE": {
         // HE-T: HE yoksa HEAT mermisine düş (CUP sürümüne göre değişir)
         private _hasHE = (([_veh] call SB_fnc_getAmmoList) findIf {
             (_x select 0) isEqualTo _turret && {([_x select 1] call SB_fnc_ammoClass) == "HE"}
         }) >= 0;
         _veh setVariable ["SB_selType", ["HEAT", "HE"] select _hasHE];
+        [_veh, _turret] call SB_fnc_leoMain;
         ["load"] call SB_fnc_t72Action;
     };
-    case "bs_1100": { _veh setVariable ["SB_range", 1100]; _veh setVariable ["SB_lrfText", "1100"]; if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) then { systemChat "BS 1100: menzil gostergesi Arma kaynagini kullaniyor (CBA: Menzil kaynagi = panel lazeri yapin)." } };
-    case "bs_1500": { _veh setVariable ["SB_range", 1500]; _veh setVariable ["SB_lrfText", "1500"]; if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) then { systemChat "SS 1500: menzil gostergesi Arma kaynagini kullaniyor (CBA: Menzil kaynagi = panel lazeri yapin)." } };
+    // elle menzil (Avstånd MAN): savaş nişanı / SS 1500 / +-100 m
+    case "bs_1100": { [_veh, 1100] call SB_fnc_leoSetRange };
+    case "bs_1500": { [_veh, 1500] call SB_fnc_leoSetRange };
+    case "rng_dn":  { [_veh, ((_veh getVariable ["SB_range", 1100]) - 100) max 200] call SB_fnc_leoSetRange };
+    case "rng_up":  { [_veh, ((_veh getVariable ["SB_range", 1100]) + 100) min 9990] call SB_fnc_leoSetRange };
+    case "rngmode": { _veh setVariable ["SB_rngMan", !(_veh getVariable ["SB_rngMan", false])] };
 
     case "lase": {
         if ((missionNamespace getVariable ["SB_TankUI_rangeSource", 0]) == 0) exitWith { systemChat "Menzil kaynagi Arma lazeri: nisangahta lazer tusunu kullanin (CBA: Menzil kaynagi)." };
         if !(_veh getVariable ["SB_lrfOn", false]) exitWith { systemChat "T-72: LRF kapali (LRF ACIK salterini acin)." };
         if (time < (_veh getVariable ["SB_lrfReadyAt", 0])) exitWith { systemChat "T-72: LRF hazir degil." };
         _veh setVariable ["SB_lrfReadyAt", time + 3];
+        _veh setVariable ["SB_rngMan", false];     // lazer ölçümü otomatik menzile döner
 
         private _weapon = _veh currentWeaponTurret _turret;
         private _from = _veh modelToWorldWorld (_veh selectionPosition ["usti hlavne", "Memory"]);
@@ -101,7 +107,7 @@ switch (_action) do {
         };
     };
 
-    case "reset": { _veh setVariable ["SB_range", 0] };
+    case "reset": { _veh setVariable ["SB_range", 0]; _veh setVariable ["SB_rngMan", false] };
     case "lrfon": {
         private _on = !(_veh getVariable ["SB_lrfOn", false]);
         _veh setVariable ["SB_lrfOn", _on];

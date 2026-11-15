@@ -115,6 +115,11 @@ L.update({
     "P_SS1500":  {"tr": "SS 1500", "en": "SS 1500", "de": "SS 1500", "sv": "SS 1500"},
     "P_BS":      {"tr": "BS 1100", "en": "BS 1100", "de": "BS 1100", "sv": "BS 1100"},
     "W_MG2":     {"tr": "MG 2", "en": "MG 2", "de": "MG3 (LADER)", "sv": "KSP 2"},
+    "AVST_T":    {"tr": "MENZIL GIRISI", "en": "RANGE ENTRY", "de": "ENTFERNUNG", "sv": "AVSTÅND"},
+    "P_RDN":     {"tr": "-100", "en": "-100", "de": "-100", "sv": "-100", "ru": "-100"},
+    "P_RUP":     {"tr": "+100", "en": "+100", "de": "+100", "sv": "+100", "ru": "+100"},
+    "T_TURRETPOS": {"tr": "TARET YONU (GOVDEYE GORE)", "en": "TURRET DIRECTION (RELATIVE TO HULL)", "de": "TURMRICHTUNG (ZUR WANNE)", "sv": "TORNRIKTNING (MOT SKROV)"},
+    "REAR_T":    {"tr": "GERI GORUS", "en": "REAR VIEW", "de": "RÜCKFAHRKAMERA", "sv": "BACKKAMERA"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 
@@ -122,7 +127,7 @@ L.update({
 _SV = {"CLOSE": "STÄNG", "ROLE_driver": "FÖRARE", "ROLE_gunner": "SKYTT", "ROLE_commander": "VAGNCHEF", "ROLE_other": "BESÄTTNING",
        "SCR_STATION": "STATION", "SCR_AMMO": "AMMUNITION", "SCR_STATUS": "STATUS", "LOAD": "LADDA", "LOADING": "LADDAR...",
        "FUEL": "BRÄNSLE", "SMOKE": "RÖK", "KMH": "KM/H", "ENGINE": "MOTOR", "COL_WEAPON": "VAPEN", "COL_AMMO": "AMMUNITION",
-       "COL_COUNT": "ANTAL", "LASE": "LASRA", "RESET": "AVST 0", "W_MAIN": "KAN", "W_COAX": "KSP", "T_LRFON": "LRF PÅ", "L_LRF": "LASER", "T_HATCH": "LUCKA", "L_READY": "KLAR", "L_LOADED": "LADDAD", "RANGE_M": "AVST m", "CREW_EMPTY": "TOM", "SELECT": "VÄLJ", "NO_AMMO": "INGEN AMMUNITION", "SEL_TITLE": "AMMUNITIONSVAL"}
+       "COL_COUNT": "ANTAL", "L_RUN": "GÅR", "F_ENG": "MOTOR", "F_LTR": "V BAND", "F_RTR": "H BAND", "F_HULL": "SKROV", "T_ENGINE": "MOTOR", "T_LIGHT": "LJUS", "SPEED": "HASTIGHET", "LASE": "LASRA", "RESET": "AVST 0", "W_MAIN": "KAN", "W_COAX": "KSP", "T_LRFON": "LRF PÅ", "L_LRF": "LASER", "T_HATCH": "LUCKA", "L_READY": "KLAR", "L_LOADED": "LADDAD", "RANGE_M": "AVST m", "CREW_EMPTY": "TOM", "SELECT": "VÄLJ", "NO_AMMO": "INGEN AMMUNITION", "SEL_TITLE": "AMMUNITIONSVAL"}
 for _k, _v in _SV.items():
     if isinstance(L[_k], tuple):
         L[_k] = dict(zip(LANGS, L[_k]))

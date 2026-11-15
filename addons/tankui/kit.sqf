@@ -253,7 +253,8 @@ private _sevenSeg = {
         while {count _txt < _n} do { _txt = " " + _txt };
         private _map = createHashMapFromArray [
             ["0", "abcdef"], ["1", "bc"], ["2", "abged"], ["3", "abgcd"], ["4", "fgbc"],
-            ["5", "afgcd"], ["6", "afgedc"], ["7", "abc"], ["8", "abcdefg"], ["9", "abcdfg"], ["-", "g"], [" ", ""]
+            ["5", "afgcd"], ["6", "afgedc"], ["7", "abc"], ["8", "abcdefg"], ["9", "abcdfg"], ["-", "g"], [" ", ""],
+            ["A", "abcefg"], ["F", "aefg"], ["b", "cdefg"], ["d", "bcdeg"]
         ];
         {
             private _on = _map getOrDefault [_txt select [_forEachIndex, 1], ""];

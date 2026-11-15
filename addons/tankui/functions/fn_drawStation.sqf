@@ -13,7 +13,7 @@ switch (_station) do {
     };
     case "LEO2": {
         switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
-            case "driver": { [_display] call SB_fnc_drawStationT72Driver };   // sürücü göstergeleri ortak (hız, yakıt, motor, farlar, kapak)
+            case "driver": { [_display] call SB_fnc_drawStationLeo2Driver };
             case "commander": { [_display] call SB_fnc_drawStationLeo2Cmdr };
             default { [_display] call SB_fnc_drawStationLeo2 };
         };

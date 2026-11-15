@@ -35,6 +35,10 @@ class CfgFunctions {
             class drawStationT72Cmdr {};
             class drawStationLeo2 {};
             class drawStationLeo2Cmdr {};
+            class drawStationLeo2Driver {};
+            class gpsText {};
+            class leoSetRange {};
+            class leoMain {};
             class t72ActionX {};
             class t72Action {};
             class placeRect {};

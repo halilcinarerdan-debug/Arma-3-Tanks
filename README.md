@@ -128,10 +128,9 @@ STAB şalteri artık `enableGunStabilization` ile **gerçekten** top stabilizasy
 ## Leopard 2 ailesi (Strv 122 mantığı)
 
 Strv 122 (Leo 2S) CUP'ta bulunmayabilir; bu yüzden ayrı bir araç sınıfına değil **Leopard 2 profiline** bağlanır
-(`leopard2`, `leo2`, `strv122`, `strv` eşleşir). İstasyon ekranı (`station = "LEO2"`):
+(`leopard2`, `leo2`, `strv122`, `strv` eşleşir). `station = "LEO2"`. Ayrıntı: [`docs/strv122-stations.md`](docs/strv122-stations.md).
 
-- **Nişancı:** BER/ELD/KSP/STAB lambaları, ateş kontrol modu (NORMAL = hidrolik + stab, ACİL/OBSERVATION = hidrolik, MANUEL = güç yok),
-  APFSDS-T / HE-T seçimi + YÜKLE (HE yoksa HEAT'e düşer), top/MG şalteri, LRF, savaş nişanı BS 1100 / SS 1500, kalan mermi sayaçları.
-- **Komutan:** mürettebat, MG/duman sayıları, arıza lambaları, kapak, duman atışı.
-- **Sürücü:** T-72 sürücü ekranıyla ortak (hız, yakıt, motor, farlar, kapak).
-- Dil: araç dili Almanca (`de`); CBA ayarından **Svenska** (`sv`) seçilebilir (Strv 122 terimleri: STAB TILL, OBSERVATION, TORN FRÅN, SLPILPRJ 95...).
+- **Nişancı:** GPS satırı `F196A`, Ber/Eld/KSP/Stab lambaları, ateş kontrol modu (STAB TILL / OBSERVATION / TORN FRÅN), APFSDS / HE-T / MG seçimi + YÜKLE, Avstånd AUTOM/MAN, elle menzil ±100, BS 1100, SS 1500, LRF.
+- **Komutan:** mürettebat, taret yönü saat şeridi, MG/duman sayıları, arıza lambaları, kapak, duman.
+- **Sürücü:** hız, yakıt, arıza lambaları, geri görüş mesafe kılavuzu (5/10/15 m), motor/far/kapak.
+- Dil: araç dili Almanca; CBA'dan **Svenska** seçilebilir (STAB TILL, OBSERVATION, TORN FRÅN, SLPILPRJ 95 …).
