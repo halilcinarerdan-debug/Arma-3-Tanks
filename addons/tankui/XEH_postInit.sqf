@@ -1,3 +1,6 @@
+// Nişangâh plakaları: nişancı optiğine bakarken otomatik gösterilir (girişi engellemez)
+[{ call SB_fnc_hudUpdate }, 0.3] call CBA_fnc_addPerFrameHandler;
+
 // ACE self-interact: araç içindeyken "Tank sistemleri" girişi.
 if (isClass (configFile >> "CfgPatches" >> "ace_interact_menu")) then {
     private _action = [

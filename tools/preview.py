@@ -210,7 +210,49 @@ def status():
     lamp(S, 17.2, 16.0, lbl("ENGINE"), GREEN, 1, 3.8)
     finish(S); return S
 
+
+# ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
+def hud():
+    global u, bx, by
+    S = Scene()
+    # arka plan: optik penceresi (kullanıcının ekran görüntüsündeki yerleşim) + Arma'nın kendi panelleri
+    S.paste(RECT, W / 2, H / 2, W, H, (0.02, 0.02, 0.02, 1))
+    S.paste(RECT, W / 2, H * 0.52, W * 0.74, H * 0.74, (0.52, 0.62, 0.72, 1))
+    S.paste(RECT, W * 0.07, H * 0.09, W * 0.13, H * 0.1, (0.15, 0.15, 0.15, 1))        # Arma hasar paneli (sol üst)
+    S.paste(RECT, W * 0.93, H * 0.06, W * 0.13, H * 0.08, (0.15, 0.12, 0.12, 1))       # Arma silah paneli (sağ üst)
+    d = ImageDraw.Draw(S.im)
+    f = ImageFont.truetype(FONT, 22)
+    d.text((W / 2, H * 0.84), "0272 RDY", font=f, fill=(150, 235, 110), anchor="mm")    # Arma menzil göstergesi
+    d.text((W * 0.07, H * 0.09), "Arma panel", font=f, fill=(200, 200, 200), anchor="mm")
+    d.text((W * 0.93, H * 0.06), "Arma silah/mermi", font=f, fill=(230, 120, 120), anchor="mm")
+    u = 0.013 * W                      # 1 U = ekran genişliğinin %1,3'ü
+    colW, gap = 9, 0.6
+    x0L, x0R, yTop = 0.5 * u, W - (colW + 0.5) * u, 0.17 * H
+    def plate(px, py, w, h):
+        global bx, by
+        bx, by = px, py
+        S.box(-0.12, -0.12, w + 0.24, h + 0.24, (0, 0, 0, 0.88)); S.box(0, 0, w, h, (0.27, 0.31, 0.22, 0.94)); S.box(0.2, 0.2, w - 0.4, h - 0.4, (0.05, 0.06, 0.05, 0.92))
+        for fx, fy in [(0.04, 0.05), (0.96, 0.05), (0.04, 0.95), (0.96, 0.95)]:
+            S.spr("ring", fx * w, fy * h, 0.34, 0.34, (0.6, 0.6, 0.57, 1))
+    hA, hB, hC, hD = 8.4, 5.9, 6.0, 8.6
+    plate(x0L, yTop, colW, hA)
+    for key, y, on in (("AM_KE", 1.5, 1), ("AM_HE", 3.0, 0), ("AM_HEAT", 4.5, 0)): lamp_round(S, 1.3, y, lbl(key), AMBER, on, "right")
+    lamp_round(S, 5.6, 1.5, lbl("L_LOADED"), VIOLET, 1, "right"); lamp_round(S, 5.6, 3.0, lbl("L_READY"), RED, 1, "right")
+    S.txt(0.8, 6.2, 7.4, 0.7, lbl("W_MAIN") + " | " + lbl("AM_KE"), AMBER, 0, 0.55)
+    yB = yTop + (hA + gap) * u
+    plate(x0L, yB, colW, hB)
+    lamp_round(S, 1.3, 1.5, lbl("L_STAB"), GREEN, 1, "right"); lamp_round(S, 5.6, 1.5, lbl("L_HYDR"), GREEN, 1, "right")
+    lamp_round(S, 1.3, 3.0, lbl("L_MIRROR"), RED, 1, "right"); lamp_round(S, 5.6, 3.0, lbl("L_DELTA"), RED, 0, "right")
+    lamp_round(S, 1.3, 4.5, lbl("L_LRF"), GREEN, 1, "right"); S.txt(5.6, 4.5, 3.2, 0.6, "NORM", (0.84, 0.86, 0.8, 1), 0, 0.5)
+    plate(x0R, yTop, colW, hC)
+    S.spr("display", 4.5, 2.6, 6.2, 2.7); seven(S, 2.475, 2.6, "0272"); S.txt(4.5, 4.9, 7, 0.6, lbl("RANGE_M"), dim, 2, 0.5)
+    yD = yTop + (hC + gap) * u
+    plate(x0R, yD, colW, hD)
+    for key, val, y in (("AM_KE", "22", 1.7), ("AM_HE", "10", 3.5), ("AM_HEAT", "9", 5.3), ("W_COAX", "450", 7.1)):
+        S.txt(0.9, y, 3.6, 0.6, lbl(key), (0.84, 0.86, 0.8, 1), 0, 0.55); seven(S, 4.4, y, val, 3, 0.6)
+    return S
+
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

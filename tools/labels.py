@@ -52,6 +52,10 @@ L = {
     "T_MIRROR": ("AYNA KILIDI", "MIRROR LOCK", "ЗЕРКАЛО", "SPIEGEL"),
     "T_MODE":   ("LRF MOD", "LRF MODE", "РЕЖИМ ЛД", "LRF-MODUS"),
     "T_WEAPON": ("TOP / PKT", "GUN / COAX", "ПУШКА / ПКТ", "KANONE / KOAX"),
+    # nişangâh plakaları (HUD)
+    "W_MAIN":  ("TOP", "GUN", "ПУШКА", "KANONE"),
+    "W_COAX":  ("PKT", "COAX", "ПКТ", "KOAX"),
+    "RANGE_M": ("MENZIL m", "RANGE m", "ДАЛЬН. м", "ENTF. m"),
     # muhimmat ekranı
     "COL_WEAPON": ("SILAH", "WEAPON", "ОРУЖИЕ", "WAFFE"),
     "COL_AMMO":   ("MUHIMMAT", "AMMUNITION", "СНАРЯД", "MUNITION"),

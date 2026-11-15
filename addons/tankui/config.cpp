@@ -38,6 +38,9 @@ class CfgFunctions {
             class firedEH {};
             class findWeapon {};
             class weaponRoles {};
+            class coaxCount {};
+            class hudBuild {};
+            class hudUpdate {};
         };
     };
 };
@@ -110,3 +113,4 @@ class CfgSBTankUI {
 
 #include "gui\baseClasses.hpp"
 #include "gui\main.hpp"
+#include "gui\hud.hpp"

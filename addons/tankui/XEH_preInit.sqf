@@ -68,3 +68,13 @@ if (!hasInterface) exitWith {};
     ["Sapma siddeti (%)", "Panel etkilerinin sapma miktari (100 = varsayilan, 0 = sapma yok)."],
     "Steel Tank UI", [0, 200, 100, 0], 0
 ] call CBA_fnc_addSetting;
+
+["SB_TankUI_hud", "CHECKBOX",
+    ["Nisangah plakalari", "Nisancı optigine bakarken yan seritlerde stabilizasyon/mermi/menzil plakalarini gosterir."],
+    "Steel Tank UI", true, 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_hudScale", "SLIDER",
+    ["Nisangah plaka boyutu (%)", "Plakalarin olcegi (100 = varsayilan)."],
+    "Steel Tank UI", [50, 200, 100, 0], 0
+] call CBA_fnc_addSetting;

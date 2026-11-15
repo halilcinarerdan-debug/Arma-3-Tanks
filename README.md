@@ -95,3 +95,11 @@ Henüz yapılmayanlar (komut sözdizimi doğrulanamadı): HIDROLIK ile taret kil
 - **Mermi seçici (MERMI SECICI):** Otomatik yükleyiciye **hangi mermi tipinin** yükleneceğini söyler (BPS/BKS/OFS). YUKLE'ye basınca o mermi namluya girer. Yalnızca seçici tek başına bir şey yüklemez.
 - **Balistik (BALISTIK lambaları + ELLE anahtarı):** Nişan bilgisayarının **hangi mermi tablosunu** kullandığını gösterir. Normalde yüklü mermiyi otomatik izler; ELLE yalnızca bilgisayar bozulduğunda elle indekslemek içindir. Yüklü mermiyle uyuşmazsa nişan o mermi için yanlış hesaplanır (atış sapar).
 - Yükleme sonucu oyunda sohbete yazılır ("Yuklendi: ..." / "Yukleme basarisiz ..."), ayrıntı RPT'de `[SB_TankUI] loadMagazine sonuc`.
+
+## Nişangâh plakaları (HUD)
+Nişancı/komutan optiğe baktığında (cameraView = GUNNER) iki yandaki boş şeritlerde, Arma'nın kendi üst köşe panellerinin altında dört plaka görünür (girişi engellemez, menü açıkken gizlenir):
+- **Sol-üst:** yüklü mermi tipi (BPS/OFS/BKS), YUKLU/HAZIR lambaları, aktif silah | mermi, yükleyici durumu.
+- **Sol-alt:** gerçek stabilizasyon durumu (STAB), hidrolik, ayna, Delta-d, LRF açık, LRF modu.
+- **Sağ-üst:** LRF menzil ekranı (7 segment).
+- **Sağ-alt:** kalan mermi sayıları (BPS/OFS/BKS/PKT).
+CBA ayarları: "Nisangah plakalari" (aç/kapa), "Nisangah plaka boyutu (%)". Arma'nın kendi arayüzündeki pusula, taret simgesi/EL, "menzil RDY" ile çakışmaz.
