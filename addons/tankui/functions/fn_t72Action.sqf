@@ -81,7 +81,9 @@ switch (_action) do {
     };
     case "stab": {
         if (_veh getVariable ["SB_hydr", false]) then {
-            _veh setVariable ["SB_stab", !(_veh getVariable ["SB_stab", false])];
+            private _stabNew = !(_veh getVariable ["SB_stab", false]);
+            _veh setVariable ["SB_stab", _stabNew];
+            if (_stabNew) then { _veh setVariable ["SB_stabOn", time] };      // aşırı ısınma sayacı
         } else {
             systemChat "T-72: stabilizasyon icin once hidrolik acilmali.";
         };

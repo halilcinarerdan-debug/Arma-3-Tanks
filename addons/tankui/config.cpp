@@ -34,6 +34,8 @@ class CfgFunctions {
             class t72Action {};
             class placeRect {};
             class lbl {};
+            class stabEffective {};
+            class firedEH {};
         };
     };
 };
@@ -41,6 +43,15 @@ class CfgFunctions {
 class Extended_PreInit_EventHandlers {
     class SB_TankUI {
         init = "call compile preprocessFileLineNumbers 'z\tank33\addons\tankui\XEH_preInit.sqf'";
+    };
+};
+
+// Atış sapması (stabilizasyon/balistik anahtarı etkileri). Tüm Tank türevlerine uygulanır; kod yalnızca "SB_armed" araçlarda iş yapar.
+class Extended_Fired_EventHandlers {
+    class Tank {
+        class SB_TankUI {
+            fired = "_this call SB_fnc_firedEH";
+        };
     };
 };
 

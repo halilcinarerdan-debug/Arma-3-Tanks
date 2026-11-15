@@ -41,3 +41,13 @@ if (!hasInterface) exitWith {};
     ["Dokulari kullan", "Kapatilirsa duz renkli yedek gorunum kullanilir (doku sorunlarini ayirt etmek icin)."],
     "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;
+
+["SB_TankUI_effects", "CHECKBOX",
+    ["Panel etkileri", "Acikken STAB/HIDROLIK/balistik anahtari atisi etkiler (stabilizasyon yokken hareket halinde sapma, yanlis balistik indeks). Etkiler istasyon ekrani bir kez acilinca devreye girer."],
+    "Steel Tank UI", true, 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_effectScale", "SLIDER",
+    ["Sapma siddeti (%)", "Panel etkilerinin sapma miktari (100 = varsayilan, 0 = sapma yok)."],
+    "Steel Tank UI", [0, 200, 100, 0], 0
+] call CBA_fnc_addSetting;

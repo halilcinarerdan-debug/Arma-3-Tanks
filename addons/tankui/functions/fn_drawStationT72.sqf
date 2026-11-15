@@ -9,6 +9,7 @@ params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 #include "\z\tank33\addons\tankui\kit.sqf"
 
+_veh setVariable ["SB_armed", true];       // panel etkileri (atış sapması) bu araçta artık devrede
 private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 [_vehName + "  |  " + ("SCR_STATION" call _L), _roleLabel] call _header;
 
@@ -16,7 +17,7 @@ private _violet = [0.6, 0.35, 1, 1];
 private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 
 // ---- Durum lambaları (kılavuz s.25) ----
-[0.9, 2.6, "L_STAB" call _L,   _green,  {_this getVariable ["SB_stab", false]}] call _lampRound;
+[0.9, 2.6, "L_STAB" call _L,   _green,  {[_this] call SB_fnc_stabEffective}] call _lampRound;
 [3.0, 2.6, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {time - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampRound;
 [5.1, 2.6, "L_HYDR" call _L,   _green,  {_this getVariable ["SB_hydr", false]}] call _lampRound;
 [0.9, 4.8, "L_TC" call _L,     _red,    {false}] call _lampRound;

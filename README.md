@@ -78,3 +78,15 @@ PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`z\tank33\addons\ta
 **Açma/kapama:** tank içindeyken `Ctrl+T` (Esc > Configure > Controls > Configure Addons > Steel Tank UI'dan değiştirilebilir) veya ACE self-interact > "Tank sistemleri". Kapatma: aynı tuş, KAPAT düğmesi ya da Esc. Menü açıkken nişan alınamaz/ateş edilemez: ayarla, kapat, ateş et.
 
 **Ekranlar** (soldaki üç donanım düğmesi): ISTASYON (yalnızca T-72 nişancı), MUHIMMAT, DURUM. Sürücüde yalnız DURUM, komutanda MUHIMMAT + DURUM, nişancıda üçü. Koltuk değiştirirsen menü kapanır.
+
+## Gerçek etkiler (T-72 istasyonu)
+| Kontrol | Etki |
+|---|---|
+| Mermi seçici + YUKLE, SEC | Mermiyi gerçekten yükler (`loadMagazine`) |
+| AUT/MAN | MAN: yükleme 65 sn |
+| STAB + HIDROLIK | Stabilizasyon yalnızca STAB açık + hidrolik açık + 120 sn ısınma sonrası etkindir; etkin değilken **hareket halinde atış saptırılır** (hızla artar, 30 km/h'de azami ~0,5°). 55 dk sürekli açık kalırsa hidrolik ısınır, STAB kapanır |
+| Balistik anahtarı (ELLE) | Yüklü mermiden farklı tipe indekslenirse atış kısa/uzun sapar (~0,35°) |
+| LAZER, LRF, DELTA-D, AYNA KILIDI | Yalnızca panel (menzil ölçümü gösterilir, silahı etkilemez) |
+
+Etkiler `Fired` olayıyla uygulanır ve istasyon ekranı bir araçta ilk açıldığında devreye girer (hiç açmayan oyuncuya sapma uygulanmaz). CBA ayarları: "Panel etkileri" (aç/kapa), "Sapma siddeti (%)".
+Henüz yapılmayanlar (komut sözdizimi doğrulanamadı): HIDROLIK ile taret kilidi, AYNA KILIDI ile optik stabilizasyon, LAZER ile gerçek nişan düzeltmesi, DELTA-D.
