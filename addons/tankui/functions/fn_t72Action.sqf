@@ -27,7 +27,16 @@ switch (_action) do {
         private _mag = (_row select 0) select 1;
         _veh setVariable ["SB_loading", true];
         // Karusel + mekanik yükleyici: CBA ayarı (varsayılan 6 sn); AUT/MAN "MAN" ise elle krank: ~65 sn (kılavuz s.33)
-        private _delay = if (_veh getVariable ["SB_manual", false]) then {65} else {missionNamespace getVariable ["SB_TankUI_loadTime", 6]};
+        private _target = if (_veh getVariable ["SB_manual", false]) then {65} else {missionNamespace getVariable ["SB_TankUI_loadTime", 6]};
+        // loadMagazine'den sonra Arma kendi yükleme süresini de uygular; çift beklemeyi önlemek için onu hedeften düşeriz.
+        private _wm = [_veh, _turret, _mag] call SB_fnc_findWeapon;
+        private _engine = 0;
+        if ((_wm select 0) != "") then {
+            private _wc = configFile >> "CfgWeapons" >> (_wm select 0);
+            _engine = (getNumber (_wc >> "magazineReloadTime")) max (getNumber (_wc >> "reloadTime"));
+        };
+        private _delay = (_target - _engine) max 0;
+        systemChat format ["Yukleyici: hedef %1 sn (oyunun kendi yuklemesi ~%2 sn dahil, bekleme %3 sn)", _target, round _engine, round _delay];
         [{
             params ["_veh", "_turret", "_mag"];
             [_turret, _mag, _veh] call SB_fnc_selectAmmo;

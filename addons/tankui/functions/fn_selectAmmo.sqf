@@ -3,20 +3,7 @@ params ["_turret", "_mag", ["_veh", objNull]];
 if (isNull _veh) then { _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull] };
 if (isNull _veh) exitWith {};
 
-private _weaponToUse = "";
-private _muzzleToUse = "";
-{
-    private _weapon = _x;
-    private _muzzles = getArray (configFile >> "CfgWeapons" >> _weapon >> "muzzles");
-    {
-        // "this" = silahın ana namlusu; namlu adı silah sınıfıdır
-        private _muzzle = if (_x == "this") then {_weapon} else {_x};
-        if (_muzzleToUse isEqualTo "" && {_mag in compatibleMagazines [_weapon, _muzzle]}) then {
-            _weaponToUse = _weapon;
-            _muzzleToUse = _muzzle;
-        };
-    } forEach _muzzles;
-} forEach (_veh weaponsTurret _turret);
+([_veh, _turret, _mag] call SB_fnc_findWeapon) params ["_weaponToUse", "_muzzleToUse"];
 
 if (_muzzleToUse isEqualTo "") exitWith {
     systemChat format ["Steel Tank UI: %1 icin uyumlu silah bulunamadi.", _mag];
