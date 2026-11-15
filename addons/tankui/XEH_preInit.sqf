@@ -36,3 +36,8 @@ if (!hasInterface) exitWith {};
     ["Ibre yonu", "Ibreler/kollar ters donuyorsa 'Ters' secin (ctrlSetAngle yonu)."],
     "Steel Tank UI", [[1, -1], ["Normal", "Ters"], 0], 0
 ] call CBA_fnc_addSetting;
+
+["SB_TankUI_useTextures", "CHECKBOX",
+    ["Dokulari kullan", "Kapatilirsa duz renkli yedek gorunum kullanilir (doku sorunlarini ayirt etmek icin)."],
+    "Steel Tank UI", true, 0
+] call CBA_fnc_addSetting;

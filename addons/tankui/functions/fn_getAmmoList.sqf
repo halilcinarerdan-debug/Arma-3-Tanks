@@ -10,8 +10,20 @@ private _result = [];
         private _idx = _result findIf {(_x select 0) isEqualTo _turret && {(_x select 1) isEqualTo _mag}};
         if (_idx < 0) then {
             private _weapons = _veh weaponsTurret _turret;
-            private _wName = if (_weapons isEqualTo []) then {""} else {
-                getText (configFile >> "CfgWeapons" >> (_weapons select 0) >> "displayName")
+            private _wName = "";
+            {
+                private _w = _x;
+                private _muz = getArray (configFile >> "CfgWeapons" >> _w >> "muzzles");
+                if (_muz isEqualTo []) then { _muz = ["this"] };
+                {
+                    private _m = if (_x == "this") then {_w} else {_x};
+                    if (_wName == "" && {_mag in compatibleMagazines [_w, _m]}) then {
+                        _wName = getText (configFile >> "CfgWeapons" >> _w >> "displayName");
+                    };
+                } forEach _muz;
+            } forEach _weapons;
+            if (_wName == "" && {_weapons isNotEqualTo []}) then {
+                _wName = getText (configFile >> "CfgWeapons" >> (_weapons select 0) >> "displayName");
             };
             _result pushBack [
                 _turret, _mag,

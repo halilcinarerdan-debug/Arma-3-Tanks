@@ -20,7 +20,9 @@ uiNamespace setVariable ["SB_TankUI_sig", ""];
 (_display displayCtrl 7499) ctrlSetText (["CLOSE"] call SB_fnc_lbl);
 
 // Gövde dokusu varsa yedek düz gövdeyi gizle
-if (fileExists "\z\tank33\addons\tankui\data\housing_ca.paa") then { (_display displayCtrl 7401) ctrlShow false };
+if (missionNamespace getVariable ["SB_TankUI_useTextures", true]) then { (_display displayCtrl 7401) ctrlShow false };
+// Tanılama: fileExists sonucu (RPT)
+diag_log format ["[SB_TankUI] fileExists ring=%1 housing=%2", fileExists "\z\tank33\addons\tankui\data\ring_ca.paa", fileExists "\z\tank33\addons\tankui\data\housing_ca.paa"];
 
 // Role göre sekme düğmelerini diz (ammo -> 7411 / sekme 0, status -> 7412 / sekme 1)
 private _tabMap = createHashMapFromArray [["ammo", [7411, 0]], ["status", [7412, 1]], ["station", [7413, 2]]];

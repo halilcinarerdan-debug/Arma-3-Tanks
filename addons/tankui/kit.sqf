@@ -19,7 +19,10 @@ private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "oth
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
 private _rectTex = "#(argb,8,8,3)color(1,1,1,1)";
 private _ink = [0.84, 0.86, 0.8, 1];
-private _tex = { private _p = format ["\z\tank33\addons\tankui\data\%1.paa", _this]; ["", _p] select (fileExists _p) };
+// Not: fileExists PBO içindeki .paa için güvenilir değil (oyunda yanlış false dönüyordu); dokular her zaman kullanılır.
+// Dokusuz yedek moda geçmek için CBA ayarı "Dokulari kullan" kapatılır.
+private _useTex = missionNamespace getVariable ["SB_TankUI_useTextures", true];
+private _tex = { ["", format ["\z\tank33\addons\tankui\data\%1.paa", _this]] select _useTex };
 private _fx = { _bx + _this * _u * _asp };
 private _fy = { _by + _this * _u };
 
@@ -39,8 +42,11 @@ private _spr = {
     params ["_name", "_ox", "_oy", "_wU", "_hU", ["_col", [1, 1, 1, 1]], ["_fbTex", _rectTex], ["_fbCol", [0.1, 0.1, 0.1, 1]]];
     private _t = _name call _tex;
     private _k = _col;
-    if (_t == "") then { _t = _fbTex; _k = _fbCol };
-    [_ox call _fx, _oy call _fy, _wU, _hU, _t, _k] call _pic
+    private _fallback = false;
+    if (_t == "") then { _t = _fbTex; _k = _fbCol; _fallback = true };
+    private _c = [_ox call _fx, _oy call _fy, _wU, _hU, _t, _k] call _pic;
+    if (_fallback && {(_fbCol select 3) == 0}) then { _c ctrlShow false };
+    _c
 };
 private _rect = { params ["_ox", "_oy", "_wU", "_hU", "_col"]; [_ox call _fx, _oy call _fy, _wU, _hU, _rectTex, _col] call _pic };
 private _box = { params ["_ox", "_oy", "_wU", "_hU", "_col"]; [_ox + _wU / 2, _oy + _hU / 2, _wU, _hU, _col] call _rect };

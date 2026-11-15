@@ -8,5 +8,7 @@ private _w = _thick * _asp;
 private _cx = _bx + (sin _ang) * (_len / 2) * _asp;
 private _cy = _by - (cos _ang) * (_len / 2);
 _c ctrlSetPosition [_cx - _w / 2, _cy - _len / 2, _w, _len];
+_c ctrlCommit 0;
+// Açı, konum commit'inden SONRA verilir (önce verildiğinde oyunda uygulanmıyordu)
 _c ctrlSetAngle [_ang * _sgn, 0.5, 0.5];
 _c ctrlCommit 0;

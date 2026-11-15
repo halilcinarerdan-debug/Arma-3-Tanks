@@ -12,6 +12,13 @@ private _dim = [0.62, 0.78, 0.58, 1];
 [7.5, 1.9, 4.9, 0.5, "COL_AMMO" call _L, _dim] call _txt;
 [12.4, 1.9, 4.5, 0.5, "COL_COUNT" call _L, _dim] call _txt;
 
+// aynı taret + aynı tipten birden fazla mermi sınıfı varsa (ör. HEAT ve HEAT-FS) ekran adıyla ayırt edilir
+private _dups = createHashMap;
+{
+    private _k = format ["%1|%2", _x select 0, [_x select 1] call SB_fnc_ammoClass];
+    _dups set [_k, (_dups getOrDefault [_k, 0]) + 1];
+} forEach _list;
+
 private _names = createHashMapFromArray [["KE", "AM_KE_FULL" call _L], ["HEAT", "AM_HEAT_FULL" call _L], ["HE", "AM_HE_FULL" call _L]];
 
 {
@@ -19,7 +26,8 @@ private _names = createHashMapFromArray [["KE", "AM_KE_FULL" call _L], ["HEAT", 
     if (_forEachIndex < 6) then {
         private _y = 3.5 + _forEachIndex * 2.3;
         private _type = [_mag] call SB_fnc_ammoClass;
-        private _shown = _names getOrDefault [_type, toUpper (_name select [0, 18])];
+        private _isDup = (_dups getOrDefault [format ["%1|%2", _turret, _type], 0]) > 1;
+        private _shown = if (_isDup) then { toUpper (_name select [0, 18]) } else { _names getOrDefault [_type, toUpper (_name select [0, 18])] };
         private _col = [_ink, [1, 0.8, 0.3, 1]] select _isCurrent;
 
         ["label", 2.4, _y, 4.8, 1.5, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
