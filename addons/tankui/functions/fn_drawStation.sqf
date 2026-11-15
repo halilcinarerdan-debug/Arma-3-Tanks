@@ -1,0 +1,16 @@
+/* İSTASYON sekmesi: profildeki station alanına göre araca özgü istasyon ekranını çizer. */
+params ["_display"];
+private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
+private _profile = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'dan önce çözülür, bu yüzden ayrı satır
+private _station = getText (_profile >> "station");
+switch (_station) do {
+    case "T72": { [_display] call SB_fnc_drawStationT72 };
+    default {
+        (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
+        private _c = _display ctrlCreate ["SB_RscText", -1];
+        _c ctrlSetPosition [_sx + _sw * 0.03, _sy + _sh * 0.2, _sw * 0.9, _sh * 0.05];
+        _c ctrlSetText "Bu arac icin istasyon ekrani yok.";
+        _c ctrlCommit 0;
+        uiNamespace setVariable ["SB_TankUI_ctrls", [_c]];
+    };
+};

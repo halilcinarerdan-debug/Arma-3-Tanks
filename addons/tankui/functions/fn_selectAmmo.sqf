@@ -1,6 +1,6 @@
 /* params: [turretPath, magClass] -> o taretteki uyumlu silah/namlu bulunur ve mermi yüklenir. */
-params ["_turret", "_mag"];
-private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull];
+params ["_turret", "_mag", ["_veh", objNull]];
+if (isNull _veh) then { _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull] };
 if (isNull _veh) exitWith {};
 
 private _muzzleToUse = "";

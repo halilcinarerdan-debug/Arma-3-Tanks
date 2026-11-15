@@ -15,6 +15,8 @@ class SB_RscText {
     fixedWidth = 0;
 };
 
+class SB_RscTextC: SB_RscText { style = 2; }; // ortalı metin (lambalar)
+
 class SB_RscButton {
     access = 0;
     idc = -1;

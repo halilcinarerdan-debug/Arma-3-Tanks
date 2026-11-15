@@ -27,6 +27,11 @@ class CfgFunctions {
             class drawAmmo {};
             class drawStatus {};
             class selectAmmo {};
+            class ammoClass {};
+            class ammoCount {};
+            class drawStation {};
+            class drawStationT72 {};
+            class t72Action {};
         };
     };
 };
@@ -64,6 +69,7 @@ class CfgSBTankUI {
         class T72 {
             title = "T-72 - CREW DISPLAY";
             match[] = {"t72", "t90", "t80"};
+            station = "T72"; // gunner için ISTASYON sekmesi (drawStationT72)
         };
     };
     class Generic {
@@ -74,7 +80,7 @@ class CfgSBTankUI {
     // tabs[]: "ammo" (mühimmat), "status" (durum). Steel Beasts ekranları geldikçe her rol genişletilecek.
     class Roles {
         class driver    { label = "DRIVER";    tabs[] = {"status"}; };
-        class gunner    { label = "GUNNER";    tabs[] = {"ammo", "status"}; };
+        class gunner    { label = "GUNNER";    tabs[] = {"station", "ammo", "status"}; };
         class commander { label = "COMMANDER"; tabs[] = {"ammo", "status"}; };
         class other     { label = "CREW";      tabs[] = {"status"}; };
     };

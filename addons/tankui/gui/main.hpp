@@ -66,6 +66,12 @@ class SB_TankUI_Main {
             text = "DURUM";
             action = "[1] call SB_fnc_setTab;";
         };
+        class TabStation: TabAmmo {
+            idc = 7413;
+            x = SB_X + SB_W * 0.39;
+            text = "ISTASYON";
+            action = "[2] call SB_fnc_setTab;";
+        };
         // Kapat
         class Close: SB_RscButton {
             idc = 7499;

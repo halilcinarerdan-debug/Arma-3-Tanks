@@ -7,6 +7,9 @@ private _roleCfg = configFile >> "CfgSBTankUI" >> "Roles" >> _role;
 uiNamespace setVariable ["SB_TankUI_display", _display];
 uiNamespace setVariable ["SB_TankUI_vehicle", _veh];
 uiNamespace setVariable ["SB_TankUI_role", _role];
+// Oyuncunun taret yolu (nişancı istasyonu işlemleri için)
+private _crew = (fullCrew _veh) select {(_x select 0) isEqualTo player};
+uiNamespace setVariable ["SB_TankUI_turret", if (_crew isEqualTo []) then {[0]} else {(_crew select 0) select 3}];
 uiNamespace setVariable ["SB_TankUI_ctrls", []];
 uiNamespace setVariable ["SB_TankUI_sig", ""];
 
@@ -14,20 +17,24 @@ uiNamespace setVariable ["SB_TankUI_sig", ""];
 (_display displayCtrl 7404) ctrlSetText getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
 
 // Role göre sekme düğmelerini diz (ammo -> 7411 / sekme 0, status -> 7412 / sekme 1)
-private _tabMap = createHashMapFromArray [["ammo", [7411, 0]], ["status", [7412, 1]]];
+private _tabMap = createHashMapFromArray [["ammo", [7411, 0]], ["status", [7412, 1]], ["station", [7413, 2]]];
 private _p1 = ctrlPosition (_display displayCtrl 7411);
 private _step = ((ctrlPosition (_display displayCtrl 7412)) select 0) - (_p1 select 0);
-{ (_display displayCtrl _x) ctrlShow false } forEach [7411, 7412];
+{ (_display displayCtrl _x) ctrlShow false } forEach [7411, 7412, 7413];
 
 private _first = -1;
+private _slot = 0;
 {
     private _info = _tabMap getOrDefault [_x, []];
+    // "station" sekmesi yalnızca profilde station tanımlıysa görünür
+    if (_x == "station" && {getText (_profile >> "station") == ""}) then { _info = [] };
     if (_info isNotEqualTo []) then {
         _info params ["_idc", "_idx"];
         private _btn = _display displayCtrl _idc;
-        _btn ctrlSetPosition [(_p1 select 0) + _step * _forEachIndex, _p1 select 1, _p1 select 2, _p1 select 3];
+        _btn ctrlSetPosition [(_p1 select 0) + _step * _slot, _p1 select 1, _p1 select 2, _p1 select 3];
         _btn ctrlCommit 0;
         _btn ctrlShow true;
+        _slot = _slot + 1;
         if (_first < 0) then { _first = _idx };
     };
 } forEach getArray (_roleCfg >> "tabs");

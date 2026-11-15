@@ -27,6 +27,7 @@ Her yeni ekran şu sırayla yapılır:
 - Tuş: **Ctrl+T** (CBA Keybinds > Steel Tank UI), ayrıca ACE self-interact > "Tank sistemleri"
 - Sekme MUHIMMAT: silah, mermi tipi, adet, aktif mermi işareti, **SEC** ile mermi seçimi (`loadMagazine`, CBA targetEvent ile)
 - Sekme DURUM: gövde/motor/palet/taret/top/yakıt deposu hasarı (canlı), hız, yakıt, motor, mürettebat
+- Sekme ISTASYON (gunner, T-72 profili): durum/balistik lambaları, mermi seçici + YUKLE (6 sn otomatik yükleyici gecikmesi), LRF (lazer, mod, menzil sıfırla), şalterler. Spec: `docs/t72m1-gunner-station.md`
 - Profiller: `CfgSBTankUI` (M1A2, Leopard 2, Challenger 2, T-72, Generic)
 
 Bu ekranlar **yer tutucudur**; Steel Beasts görselleri geldikçe araç başına gerçek düzene çevrilecek.
