@@ -161,6 +161,10 @@
         <Key ID="STR_SB_en_T_MODE"><Original>LRF MODE</Original></Key>
         <Key ID="STR_SB_ru_T_MODE"><Original>РЕЖИМ ЛД</Original></Key>
         <Key ID="STR_SB_de_T_MODE"><Original>LRF-MODUS</Original></Key>
+        <Key ID="STR_SB_tr_T_WEAPON"><Original>TOP / PKT</Original></Key>
+        <Key ID="STR_SB_en_T_WEAPON"><Original>GUN / COAX</Original></Key>
+        <Key ID="STR_SB_ru_T_WEAPON"><Original>ПУШКА / ПКТ</Original></Key>
+        <Key ID="STR_SB_de_T_WEAPON"><Original>KANONE / KOAX</Original></Key>
         <Key ID="STR_SB_tr_COL_WEAPON"><Original>SILAH</Original></Key>
         <Key ID="STR_SB_en_COL_WEAPON"><Original>WEAPON</Original></Key>
         <Key ID="STR_SB_ru_COL_WEAPON"><Original>ОРУЖИЕ</Original></Key>

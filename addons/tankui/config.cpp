@@ -37,6 +37,7 @@ class CfgFunctions {
             class stabEffective {};
             class firedEH {};
             class findWeapon {};
+            class weaponRoles {};
         };
     };
 };

@@ -40,6 +40,12 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 [10.2, 6.1, 2.6, 0.5, "BALL_OVR" call _L, _ink, 2, 0.38] call _txt;
 [10.2, 5.0, 1.6, 1.6, "ball"] call _inv;
 
+// ---- TOP / PKT şalteri: konum aktif silahı gösterir (yukarı = ana top, aşağı = koaksiyel) ----
+[3.2, 8.0, "T_WEAPON" call _L, "weapon", {
+    private _t = uiNamespace getVariable ["SB_TankUI_turret", [0]];
+    [0, 180] select ((_this currentWeaponTurret _t) isEqualTo (([_this, _t] call SB_fnc_weaponRoles) select 1))
+}] call _toggle;
+
 // ---- Otomatik yükleyici AUT/MAN + ayna kilidi ----
 [7.0, 9.0, "T_AUTO" call _L, "automan", {[0, 180] select (_this getVariable ["SB_manual", false])}] call _toggle;
 [9.6, 9.0, "T_MIRROR" call _L, "mirror", {[180, 0] select (_this getVariable ["SB_mirror", false])}] call _toggle;

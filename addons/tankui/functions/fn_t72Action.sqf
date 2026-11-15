@@ -1,6 +1,6 @@
 /*
  * T-72 istasyon düğmeleri. params: [eylem]
- * sel_KE|sel_HEAT|sel_HE|sel_OFF, load, lase, reset, mode, delta, stab, hydr, ball, lrfon, automan, mirror
+ * sel_KE|sel_HEAT|sel_HE|sel_OFF, load, lase, reset, mode, delta, stab, hydr, ball, lrfon, automan, mirror, weapon
  * Durumlar araç üzerinde (sadece bu client'ta) tutulur.
  */
 params ["_action"];
@@ -72,6 +72,21 @@ switch (_action) do {
         private _on = !(_veh getVariable ["SB_lrfOn", false]);
         _veh setVariable ["SB_lrfOn", _on];
         if (_on) then { _veh setVariable ["SB_lrfReadyAt", time + 4] };   // lazer ısınma süresi
+    };
+    case "weapon": {
+        // TOP <-> PKT: aktif silahı değiştir (kılavuz: M tuşu, coax/main)
+        ([_veh, _turret] call SB_fnc_weaponRoles) params ["_main", "_coax"];
+        private _cur = _veh currentWeaponTurret _turret;
+        private _target = if (_cur == _main) then {_coax} else {_main};
+        if (_target == "") exitWith { systemChat "T-72: bu taretde TOP/PKT secimi icin ikinci silah bulunamadi." };
+        player selectWeapon _target;
+        [{
+            params ["_veh", "_turret", "_target"];
+            if ((_veh currentWeaponTurret _turret) != _target) then {
+                systemChat "Silah secilemedi (selectWeapon etkisiz kaldi). RPT'ye bakin.";
+                diag_log format ["[SB_TankUI] TOP/PKT secimi basarisiz: istenen=%1 mevcut=%2", _target, _veh currentWeaponTurret _turret];
+            };
+        }, [_veh, _turret, _target], 0.4] call CBA_fnc_waitAndExecute;
     };
     case "automan": { _veh setVariable ["SB_manual", !(_veh getVariable ["SB_manual", false])] };
     case "mirror":  { _veh setVariable ["SB_mirror", !(_veh getVariable ["SB_mirror", false])] };
