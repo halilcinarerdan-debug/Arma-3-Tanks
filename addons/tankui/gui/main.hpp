@@ -17,11 +17,12 @@ class SB_TankUI_Main {
     class controlsBackground {};
 
     class controls {
-        // Doku yokken yedek gövde (doku varsa onLoad gizler)
+        // Koyu zemin: gövde dokusunun ekran deliği kenarındaki yarı şeffaf pikseller arkadaki oyun dünyasını göstermesin.
+        // Doku kapalıyken (CBA ayarı) onLoad bunu zeytin yeşili yedek gövdeye çevirir.
         class Frame: SB_RscText {
             idc = 7401;
             x = DEV_X; y = DEV_Y; w = DEV_W; h = DEV_H;
-            colorBackground[] = {0.25, 0.30, 0.20, 1};
+            colorBackground[] = {0.05, 0.06, 0.04, 1};
         };
         // Ekran (cihazın camı)
         class Screen: SB_RscText {

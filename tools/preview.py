@@ -51,10 +51,8 @@ class Scene:
         self.paste(DOT if name == "@dot" else (RECT if name == "@rect" else tex(name)), self.U(ox), self.V(oy), wU * u, hU * u, tint)
     def rect(self, ox, oy, wU, hU, col): self.paste(RECT, self.U(ox), self.V(oy), wU * u, hU * u, col)
     def box(self, ox, oy, wU, hU, col): self.rect(ox + wU / 2, oy + hU / 2, wU, hU, col)
-    def bar(self, bx_, by_, length, thick, ang, tint, name="needle"):   # placeRect
-        a = math.radians(ang)
-        cx = bx_ + math.sin(a) * length / 2; cy = by_ - math.cos(a) * length / 2
-        self.paste(tex(name), cx, cy, thick, length, tint, ang)
+    def bar(self, bx_, by_, length, thick, ang, tint, name="needle"):   # placeRect: pivot merkezli kare
+        self.paste(tex(name), bx_, by_, 2 * length, 2 * length, tint, ang)
     def txt(self, ox, oy, wU, hU, t, col=(0.84, 0.86, 0.8, 1), style=2, size=0.46):
         t = str(t)
         f = ImageFont.truetype(FONT, int(u * size * 1.0))

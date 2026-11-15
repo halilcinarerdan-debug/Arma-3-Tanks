@@ -336,13 +336,15 @@ def gauge_arc(name="gauge_arc", vmax=30, a0=-80, a1=80, step=5):
 
 # ------------------------------------------------------------------ ibre
 def needle():
-    W, H = 64, 512
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    """Kare doku, pivot = merkez, ibre merkezden yukarı uzanır (uç üstte). Kontrol karesi merkez etrafında döndürüldüğü için
+    oyunda hiçbir açıda kırpılmaz (ince dikdörtgen dokular döndürülünce kırpılıyordu)."""
+    S = 512; c = S / 2; k = 2
+    img = Image.new("RGBA", (S * k, S * k), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    # konik ibre: tabanda geniş, uçta sivri; uç üstte
-    d.polygon([(W / 2 - 13, H), (W / 2 + 13, H), (W / 2 + 2, 4), (W / 2 - 2, 4)], fill=(235, 235, 235, 255))
-    d.polygon([(W / 2, H), (W / 2 + 13, H), (W / 2 + 2, 4), (W / 2, 4)], fill=(170, 170, 170, 255))
-    save(img.filter(ImageFilter.GaussianBlur(0.6)), "needle")
+    d.polygon([((c - 14) * k, c * k), ((c + 14) * k, c * k), ((c + 10) * k, (c + 44) * k), ((c - 10) * k, (c + 44) * k)], fill=(200, 200, 200, 255))   # kuyruk
+    d.polygon([((c - 12) * k, c * k), ((c + 12) * k, c * k), ((c + 3.5) * k, 6 * k), ((c - 3.5) * k, 6 * k)], fill=(240, 240, 240, 255))               # gövde
+    d.polygon([(c * k, c * k), ((c + 12) * k, c * k), ((c + 3.5) * k, 6 * k), (c * k, 6 * k)], fill=(168, 168, 168, 255))                              # gölgeli yarı
+    save(img.resize((S, S), Image.LANCZOS), "needle")
 
 
 # ------------------------------------------------------------------ lens / halka / parlama
@@ -410,21 +412,20 @@ def recess():
 
 
 def lever():
-    W, H = 48, 256
-    a = np.zeros((H, W, 4), np.float32)
-    xx = np.arange(W)[None, :].repeat(H, 0)
-    t = (xx - W / 2) / (W / 2)
-    shade = 170 + 70 * np.cos((t + 0.35) * 1.4) - 40 * np.abs(t)
+    """Kare doku, pivot = merkez; kol merkezden yukarı, ucunda topuz. 180 derece döndürülünce aşağı bakar."""
+    S = 256; c = S / 2
+    xx = np.arange(S)[None, :].repeat(S, 0).astype(np.float32)
+    t = (xx - c) / 18.0
+    shade = 170 + 70 * np.cos((t + 0.35) * 1.4) - 40 * np.minimum(1.0, np.abs(t))
+    a = np.zeros((S, S, 4), np.float32)
     a[..., :3] = shade[..., None]
-    a[..., 3] = 255
-    img = to_img(a)
-    m = Image.new("L", (W, H), 0)
+    m = Image.new("L", (S * 3, S * 3), 0)
     md = ImageDraw.Draw(m)
-    md.rounded_rectangle([W / 2 - 11, 28, W / 2 + 11, H], radius=6, fill=255)
-    md.ellipse([W / 2 - 22, 0, W / 2 + 22, 44], fill=255)         # uç topuz
-    out = np.asarray(img).copy()
-    out[..., 3] = np.asarray(m)
-    save(Image.fromarray(out, "RGBA"), "lever")
+    md.rounded_rectangle([(c - 9) * 3, 24 * 3, (c + 9) * 3, (c + 10) * 3], radius=8 * 3, fill=255)     # gövde
+    md.ellipse([(c - 20) * 3, 2 * 3, (c + 20) * 3, 42 * 3], fill=255)                                     # topuz
+    md.ellipse([(c - 13) * 3, (c - 13) * 3, (c + 13) * 3, (c + 13) * 3], fill=255)                        # pivot göbeği
+    a[..., 3] = np.asarray(m.resize((S, S), Image.LANCZOS)).astype(np.float32)
+    save(to_img(a), "lever")
 
 
 def label():

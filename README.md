@@ -71,3 +71,10 @@ PBO ön eki `addons/tankui/$PBOPREFIX$` dosyasından okunur (`z\tank33\addons\ta
 
 **Ön eki değiştirmek:** pboProject dosyaları P: sürücüsünde ön ekle arar, proje `P:\<ön ek>` altında durmalıdır (şu an `z\tank33\addons\tankui`). Başka bir yerde derlenecekse:
 `python3 tools/set_prefix.py "yeni\on\ek"` tüm yolları ve `$PBOPREFIX$` dosyasını birlikte günceller.
+
+## Kullanım
+**Gereksinim:** CBA_A3, ACE3, CUP Vehicles. PBO derlenirken dokular `.paa`'ya çevrilir (pboProject).
+
+**Açma/kapama:** tank içindeyken `Ctrl+T` (Esc > Configure > Controls > Configure Addons > Steel Tank UI'dan değiştirilebilir) veya ACE self-interact > "Tank sistemleri". Kapatma: aynı tuş, KAPAT düğmesi ya da Esc. Menü açıkken nişan alınamaz/ateş edilemez: ayarla, kapat, ateş et.
+
+**Ekranlar** (soldaki üç donanım düğmesi): ISTASYON (yalnızca T-72 nişancı), MUHIMMAT, DURUM. Sürücüde yalnız DURUM, komutanda MUHIMMAT + DURUM, nişancıda üçü. Koltuk değiştirirsen menü kapanır.
