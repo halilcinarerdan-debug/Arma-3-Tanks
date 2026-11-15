@@ -7,8 +7,8 @@ if (isNull _display) exitWith {};
 uiNamespace setVariable ["SB_TankUI_ctrls", []];
 uiNamespace setVariable ["SB_TankUI_tab", _tab];
 
-private _active = [0.12, 0.25, 0.12, 1];
-private _idle = [0.05, 0.08, 0.05, 1];
+private _active = [0.14, 0.30, 0.13, 1];
+private _idle = [0.07, 0.08, 0.06, 1];
 (_display displayCtrl 7411) ctrlSetBackgroundColor ([_idle, _active] select (_tab == 0));
 (_display displayCtrl 7412) ctrlSetBackgroundColor ([_idle, _active] select (_tab == 1));
 (_display displayCtrl 7413) ctrlSetBackgroundColor ([_idle, _active] select (_tab == 2));

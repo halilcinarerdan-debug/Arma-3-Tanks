@@ -1,74 +1,72 @@
-/* Durum sekmesi: hasar çubukları (hitpoint) + hız/yakıt/motor. Değerler refresh ile canlı güncellenir. */
+/* DURUM ekranı (ekipman dili): taret/gövde şeması (hasara göre renk), bölge LED'leri, hız 7 segment, yakıt kadranı. */
 params ["_display"];
 private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
+#include "\sb\tankui\kit.sqf"
 
-private _scr = ctrlPosition (_display displayCtrl 7402);
-_scr params ["_sx", "_sy", "_sw", "_sh"];
-private _x0 = _sx + _sw * 0.03;
-private _y0 = _sy + _sh * 0.19;
-private _rowH = _sh * 0.055;
-private _font = _rowH * 0.7;
-private _ctrls = [];
+[getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName") + "  |  DURUM", _roleLabel] call _header;
 
-private _mk = {
-    params ["_x", "_y", "_w", "_text"];
-    private _c = _display ctrlCreate ["SB_RscText", -1];
-    _c ctrlSetPosition [_x, _y, _w, _rowH * 0.9];
-    _c ctrlSetText _text;
-    _c ctrlSetFontHeight _font;
-    _c ctrlCommit 0;
-    _ctrls pushBack _c;
-    _c
+// hasar -> renk (kalan sağlık yüksek: yeşil, orta: amber, düşük: kırmızı, hitpoint yok: gri)
+private _dmgCol = {
+    params ["_d"];
+    if (_d < 0) exitWith {[0.3, 0.32, 0.3, 1]};
+    private _h = 1 - _d;
+    if (_h >= 0.8) exitWith {[0.5, 0.8, 0.45, 1]};
+    if (_h >= 0.4) exitWith {[1, 0.72, 0.15, 1]};
+    [0.95, 0.2, 0.15, 1]
 };
+uiNamespace setVariable ["SB_dmgCol", _dmgCol];
 
-// Hasar (sol sütun)
-[_x0, _y0, _sw * 0.4, "HASAR"] call _mk;
-private _hpRows = [
-    ["GOVDE", "hithull"], ["MOTOR", "hitengine"],
-    ["SOL PALET", "hitltrack"], ["SAG PALET", "hitrtrack"],
-    ["TARET", "hitturret"], ["TOP", "hitgun"], ["YAKIT DEPOSU", "hitfuel"]
-];
-private _i = 1;
+// ---- Şema: üstten görünüm, parçalar ayrı doku, hasara göre boyanır ----
+["display", 5.0, 8.7, 9.8, 14.6, [1, 1, 1, 1], _rectTex, [0.03, 0.04, 0.03, 1]] call _spr;
 {
-    _x params ["_label", "_hp"];
+    _x params ["_texName", "_hp"];
+    private _p = [_texName, 5.0, 8.7, 8.667, 13.0, [0.5, 0.8, 0.45, 1], _rectTex, [0, 0, 0, 0]] call _spr;
+    _p setVariable ["sb_hp", _hp];
+    _p setVariable ["sb_fn", {
+        params ["_c", "_veh"];
+        _c ctrlSetTextColor ([[_veh, _c getVariable "sb_hp"] call SB_fnc_getHit] call (uiNamespace getVariable "SB_dmgCol"));
+    }];
+    [_p, _veh] call (_p getVariable "sb_fn");
+} forEach [
+    ["tank_trackL", "hitltrack"], ["tank_trackR", "hitrtrack"], ["tank_hull", "hithull"],
+    ["tank_engine", "hitengine"], ["tank_turret", "hitturret"], ["tank_gun", "hitgun"]
+];
+
+// ---- Bölge listesi: etiket plakası + yüzde + LED ----
+private _zones = [["GOVDE", "hithull"], ["MOTOR", "hitengine"], ["SOL PALET", "hitltrack"], ["SAG PALET", "hitrtrack"], ["TARET", "hitturret"], ["TOP", "hitgun"], ["YAKIT DEPOSU", "hitfuel"]];
+private _row = 0;
+{
+    _x params ["_name", "_hp"];
     if (([_veh, _hp] call SB_fnc_getHit) >= 0) then {
-        private _y = _y0 + _rowH * _i;
-        [_x0, _y, _sw * 0.18, _label] call _mk;
-        private _v = [_x0 + _sw * 0.19, _y, _sw * 0.33, ""] call _mk;
-        _v setVariable ["sb_hp", _hp];
-        _v setVariable ["sb_fn", {
+        private _y = 2.7 + _row * 1.35;
+        ["label", 13.9, _y, 5.6, 1.1, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
+        [11.3, _y, 4.4, 0.6, _name, _ink, 0] call _txt;
+        private _val = [16.9, _y, 2.3, 0.6, "", _ink, 1] call _txt;
+        private _lx = 19.9;
+        ["ring", _lx, _y, 0.95, 0.95, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
+        private _lens = ["lens", _lx, _y, 0.62, 0.62, [0.5, 0.8, 0.45, 1], _dotTex, [0.5, 0.8, 0.45, 1]] call _spr;
+        ["gloss", _lx - 0.1, _y - 0.12, 0.5, 0.5, [1, 1, 1, 1], _dotTex, [1, 1, 1, 0]] call _spr;
+        _lens setVariable ["sb_hp", _hp];
+        _lens setVariable ["sb_val", _val];
+        _lens setVariable ["sb_fn", {
             params ["_c", "_veh"];
             private _d = [_veh, _c getVariable "sb_hp"] call SB_fnc_getHit;
-            _c ctrlSetText (([1 - _d, 16] call SB_fnc_bar) + format [" %1%2", round ((1 - _d) * 100), "%"]);
-            private _col = [0.55, 1, 0.55, 1];
-            if (_d >= 0.6) then { _col = [1, 0.25, 0.2, 1] } else { if (_d >= 0.2) then { _col = [1, 0.75, 0.2, 1] } };
-            _c ctrlSetTextColor _col;
+            _c ctrlSetTextColor ([_d] call (uiNamespace getVariable "SB_dmgCol"));
+            (_c getVariable "sb_val") ctrlSetText format ["%1%%", round ((1 - _d) * 100)];
         }];
-        [_v, _veh] call (_v getVariable "sb_fn");
-        _i = _i + 1;
+        [_lens, _veh] call (_lens getVariable "sb_fn");
+        _row = _row + 1;
     };
-} forEach _hpRows;
+} forEach _zones;
 
-// Araç verisi (sağ sütun)
-private _xr = _x0 + _sw * 0.58;
-[_xr, _y0, _sw * 0.35, "ARAC"] call _mk;
-private _info = [
-    ["HIZ", {format ["%1 km/h", round (speed _this)]}],
-    ["YAKIT", {format ["%1 %%", round (fuel _this * 100)]}],
-    ["MOTOR", {["KAPALI", "ACIK"] select (isEngineOn _this)}],
-    ["MURETTEBAT", {format ["%1 / %2", count crew _this, count fullCrew [_this, "", true]]}]
-];
-{
-    _x params ["_label", "_code"];
-    private _y = _y0 + _rowH * (_forEachIndex + 1);
-    [_xr, _y, _sw * 0.15, _label] call _mk;
-    private _v = [_xr + _sw * 0.16, _y, _sw * 0.2, ""] call _mk;
-    _v setVariable ["sb_code", _code];
-    _v setVariable ["sb_fn", {
-        params ["_c", "_veh"];
-        _c ctrlSetText (_veh call (_c getVariable "sb_code"));
-    }];
-    [_v, _veh] call (_v getVariable "sb_fn");
-} forEach _info;
+// ---- Hız (7 segment) ----
+["display", 16.2, 13.5, 5.0, 2.3, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
+[15.1, 13.5, compile "str round abs speed _this", 3, 0.85] call _sevenSeg;
+[19.1, 13.5, 1.8, 0.5, "KM/H", [0.62, 0.78, 0.58, 1]] call _txt;
 
-uiNamespace setVariable ["SB_TankUI_ctrls", _ctrls];
+// ---- Yakıt kadranı + motor lambası ----
+[11.9, 14.0, 1.5, "gauge_fuel", 4, -60, 60, compile "(fuel _this) * 4", [0.05, 0.05, 0.05, 1], [0.9, 0.9, 0.85, 1]] call _gauge;
+[11.9, 16.0, 3.0, 0.5, "YAKIT", [0.62, 0.78, 0.58, 1]] call _txt;
+[17.2, 16.0, "MOTOR", _green, {isEngineOn _this}] call _lamp;
+
+call _finish;

@@ -16,6 +16,7 @@ class SB_RscText {
 };
 
 class SB_RscTextC: SB_RscText { style = 2; }; // ortalı metin (lambalar)
+class SB_RscTextR: SB_RscText { style = 1; }; // sağa hizalı metin
 
 class SB_RscButton {
     access = 0;

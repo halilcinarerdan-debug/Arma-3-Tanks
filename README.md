@@ -37,3 +37,17 @@ Bu ekranlar **yer tutucudur**; Steel Beasts görselleri geldikçe araç başına
 `addons/tankui` klasörünü PBO'ya paketleyin (prefix `sb\tankui`, bkz. `$PBOPREFIX$`; HEMTT veya Mikero pboProject). Hedef yapı: `@SB_TankUI/addons/sb_tankui.pbo` + `mod.cpp`.
 
 Oyun içi test: bir CUP tankına binin, Ctrl+T.
+
+## Cihaz görünümü ve dokular
+
+Arayüz tek parça bir tablet cihazı: zeytin gövde, siyah köşe tamponları, cam ekran. Başlık ve sekme yok; soldaki üç donanım düğmesi ekranı değiştirir (ISTASYON / MUHIMMAT / DURUM), alttaki KAPAT kapatır.
+Ortak ekipman widget'ları (`addons/tankui/kit.sqf`): etiket kutulu LED, kollu şalter, dönel seçici, basma düğmesi, 7 segmentli ekran, ibreli kadran.
+
+Dokular `addons/tankui/data/*.png` olarak üretilir (`python3 tools/gen_textures.py`). Oyun `.paa` bekler:
+1. Arma 3 Tools > ImageToPAA ile her `*_ca.png` dosyasını aynı adla `.paa`'ya çevirin (veya HEMTT ile derlemede otomatik).
+2. `.paa` dosyaları PBO'ya `\sb\tankui\data\` altına girmelidir.
+
+Dokular yoksa kod düz renk yedeğine düşer (çalışır, ama kadran çentikleri ve gövde dokusu görünmez).
+
+Önizleme (oyun içi görüntü değil): `python3 tools/preview.py <çıktı klasörü>`.
+`ctrlSetAngle` ters dönerse `config.cpp` içinde `angleSign = -1` yapın.

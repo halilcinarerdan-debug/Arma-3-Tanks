@@ -13,13 +13,13 @@ uiNamespace setVariable ["SB_TankUI_turret", if (_crew isEqualTo []) then {[0]} 
 uiNamespace setVariable ["SB_TankUI_ctrls", []];
 uiNamespace setVariable ["SB_TankUI_sig", ""];
 
-(_display displayCtrl 7403) ctrlSetText (getText (_profile >> "title") + " | " + getText (_roleCfg >> "label"));
-(_display displayCtrl 7404) ctrlSetText getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displayName");
+// Gövde dokusu varsa yedek düz gövdeyi gizle
+if (fileExists "\sb\tankui\data\housing_ca.paa") then { (_display displayCtrl 7401) ctrlShow false };
 
 // Role göre sekme düğmelerini diz (ammo -> 7411 / sekme 0, status -> 7412 / sekme 1)
 private _tabMap = createHashMapFromArray [["ammo", [7411, 0]], ["status", [7412, 1]], ["station", [7413, 2]]];
 private _p1 = ctrlPosition (_display displayCtrl 7411);
-private _step = ((ctrlPosition (_display displayCtrl 7412)) select 0) - (_p1 select 0);
+private _step = ((ctrlPosition (_display displayCtrl 7412)) select 1) - (_p1 select 1);
 { (_display displayCtrl _x) ctrlShow false } forEach [7411, 7412, 7413];
 
 private _first = -1;
@@ -31,7 +31,7 @@ private _slot = 0;
     if (_info isNotEqualTo []) then {
         _info params ["_idc", "_idx"];
         private _btn = _display displayCtrl _idc;
-        _btn ctrlSetPosition [(_p1 select 0) + _step * _slot, _p1 select 1, _p1 select 2, _p1 select 3];
+        _btn ctrlSetPosition [_p1 select 0, (_p1 select 1) + _step * _slot, _p1 select 2, _p1 select 3];
         _btn ctrlCommit 0;
         _btn ctrlShow true;
         _slot = _slot + 1;
