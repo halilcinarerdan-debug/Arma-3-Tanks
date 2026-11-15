@@ -211,9 +211,37 @@ def status():
     finish(S); return S
 
 
+
+# ---------------------------------------------------------------- SURUCU / KOMUTAN
+def driver():
+    S = Scene(); frame(S, 2, [("", 2), ("", 1)])
+    header(S, "T-72B (Russian)  |  " + lbl("SCR_STATION"), lbl("ROLE_driver"))
+    gauge(S, 5.6, 8.2, 4.2, "gauge_speed", 80, -120, 120, 32, (0.85, 0.15, 0.1, 1)); S.txt(5.6, 12.9, 4, 0.5, lbl("SPEED"), size=0.45)
+    S.spr("display", 5.6, 15.3, 5.0, 2.2); seven(S, 4.4, 15.3, "32", 3, 0.9)
+    gauge(S, 14.0, 4.6, 2.3, "gauge_fuel", 4, -60, 60, 3.1, (0.05, 0.05, 0.05, 1)); S.txt(14.0, 7.6, 4, 0.5, lbl("FUEL"), size=0.45)
+    lamp_round(S, 11.8, 9.8, lbl("L_RUN"), GREEN, 1); S.txt(12.9, 8.6, 5, 0.5, lbl("FAULT"), dim, 2, 0.45)
+    for x, k, on in ((14.8, "F_ENG", 0), (17.0, "F_LTR", 1), (19.2, "F_RTR", 0)): lamp_round(S, x, 9.8, lbl(k), RED, on)
+    lamp_round(S, 11.8, 12.2, lbl("F_HULL"), RED, 0)
+    toggle(S, 12.6, 14.6, lbl("T_ENGINE"), 0); toggle(S, 15.6, 14.6, lbl("T_LIGHT"), 180); toggle(S, 18.6, 14.6, lbl("T_HATCH"), 180)
+    finish(S); return S
+
+def cmdr():
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "T-72B (Russian)  |  " + lbl("SCR_STATION"), lbl("ROLE_commander"))
+    crew = [("driver", "Baranov", 100), ("gunner", "hcinar33", 100), ("commander", "Sudakov", 85)]
+    for i, (r, n, hp) in enumerate(crew):
+        y = 2.8 + i * 1.7
+        S.spr("label", 7.4, y, 14.2, 1.35); S.txt(0.9, y, 13, 0.7, lbl("ROLE_" + r) + ":  " + n + "   %d%%" % hp, style=0, size=0.5)
+    for cx, k, v in ((3.5, "W_COAX", "250"), (9.0, "W_NSVT", "60"), (14.5, "SMOKE", "2")):
+        S.txt(cx, 8.6, 5, 0.5, lbl(k), size=0.5); S.spr("display", cx, 10.2, 4.6, 2.0); seven(S, cx - 1.2, 10.2, v, 3, 0.9)
+    for x, k, on in ((1.6, "F_ENG", 0), (4.2, "F_LTR", 1), (6.8, "F_RTR", 0), (9.4, "F_HULL", 0)): lamp_round(S, x, 13.4, lbl(k), RED, on)
+    toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
+    finish(S); return S
+
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():
     global u, bx, by
+    saved = (u, bx, by)          # HUD kendi ölçeğini kullanır; sonraki ekranlar bozulmasın diye geri yüklenir
     S = Scene()
     # arka plan: optik penceresi (kullanıcının ekran görüntüsündeki yerleşim) + Arma'nın kendi panelleri
     S.paste(RECT, W / 2, H / 2, W, H, (0.02, 0.02, 0.02, 1))
@@ -250,9 +278,10 @@ def hud():
     plate(x0R, yD, colW, hD)
     for key, val, y in (("AM_KE", "22", 1.7), ("AM_HE", "10", 3.5), ("AM_HEAT", "9", 5.3), ("W_COAX", "450", 7.1)):
         S.txt(0.9, y, 3.6, 0.6, lbl(key), (0.84, 0.86, 0.8, 1), 0, 0.55); seven(S, 4.4, y, val, 3, 0.6)
+    u, bx, by = saved
     return S
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

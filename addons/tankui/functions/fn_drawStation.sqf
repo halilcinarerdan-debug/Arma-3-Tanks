@@ -4,7 +4,13 @@ private _veh = uiNamespace getVariable "SB_TankUI_vehicle";
 private _profile = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'dan önce çözülür, bu yüzden ayrı satır
 private _station = getText (_profile >> "station");
 switch (_station) do {
-    case "T72": { [_display] call SB_fnc_drawStationT72 };
+    case "T72": {
+        switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
+            case "driver": { [_display] call SB_fnc_drawStationT72Driver };
+            case "commander": { [_display] call SB_fnc_drawStationT72Cmdr };
+            default { [_display] call SB_fnc_drawStationT72 };
+        };
+    };
     default {
         (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
         private _c = _display ctrlCreate ["SB_RscText", -1];

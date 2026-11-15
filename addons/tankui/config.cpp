@@ -31,6 +31,9 @@ class CfgFunctions {
             class ammoCount {};
             class drawStation {};
             class drawStationT72 {};
+            class drawStationT72Driver {};
+            class drawStationT72Cmdr {};
+            class t72ActionX {};
             class t72Action {};
             class placeRect {};
             class lbl {};
@@ -104,9 +107,9 @@ class CfgSBTankUI {
     // Koltuk bazlı ekranlar. Roller CBA/Arma fullCrew rolleriyle aynı: driver, gunner, commander.
     // tabs[]: "ammo" (mühimmat), "status" (durum). Steel Beasts ekranları geldikçe her rol genişletilecek.
     class Roles {
-        class driver    { label = "DRIVER";    tabs[] = {"status"}; };
+        class driver    { label = "DRIVER";    tabs[] = {"station", "status"}; };
         class gunner    { label = "GUNNER";    tabs[] = {"station", "ammo", "status"}; };
-        class commander { label = "COMMANDER"; tabs[] = {"ammo", "status"}; };
+        class commander { label = "COMMANDER"; tabs[] = {"station", "ammo", "status"}; };
         class other     { label = "CREW";      tabs[] = {"status"}; };
     };
 };

@@ -14,6 +14,8 @@ if ((_action select [0, 4]) == "sel_") exitWith {
 };
 
 switch (_action) do {
+    // sürücü/komutan eylemleri ayrı (yalıtılmış) dosyada
+    default { [_action] call SB_fnc_t72ActionX };
     case "load": {
         if (_veh getVariable ["SB_loading", false]) exitWith {};
         private _type = _veh getVariable ["SB_selType", ""];

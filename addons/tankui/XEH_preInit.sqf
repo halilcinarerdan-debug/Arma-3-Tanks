@@ -21,6 +21,10 @@
     });
 }] call CBA_fnc_addEventHandler;
 
+// Sürücü/komutan eylemleri: araç sahibinde çalışır (tüm makinelerde kayıtlı)
+["SB_TankUI_engine", { params ["_veh", "_on"]; _veh engineOn _on }] call CBA_fnc_addEventHandler;
+["SB_TankUI_fire", { params ["_veh", "_weapon"]; _veh fire _weapon }] call CBA_fnc_addEventHandler;
+
 if (!hasInterface) exitWith {};
 
 // Tuş ataması: Controls > Configure Addons > Steel Tank UI üzerinden değiştirilebilir.
