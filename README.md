@@ -153,3 +153,8 @@ Yeni PNG'leri (`housing_leo_ca.png`, `lens_sq_ca.png`, `ring_sq_ca.png`) PAA'ya 
 SABOT / HEAT-MPAT / koaksiyel seçimi + YÜKLE, LRF, elle menzil. Komutan: mürettebat, taret yönü saat şeridi, M240 / .50 cal / duman sayıları. Sürücü: Leopard sürücü ekranıyla ortak.
 **Not:** Steel Beasts M1A2 kılavuzu henüz incelenmedi; ekran gerçek Abrams kumandalarının yaklaşık uyarlamasıdır. Kılavuz gelince inceltilecek.
 Yeni doku: `housing_m1_ca.png` (PAA'ya çevirin). Dil: İngilizce.
+
+## Rus T serisi profilleri
+
+`t90`, `t80`, `t72b`, `t72` ayrı profillerdir (ilk eşleşen kazanır). Hepsi T-72 istasyonunu kullanır; sistem farkları profil özelliklerinden gelir
+(`fcs`, `lrfMax`, `lrfModes`, `atgm`, `atgmMin`, `atgmMax`). Ayrıntı ve doğrulanacaklar: [`docs/t-series-systems.md`](docs/t-series-systems.md).

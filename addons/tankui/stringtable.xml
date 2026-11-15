@@ -448,6 +448,14 @@
         <Key ID="STR_SB_en_W_M2"><Original>.50 CAL (CWS)</Original></Key>
         <Key ID="STR_SB_tr_W_M240L"><Original>M240 (YUKLEYICI)</Original></Key>
         <Key ID="STR_SB_en_W_M240L"><Original>M240 (LOADER)</Original></Key>
+        <Key ID="STR_SB_tr_AM_ATGM"><Original>ATGM</Original></Key>
+        <Key ID="STR_SB_en_AM_ATGM"><Original>ATGM</Original></Key>
+        <Key ID="STR_SB_ru_AM_ATGM"><Original>УР</Original></Key>
+        <Key ID="STR_SB_de_AM_ATGM"><Original>LFK</Original></Key>
+        <Key ID="STR_SB_tr_L_ATGM"><Original>ATGM</Original></Key>
+        <Key ID="STR_SB_en_L_ATGM"><Original>ATGM</Original></Key>
+        <Key ID="STR_SB_ru_L_ATGM"><Original>ПТУР</Original></Key>
+        <Key ID="STR_SB_de_L_ATGM"><Original>LFK</Original></Key>
         <Key ID="STR_SB_tr_LEO_NOTE"><Original>Leopard 2 ailesi</Original></Key>
         <Key ID="STR_SB_en_LEO_NOTE"><Original>Leopard 2 family</Original></Key>
         <Key ID="STR_SB_de_LEO_NOTE"><Original>Leopard 2</Original></Key>

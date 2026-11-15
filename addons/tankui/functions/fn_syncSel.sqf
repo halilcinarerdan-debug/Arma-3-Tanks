@@ -16,4 +16,4 @@ if ((_veh getVariable [_key, ""]) isEqualTo _mag) exitWith {};
 _veh setVariable [_key, _mag];
 if ([_veh] call SB_fnc_isLoading) exitWith {};
 private _class = [_mag] call SB_fnc_ammoClass;
-if (_class in ["KE", "HE", "HEAT"] && {(_veh getVariable ["SB_selType", ""]) != _class}) then { _veh setVariable ["SB_selType", _class, true] };
+if (_class in ["KE", "HE", "HEAT", "ATGM"] && {(_veh getVariable ["SB_selType", ""]) != _class}) then { _veh setVariable ["SB_selType", _class, true] };

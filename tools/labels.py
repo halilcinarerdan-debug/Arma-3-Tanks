@@ -129,6 +129,8 @@ L.update({
     "W_COAXM":   {"tr": "KOAKS M240", "en": "COAX M240"},
     "W_M2":      {"tr": ".50 CAL (CWS)", "en": ".50 CAL (CWS)"},
     "W_M240L":   {"tr": "M240 (YUKLEYICI)", "en": "M240 (LOADER)"},
+    "AM_ATGM":   {"tr": "ATGM", "en": "ATGM", "ru": "УР", "de": "LFK"},
+    "L_ATGM":    {"tr": "ATGM", "en": "ATGM", "ru": "ПТУР", "de": "LFK"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 

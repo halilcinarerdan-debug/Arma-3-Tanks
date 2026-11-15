@@ -51,9 +51,14 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 [9.6, 9.0, "T_MIRROR" call _L, "mirror", {[180, 0] select (_this getVariable ["SB_mirror", false])}] call _toggle;
 
 // ---- Mermi seçici + YÜKLE + mermi sayacı ----
-[3.0, 12.3, [
+private _hasAtgm = ([_veh, "atgm", 0] call SB_fnc_tProfile) > 0;
+private _selPos = if (_hasAtgm) then {[
+    ["SEL_OFF" call _L, "sel_OFF", -88], ["AM_KE" call _L, "sel_KE", -44], ["AM_HEAT" call _L, "sel_HEAT", 0], ["AM_HE" call _L, "sel_HE", 44], ["AM_ATGM" call _L, "sel_ATGM", 88]
+]} else {[
     ["SEL_OFF" call _L, "sel_OFF", -75], ["AM_KE" call _L, "sel_KE", -25], ["AM_HEAT" call _L, "sel_HEAT", 25], ["AM_HE" call _L, "sel_HE", 75]
-], compile "['', 'KE', 'HEAT', 'HE'] find (_this getVariable ['SB_selType', ''])"] call _rotary;
+]};
+[3.0, 12.3, _selPos, compile "['', 'KE', 'HEAT', 'HE', 'ATGM'] find (_this getVariable ['SB_selType', ''])"] call _rotary;
+if (_hasAtgm) then { [18.8, 4.4, "L_ATGM" call _L, _green, {[_this] call SB_fnc_atgmReady}] call _lampRound };
 [3.0, 15.2, 5, 0.5, "SEL_TITLE" call _L] call _txt;
 
 private _pl = [6.9, 14.4, "LOAD" call _L, "load", [0.2, 0.6, 0.25, 1]] call _push;
@@ -86,9 +91,11 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 
 [12.4, 11.6, "LASE" call _L, "lase"] call _push;
 [15.4, 11.6, "RESET" call _L, "reset", [0.15, 0.15, 0.15, 1]] call _push;
-[19.0, 11.3, "T_MODE" call _L, "mode", {[0, -40, 40] select (_this getVariable ["SB_lrfMode", 0])}] call _toggle;
-[18.0, 9.9, 1.4, 0.5, "1200", _ink, 2, 0.4] call _txt;
-[20.0, 9.9, 1.4, 0.5, "1800", _ink, 2, 0.4] call _txt;
+if (([_veh, "lrfModes", 1] call SB_fnc_tProfile) > 0) then {
+    [19.0, 11.3, "T_MODE" call _L, "mode", {[0, -40, 40] select (_this getVariable ["SB_lrfMode", 0])}] call _toggle;
+    [18.0, 9.9, 1.4, 0.5, "1200", _ink, 2, 0.4] call _txt;
+    [20.0, 9.9, 1.4, 0.5, "1800", _ink, 2, 0.4] call _txt;
+};
 
 // ---- Şalter sırası: Delta-d / stabilizasyon / hidrolik + LRF açma (kılavuz s.27-28) ----
 [12.5, 14.5, "T_DELTA" call _L, "delta", {[180, 0] select (_this getVariable ["SB_delta", false])}] call _toggle;

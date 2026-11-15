@@ -103,7 +103,7 @@ switch (_action) do {
         private _dir = _veh weaponDirection _weapon;
         private _hits = lineIntersectsSurfaces [_from, _from vectorAdd (_dir vectorMultiply 4000), _veh, objNull, true, 1, "FIRE", "VIEW"];
 
-        private _limit = [3000, 1200, 1800] select (_veh getVariable ["SB_lrfMode", 0]);
+        private _limit = if (([_veh, "lrfModes", 1] call SB_fnc_tProfile) > 0) then { [3000, 1200, 1800] select (_veh getVariable ["SB_lrfMode", 0]) } else { [_veh, "lrfMax", 3000] call SB_fnc_tProfile };
         private _dist = if (_hits isEqualTo []) then {-1} else {_from distance ((_hits select 0) select 0)};
 
         if (_dist < 0 || {_dist > _limit}) then {

@@ -41,6 +41,8 @@ class CfgFunctions {
             class gpsText {};
             class leoSetRange {};
             class leoMain {};
+            class atgmReady {};
+            class tProfile {};
             class syncSel {};
             class t72ActionX {};
             class t72Action {};
@@ -113,11 +115,38 @@ class CfgSBTankUI {
             language = "en";
             match[] = {"challenger2", "challenger_2"};
         };
+        // Rus T serisi (hepsi station "T72" ekranını kullanır; sistem farkları aşağıdaki özelliklerle gelir).
+        // fcs: 1 = T-72M1 sınıfı (lazer + elle lead, LRF modları), 2 = T-72B (1A40-1: lazer + analog balistik bilgisayar, otomatik lead),
+        //      3 = T-80U / T-90A (1A45 Irtysh). lrfMax: LRF azami menzil (m). lrfModes: 1200/1800 mod şalteri var mı.
+        //      atgm: gövde topundan ATGM (Svir / Refleks / Invar) seçimi var mı; atgmMin/atgmMax: kılavuzlu füze menzil penceresi (m).
+        // NOT: sayılar genel kaynaklardan (internet + genel bilgi); Steel Beasts kılavuzlarıyla doğrulanacak.
+        class T90 {
+            title = "T-90 - CREW DISPLAY";
+            language = "ru";
+            match[] = {"t90"};
+            station = "T72";
+            fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
+        };
+        class T80 {
+            title = "T-80 - CREW DISPLAY";
+            language = "ru";
+            match[] = {"t80"};
+            station = "T72";
+            fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
+        };
+        class T72B {
+            title = "T-72B - CREW DISPLAY";
+            language = "ru";
+            match[] = {"t72b"};
+            station = "T72";
+            fcs = 2; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
+        };
         class T72 {
             title = "T-72 - CREW DISPLAY";
             language = "ru";
-            match[] = {"t72", "t90", "t80"};
+            match[] = {"t72"};
             station = "T72"; // gunner için ISTASYON sekmesi (drawStationT72)
+            fcs = 1; lrfMax = 3000; lrfModes = 1; atgm = 0; atgmMin = 0; atgmMax = 0;
         };
     };
     class Generic {
