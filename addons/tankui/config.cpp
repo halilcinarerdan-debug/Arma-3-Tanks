@@ -158,7 +158,7 @@ class CfgSBTankUI {
         class T80 {
             title = "T-80 - CREW DISPLAY";
             language = "ru";
-            match[] = {"t80"};
+            match[] = {"t80", "ff_rsy_v9"};   // FF_RSY_v9 = T-80UK (kullanıcı)
             station = "T72"; palette = "t72";
             fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
         };
