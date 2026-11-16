@@ -54,3 +54,8 @@ Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lam
 - Uygulananlar: M1 nişancı ekranının etiketleri gerçek adlara çekildi (NORMAL / EMERGENCY / MANUAL, `RANGE ARM / SAFE`, `GUN / AMMUNITION SELECT`). Davranış (NORMAL = güç+stab, EMERGENCY = güç, MANUAL = güç yok) SB'nin üç tank ailesi için aynı adlarla tarif ettiği modlara dayanıyor; yaklaşık eşleşme.
 - Arma'da karşılığı yok: termal cihaz grubu (polarite, sembol, retikül, odak, büyütme 6X-50X, anti-glare, search/stare), boresight, panel ışıkları, `AIR / GROUND`, `NORMAL MODE DRIFT`.
 - Bekleyen: `METRL DATA` menüsünde hangi girişler var (hava sıcaklığı / rüzgâr vb.): açılırsa Leopard'daki gibi isteğe bağlı balistik giriş sayfası eklenebilir.
+
+## SB M1A2 SEP menü ekranları (kullanıcı açtı; `METRL DATA` açılmıyor)
+- `SENSORS`: RANGE (varsayılan 1200), ATTD, LEAD A/M (otomatik/elle lead), H/T POSN OFF/ON, RETURN. `ADJUST`: BORESIGHT, ZERO, BATTLE SIGHT, AMMO SUBDES, AMMO COUNT, RETURN. En sağdaki tuş her ekranda ana menüye döner.
+- Uygulanan: **BATTLE SIGHT** düğmesi (M1 nişancı ekranı, profil `bsRange = 1200`; SENSORS > RANGE varsayılanı 1200 olduğu için çıkarım), mermi sayaçları (AMMO COUNT karşılığı zaten var), elle menzil (RANGE).
+- Arma'da karşılığı yok: LEAD A/M, ATTD, H/T POSN, BORESIGHT, ZERO, AMMO SUBDES.

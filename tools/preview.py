@@ -331,7 +331,7 @@ def m1_gunner():
         S.spr("label", 15.2, y, 8.8, 1.15); lamp_round(S, 10.9, y, "", AMBER, on); S.txt(12.0, y, 5, 0.55, lbl(k), style=0, size=0.4)
         S.spr("display", 17.9, y, 3.0, 1.0); seven(S, 16.79 if nd == 4 else 17.53, y, n, nd, 0.55)
     push(S, 2.2, 10.8, lbl("LOAD"), (0.2, 0.6, 0.25, 1)); push(S, 5.4, 10.8, lbl("LASE")); push(S, 8.6, 10.8, lbl("RESET"), (0.15, 0.15, 0.15, 1))
-    toggle(S, 18.4, 11.0, lbl("T_LRFON"), 180)
+    push(S, 11.8, 10.8, lbl("M1_BS"), (0.45, 0.45, 0.45, 1)); toggle(S, 18.4, 11.0, lbl("M1_RANGE"), 180)
     toggle(S, 2.2, 14.2, lbl("T_RMODE"), 0); push(S, 5.6, 14.0, lbl("P_RDN"), (0.45, 0.45, 0.45, 1)); push(S, 8.8, 14.0, lbl("P_RUP"), (0.45, 0.45, 0.45, 1))
     S.spr("display", 14.4, 14.2, 5.6, 1.9); seven(S, 12.4, 14.2, "1100", 4, 0.8); S.txt(18.0, 14.2, 3, 0.5, lbl("AVST_T"), DIMG, size=0.38)
     finish(S); PAL = ""; return S
