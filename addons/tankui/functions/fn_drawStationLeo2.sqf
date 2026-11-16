@@ -83,4 +83,9 @@ private _bs = [_veh, "bsRange", 1100] call SB_fnc_tProfile;
 [12.4, 14.2, compile "[_this] call SB_fnc_rangeText", 4, 0.8] call _sevenSeg;
 [18.0, 14.2, 3, 0.5, "AVST_T" call _L, _dim, 2, 0.38] call _txt;
 
+// isteğe bağlı: balistik giriş sayfası (CBA ayarı + profil özelliği ballInputs)
+if ((missionNamespace getVariable ["SB_TankUI_ballInputs", false]) && {([_veh, "ballInputs", 0] call SB_fnc_tProfile) > 0}) then {
+    [19.4, 4.5, "BAL_BTN" call _L, "page_bal", {[0, 180] select ((uiNamespace getVariable ["SB_leoPage", 0]) == 1)}, 0.65] call _toggle;
+};
+
 call _finish;

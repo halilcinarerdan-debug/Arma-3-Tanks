@@ -363,6 +363,21 @@ def t72b3():
     push(S, 15.6, 7.0, lbl("LASE")); push(S, 18.2, 7.0, lbl("RESET"), (0.15, 0.15, 0.15, 1))
     finish(S); PAL = ""; return S
 
+def leo_ball():
+    global PAL
+    PAL = "leo"
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "Leopard 2A5  |  " + lbl("BAL_T"), lbl("ROLE_gunner"))
+    for key, y, val in [("BAL_ALT", 3.8, " 12"), ("BAL_AIR", 6.1, " 18"), ("BAL_POW", 8.4, " 20"), ("BAL_WIND", 10.7, "  3")]:
+        S.spr("label", 6.2, y, 11.0, 1.4); S.txt(0.9, y, 8.8, 0.6, lbl(key), style=0, size=0.45)
+        S.spr("display", 14.0, y, 3.8, 1.5); seven(S, 12.9, y, val, 4, 0.55)
+        push(S, 17.0, y, "", (0.45, 0.45, 0.45, 1)); S.txt(17.0, y, 1.0, 0.6, "-", (0.05, 0.05, 0.05, 1), size=0.6)
+        push(S, 19.0, y, "", (0.45, 0.45, 0.45, 1)); S.txt(19.0, y, 1.0, 0.6, "+", (0.05, 0.05, 0.05, 1), size=0.6)
+    toggle(S, 2.2, 13.0, lbl("T_RMODE"), 180)
+    S.txt(9.6, 13.0, 9.5, 0.5, lbl("BAL_ENV") + ": 18 °C   12 (x10 m)   3 m/s", (0.9, 0.92, 0.9, 1), size=0.4)
+    push(S, 19.0, 13.2, lbl("BAL_BACK"), (0.2, 0.6, 0.25, 1))
+    finish(S); PAL = ""; return S
+
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():
     global u, bx, by
@@ -408,5 +423,5 @@ def hud():
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver), ("m1_nisanci", m1_gunner), ("m1_komutan", m1_cmdr), ("m1_surucu", m1_driver), ("t72b3_nisanci", t72b3)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver), ("m1_nisanci", m1_gunner), ("m1_komutan", m1_cmdr), ("m1_surucu", m1_driver), ("t72b3_nisanci", t72b3), ("leo_balistik", leo_ball)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

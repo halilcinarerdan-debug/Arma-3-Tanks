@@ -70,6 +70,11 @@ if (!hasInterface) exitWith {};
     "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;
 
+["SB_TankUI_ballInputs", "CHECKBOX",
+    ["Balistik giris sapmasi (opsiyonel)", "Leopard 2: nisangahta balistik bilgisayar girisleri (yukseklik, hava/barut sicakligi, yan ruzgar) gercekten sapmissa atis sapar. ACE Weather ile uyumlu. Kapali = sayfa gorunmez, sapma yok."],
+    "Steel Tank UI", false, 0
+] call CBA_fnc_addSetting;
+
 ["SB_TankUI_effectScale", "SLIDER",
     ["Sapma siddeti (%)", "Panel etkilerinin sapma miktari (100 = varsayilan, 0 = sapma yok)."],
     "Steel Tank UI", [0, 200, 100, 0], 0

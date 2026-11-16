@@ -134,6 +134,14 @@ L.update({
     "SEL_KE":    {"tr": "BPS", "en": "KE", "ru": "Б", "de": "KE"},
     "SEL_HEAT":  {"tr": "BKS", "en": "HEAT", "ru": "К", "de": "HEAT"},
     "SEL_HE":    {"tr": "OFS", "en": "HE", "ru": "О", "de": "HE"},
+    "BAL_T":     {"tr": "BALISTIK GIRISLER", "en": "BALLISTIC INPUTS", "de": "EINGABEN", "sv": "BALLISTIKINGÅNGAR"},
+    "BAL_ALT":   {"tr": "YUKSEKLIK NN x10 m", "en": "ALTITUDE x10 m", "de": "HÖHE NN x10 m", "sv": "HÖJD x10 m"},
+    "BAL_AIR":   {"tr": "HAVA SICAKLIGI °C", "en": "AIR TEMP °C", "de": "LUFTTEMP. °C", "sv": "LUFTTEMP °C"},
+    "BAL_POW":   {"tr": "BARUT SICAKLIGI °C", "en": "POWDER TEMP °C", "de": "PULVERTEMP. °C", "sv": "KRUTTEMP °C"},
+    "BAL_WIND":  {"tr": "YAN RUZGAR m/s (+ sag)", "en": "CROSSWIND m/s (+ right)", "de": "QUERWIND m/s (+ rechts)", "sv": "SIDVIND m/s (+ höger)"},
+    "BAL_ENV":   {"tr": "ORTAM", "en": "AMBIENT", "de": "UMGEBUNG", "sv": "OMGIVNING"},
+    "BAL_BACK":  {"tr": "GERI", "en": "BACK", "de": "ZURÜCK", "sv": "TILLBAKA"},
+    "BAL_BTN":   {"tr": "BAL", "en": "BAL", "de": "BAL", "sv": "BAL"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 

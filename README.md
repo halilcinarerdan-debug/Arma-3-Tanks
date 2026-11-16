@@ -169,3 +169,10 @@ Görüntüden okunamayan parçalar (sol alt renkli butonlar, menzil ekranı yan�
 
 `python3 tools/gen_textures_hq.py [housing|small|gauges|all]` yüksek kalite sürümü üretir: yükseklik haritası + gerçek aydınlatma (pah, speküler), kenar aşınması
 (açık metal ve pas sıyrığı), çok oktavlı kir/akıntı, 2048×2048 gövde, 1024×1024 kadran, 512 topuz, 256 lens/halka. Aynı dosya adlarının üzerine yazar; **tüm PNG'leri yeniden PAA'ya çevirin**.
+
+## Balistik giriş sapması (opsiyonel, Leopard 2 / Strv 122)
+
+CBA ayarı **"Balistik giris sapmasi (opsiyonel)"** (varsayılan kapalı). Açıkken istasyon ekranında `BAL` anahtarı çıkar; açılan sayfada panelin HÖHE / LUFTTEMP. / PULVERTEMP. / QUERWIND girişleri
+vardır. Girilen değer gerçek ortamdan saparsa atış saparır (**basit oyun dengesi modeli, fizik değil**; ölçek "Sapma siddeti" ile). Girilmeyen değer gerçek değer sayılır (sapma yok);
+yan rüzgâr AUTOM iken sensör gerçeği bilir, MANUELL iken girilen değer kullanılır. ACE Weather açıksa sıcaklık ondan (`ace_weather_currentTemperature`), rüzgâr oyun rüzgârından (`wind`) okunur.
+Doğrulanmadı: `ace_weather_currentTemperature` adı ve `ambientTemperature` dönüş biçimi (yoksa yedek değer kullanılır).

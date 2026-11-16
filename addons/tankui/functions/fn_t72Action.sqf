@@ -8,6 +8,25 @@ private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull];
 if (isNull _veh) exitWith {};
 private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
+// sayfa değiştirme ve balistik giriş düğmeleri (Leopard 2)
+if ((_action select [0, 5]) == "page_") exitWith {
+    uiNamespace setVariable ["SB_leoPage", [0, 1] select (_action == "page_bal")];
+    [2] call SB_fnc_setTab;
+};
+if (_action == "bal_windman") exitWith {
+    private _man = !(_veh getVariable ["SB_balWindMan", false]);
+    if (_man) then { _veh setVariable ["SB_bal_wind", [_veh, "wind"] call SB_fnc_ballInput, true] };
+    _veh setVariable ["SB_balWindMan", _man, true];
+};
+if ((_action select [0, 4]) == "bal_") exitWith {
+    private _p = _action splitString "_";                  // ["bal", anahtar, "up"|"dn"]
+    private _key = _p select 1;
+    private _step = [1, -1] select ((_p select 2) == "dn");
+    if (_key == "wind" && {!(_veh getVariable ["SB_balWindMan", false])}) exitWith { systemChat "Yan ruzgar AUTOM: sensor gercek degeri kullaniyor (MANUELL yapin)." };
+    private _cur = [_veh, _key] call SB_fnc_ballInput;
+    _veh setVariable ["SB_bal_" + _key, _cur + _step, true];
+};
+
 if ((_action select [0, 3]) == "bs_") exitWith { [_veh, parseNumber (_action select [3])] call SB_fnc_leoSetRange };   // savaş nişanı / SS 1500
 
 if ((_action select [0, 4]) == "sel_") exitWith {

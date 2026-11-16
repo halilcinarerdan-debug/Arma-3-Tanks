@@ -41,6 +41,9 @@ class CfgFunctions {
             class drawStationM1Cmdr {};
             class gpsText {};
             class leoSetRange {};
+            class ballEnv {};
+            class ballInput {};
+            class drawStationLeo2Ball {};
             class leoMain {};
             class atgmReady {};
             class tProfile {};
@@ -110,6 +113,7 @@ class CfgSBTankUI {
             match[] = {"strv"};
             palette = "leo";
             station = "LEO2";
+            ballInputs = 1;
             bsRange = 1100;      // Strv 122: savaş nişanı 1100 m (SB Strv 122 kılavuzu)
         };
         class Leopard2 {
@@ -117,6 +121,7 @@ class CfgSBTankUI {
             language = "de";
             match[] = {"leopard2", "leopard_2", "leo2"};   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
             palette = "leo";
+            ballInputs = 1;
             bsRange = 1000;      // Leopard 2 (DE): "E 1000" tuşu (SB iç görseli)
             station = "LEO2"; // Leopard 2 ailesi (Strv 122 mantığı); gunner/commander için ISTASYON sekmesi
         };

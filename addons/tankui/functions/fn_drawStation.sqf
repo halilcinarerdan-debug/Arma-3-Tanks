@@ -29,7 +29,11 @@ switch (_station) do {
         switch (uiNamespace getVariable ["SB_TankUI_role", "gunner"]) do {
             case "driver": { [_display] call SB_fnc_drawStationLeo2Driver };
             case "commander": { [_display] call SB_fnc_drawStationLeo2Cmdr };
-            default { [_display] call SB_fnc_drawStationLeo2 };
+            default {
+                if ((uiNamespace getVariable ["SB_leoPage", 0]) == 1 && {missionNamespace getVariable ["SB_TankUI_ballInputs", false]}) then {
+                    [_display] call SB_fnc_drawStationLeo2Ball;
+                } else { [_display] call SB_fnc_drawStationLeo2 };
+            };
         };
     };
     default {
