@@ -64,6 +64,9 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 [_pl, _veh] call (_pl getVariable "sb_fn");
 [5.4, 10.8, "LASE" call _L, "lase"] call _push;
 [8.6, 10.8, "RESET" call _L, "reset", [0.15, 0.15, 0.15, 1]] call _push;
+// ADJUST > BATTLE SIGHT: menzili savaş nişanı değerine (profil bsRange) ayarlar
+private _bs = [_veh, "bsRange", 1200] call SB_fnc_tProfile;
+[11.8, 10.8, "M1_BS" call _L, format ["bs_%1", _bs], [0.45, 0.45, 0.45, 1]] call _push;
 [18.4, 11.0, "M1_RANGE" call _L, "lrfon", {[180, 0] select (_this getVariable ["SB_lrfOn", false])}] call _toggle;
 
 // ---- Satır B: balistik bilgisayar (Avstånd AUTOM/MAN, elle menzil) ----

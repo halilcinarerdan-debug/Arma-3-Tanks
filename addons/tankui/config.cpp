@@ -106,6 +106,7 @@ class CfgSBTankUI {
             match[] = {"m1a2", "m1a1", "m1_abrams", "m1a2_tusk"};
             palette = "m1";
             station = "M1";
+            bsRange = 1200;      // SB M1A2 SEP: SENSORS > RANGE varsayılan 1200, ADJUST > BATTLE SIGHT
         };
         // Leopard 1A5: SB iç görselleri Leopard 2A4 ile aynı yapıda (kontrol ünitesi, balistik bilgisayar, termal/silah paneli);
         // bu yüzden Leopard 2 ekranı kullanılır. Savaş nişanı: balistik bilgisayar ekranı dinlenmede +100 (x10 m = 1000 m) gösteriyor.
