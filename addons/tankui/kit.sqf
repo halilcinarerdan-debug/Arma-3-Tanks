@@ -19,7 +19,8 @@ private _profCfg = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'
 private _pal = getText (_profCfg >> "palette");
 private _leo = _pal != "";
 private _accent = [[0.62, 0.78, 0.58, 1], [0.9, 0.92, 0.9, 1]] select _leo;
-private _sqOk = _leo && {fileExists "\z\tank33\addons\tankui\data\ring_sq_ca.paa"} && {fileExists "\z\tank33\addons\tankui\data\lens_sq_ca.paa"};
+private _isSq = _pal in ["leo", "m1"];
+private _sqOk = _isSq && {fileExists "\z\tank33\addons\tankui\data\ring_sq_ca.paa"} && {fileExists "\z\tank33\addons\tankui\data\lens_sq_ca.paa"};
 private _ringN = ["ring", "ring_sq"] select _sqOk;
 private _lensN = ["lens", "lens_sq"] select _sqOk;
 private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "other"])) call _L;
@@ -154,6 +155,44 @@ private _lampRound = {
         (_c getVariable "sb_glow") ctrlSetTextColor [_k select 0, _k select 1, _k select 2, [0, 0.25] select _on];
     }];
     [_lens, _veh] call (_lens getVariable "sb_fn");
+};
+
+// ---- Küçük yuvarlak lamba (gerçek T-72 paneli: gövdeye gömülü, etiketsiz küçük lens; minik gravür yazı altta) ----
+private _lampSmall = {
+    params ["_ox", "_oy", "_name", "_col", "_code"];
+    private _glow = [_ox call _fx, _oy call _fy, 1.2, 1.2, _dotTex, [_col select 0, _col select 1, _col select 2, 0]] call _pic;
+    ["ring", _ox, _oy, 0.95, 0.95, [1, 1, 1, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
+    private _lens = ["lens", _ox, _oy, 0.64, 0.64, _col, _dotTex, _col] call _spr;
+    ["gloss", _ox - 0.1, _oy - 0.12, 0.5, 0.5, [1, 1, 1, 1], _dotTex, [1, 1, 1, 0]] call _spr;
+    if (_name != "") then { [_ox, _oy + 0.85, 2.1, 0.4, _name, _ink, 2, 0.3] call _txt };
+    _lens setVariable ["sb_col", _col];
+    _lens setVariable ["sb_glow", _glow];
+    _lens setVariable ["sb_code", _code];
+    _lens setVariable ["sb_fn", {
+        params ["_c", "_veh"];
+        private _k = _c getVariable "sb_col";
+        private _on = _veh call (_c getVariable "sb_code");
+        _c ctrlSetTextColor (if (_on) then {_k} else {[(_k select 0) * 0.14, (_k select 1) * 0.14, (_k select 2) * 0.14, 1]});
+        (_c getVariable "sb_glow") ctrlSetTextColor [_k select 0, _k select 1, _k select 2, [0, 0.22] select _on];
+    }];
+    [_lens, _veh] call (_lens getVariable "sb_fn");
+};
+
+// ---- Siyah yuvarlak buton (T-72 paneli: МЕХ-Д / СТАБИЛ / ПРИВОД): koyu başlık, açıkken ince yeşil halka ----
+private _pushBlack = {
+    params ["_ox", "_oy", "_name", "_act", "_stateCode"];
+    ["recess", _ox, _oy, 2.1, 2.1, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
+    private _ringC = ["ring", _ox, _oy, 1.7, 1.7, [0.45, 0.46, 0.43, 1], _dotTex, [0.45, 0.46, 0.43, 1]] call _spr;
+    ["knob", _ox, _oy, 1.25, 1.25, [0.16, 0.16, 0.16, 1], _dotTex, [0.12, 0.12, 0.12, 1]] call _spr;
+    ["gloss", _ox - 0.2, _oy - 0.25, 0.7, 0.7, [1, 1, 1, 0.5], _dotTex, [1, 1, 1, 0]] call _spr;
+    [_ox, _oy + 1.4, 3.0, 0.5, _name, _ink, 2, 0.38] call _txt;
+    [_ox, _oy, 2.0, 2.0, _act] call _inv;
+    _ringC setVariable ["sb_state", _stateCode];
+    _ringC setVariable ["sb_fn", {
+        params ["_c", "_veh"];
+        _c ctrlSetTextColor (if (_veh call (_c getVariable "sb_state")) then {[0.25, 0.95, 0.35, 1]} else {[0.45, 0.46, 0.43, 1]});
+    }];
+    [_ringC, _veh] call (_ringC getVariable "sb_fn");
 };
 
 // ---- Kollu şalter: _angCode araç alır, kol açısı döner ----

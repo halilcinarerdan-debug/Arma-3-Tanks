@@ -158,3 +158,9 @@ Yeni doku: `housing_m1_ca.png` (PAA'ya çevirin). Dil: İngilizce.
 
 `t90`, `t80`, `t72b`, `t72` ayrı profillerdir (ilk eşleşen kazanır). Hepsi T-72 istasyonunu kullanır; sistem farkları profil özelliklerinden gelir
 (`fcs`, `lrfMax`, `lrfModes`, `atgm`, `atgmMin`, `atgmMax`). Ayrıntı ve doğrulanacaklar: [`docs/t-series-systems.md`](docs/t-series-systems.md).
+
+## T-72 paneli (palette = "t72")
+
+Koyu mavi-gri boyalı çelik gövde (`housing_t72_ca.png`, PAA'ya çevrilmeli); SB T-72 görüntülerindeki biçimler: tek plakada kompakt 2×3 lamba matrisi,
+МЕХ-Д / СТАБИЛ / ПРИВОД için siyah yuvarlak butonlar (açıkken ince yeşil halka), seçicide harfler (Б / К / О). T-72, T-72B, T-80 ve T-90 profilleri kullanır.
+Görüntüden okunamayan parçalar (sol alt renkli butonlar, menzil ekranı yanındaki sarı lamba, РУЧ/ПОДДОН penceresi) bilerek eklenmedi.

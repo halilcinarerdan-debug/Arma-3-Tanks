@@ -101,10 +101,21 @@ def lamp(S, ox, oy, name, col, on, pw=3.4):
 def lamp_round(S, ox, oy, name, col, on, side="below"):
     k = col if on else tuple(c * 0.14 for c in col[:3]) + (1,)
     S.spr("@dot", ox, oy, 1.5, 1.5, (col[0], col[1], col[2], 0.25 if on else 0))
-    S.spr("ring_sq" if PAL else "ring", ox, oy, 1.25, 1.25); S.spr("lens_sq" if PAL else "lens", ox, oy, 0.85, 0.85, k); S.spr("gloss", ox - 0.14, oy - 0.16, 0.7, 0.7)
+    sq = PAL in ("leo", "m1"); S.spr("ring_sq" if sq else "ring", ox, oy, 1.25, 1.25); S.spr("lens_sq" if sq else "lens", ox, oy, 0.85, 0.85, k); S.spr("gloss", ox - 0.14, oy - 0.16, 0.7, 0.7)
     if name:
         if side == "right": S.txt(ox + 0.9, oy, 3.2, 0.5, name, style=0, size=0.4)
         else: S.txt(ox, oy + 1.05, 2.6, 0.5, name, size=0.38)
+
+def lamp_small(S, ox, oy, name, col, on):
+    k = col if on else tuple(c * 0.14 for c in col[:3]) + (1,)
+    S.spr("@dot", ox, oy, 1.2, 1.2, (col[0], col[1], col[2], 0.22 if on else 0))
+    S.spr("ring", ox, oy, 0.95, 0.95); S.spr("lens", ox, oy, 0.64, 0.64, k); S.spr("gloss", ox - 0.1, oy - 0.12, 0.5, 0.5)
+    if name: S.txt(ox, oy + 0.85, 2.1, 0.4, name, size=0.3)
+
+def push_black(S, ox, oy, name, on):
+    S.spr("recess", ox, oy, 2.1, 2.1); S.spr("ring", ox, oy, 1.7, 1.7, (0.25, 0.95, 0.35, 1) if on else (0.45, 0.46, 0.43, 1))
+    S.spr("knob", ox, oy, 1.25, 1.25, (0.16, 0.16, 0.16, 1)); S.spr("gloss", ox - 0.2, oy - 0.25, 0.7, 0.7, (1, 1, 1, 0.5))
+    S.txt(ox, oy + 1.4, 3.0, 0.5, name, size=0.38)
 
 def toggle(S, ox, oy, name, ang):
     S.spr("recess", ox, oy, 1.7, 1.7); S.spr("ring", ox, oy, 1.15, 1.15)
@@ -147,19 +158,22 @@ def finish(S):
 # ---------------------------------------------------------------- ISTASYON
 VIOLET = (0.6, 0.35, 1, 1)
 def station():
+    global PAL
+    PAL = "t72"
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
     header(S, "T-72B (Russian)  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
     # durum lambaları (kılavuz s.25)
-    for (x, y, k, c, on) in [(0.9, 2.6, "L_STAB", GREEN, 1), (3.0, 2.6, "L_MIRROR", RED, 1), (5.1, 2.6, "L_HYDR", GREEN, 1),
-                             (0.9, 4.8, "L_TC", RED, 0), (3.0, 4.8, "L_DELTA", RED, 1), (5.1, 4.8, "L_LOADED", VIOLET, 1)]:
-        lamp_round(S, x, y, lbl(k), c, on)
+    S.spr("label", 3.0, 3.6, 6.4, 4.4)
+    for (x, y, k, c, on) in [(1.2, 2.7, "L_STAB", GREEN, 1), (3.0, 2.7, "L_MIRROR", RED, 1), (4.8, 2.7, "L_HYDR", GREEN, 1),
+                             (1.2, 4.7, "L_TC", RED, 0), (3.0, 4.7, "L_DELTA", RED, 1), (4.8, 4.7, "L_LOADED", VIOLET, 1)]:
+        lamp_small(S, x, y, lbl(k), c, on)
     # balistik üçgen + manuel anahtar
     S.txt(8.0, 1.8, 3.6, 0.5, lbl("BALL"), (0.62, 0.78, 0.58, 1))
     lamp_round(S, 8.0, 3.2, lbl("AM_KE"), AMBER, 1, "right"); lamp_round(S, 6.9, 5.0, lbl("AM_HE"), AMBER, 0); lamp_round(S, 8.0, 6.8, lbl("AM_HEAT"), AMBER, 0, "right")
     S.spr("knob", 10.2, 5.0, 1.5, 1.5); S.txt(10.2, 6.1, 2.6, 0.5, lbl("BALL_OVR"), size=0.38)
     toggle(S, 7.0, 9.0, lbl("T_AUTO"), 0); toggle(S, 9.6, 9.0, lbl("T_MIRROR"), 0)
     # mermi seçici, yükle, sayaç
-    rotary(S, 3.0, 12.3, [(lbl("SEL_OFF"), "", -75), (lbl("AM_KE"), "", -25), (lbl("AM_HEAT"), "", 25), (lbl("AM_HE"), "", 75)], 1)
+    rotary(S, 3.0, 12.3, [(lbl("SEL_OFF"), "", -75), (lbl("SEL_KE"), "", -25), (lbl("SEL_HEAT"), "", 25), (lbl("SEL_HE"), "", 75)], 1)
     S.txt(3.0, 15.2, 5, 0.5, lbl("SEL_TITLE")); push(S, 6.9, 14.4, lbl("LOAD"), (0.2, 0.6, 0.25, 1))
     gauge(S, 9.8, 13.3, 1.4, "gauge_ammo", 11, -115, 115, 7, (0.05, 0.05, 0.05, 1)); S.txt(9.8, 15.2, 3.4, 0.5, lbl("AMMO_COUNT"), size=0.4)
     # LRF ekranı ve lambalar
@@ -172,8 +186,8 @@ def station():
     lamp_round(S, 14.4, 6.9, "", RED, 1); S.txt(14.4, 9.6, 6, 0.5, lbl("RANGE"), size=0.42)
     push(S, 12.4, 11.6, lbl("LASE")); push(S, 15.4, 11.6, lbl("RESET"), (0.15, 0.15, 0.15, 1))
     toggle(S, 19.0, 11.3, lbl("T_MODE"), 0); S.txt(18.0, 9.9, 1.4, 0.5, "1200", size=0.4); S.txt(20.0, 9.9, 1.4, 0.5, "1800", size=0.4)
-    toggle(S, 12.5, 14.5, lbl("T_DELTA"), 180); toggle(S, 14.8, 14.5, lbl("T_STAB"), 0); toggle(S, 17.1, 14.5, lbl("T_HYDR"), 0); toggle(S, 19.4, 14.5, lbl("T_LRFON"), 0)
-    finish(S); return S
+    push_black(S, 12.5, 14.3, lbl("T_DELTA"), 1); push_black(S, 14.9, 14.3, lbl("T_STAB"), 0); push_black(S, 17.3, 14.3, lbl("T_HYDR"), 0); toggle(S, 19.4, 14.5, lbl("T_LRFON"), 0)
+    finish(S); PAL = ""; return S
 
 # ---------------------------------------------------------------- MUHIMMAT
 def ammo():

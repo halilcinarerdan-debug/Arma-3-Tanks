@@ -131,6 +131,9 @@ L.update({
     "W_M240L":   {"tr": "M240 (YUKLEYICI)", "en": "M240 (LOADER)"},
     "AM_ATGM":   {"tr": "ATGM", "en": "ATGM", "ru": "УР", "de": "LFK"},
     "L_ATGM":    {"tr": "ATGM", "en": "ATGM", "ru": "ПТУР", "de": "LFK"},
+    "SEL_KE":    {"tr": "BPS", "en": "KE", "ru": "Б", "de": "KE"},
+    "SEL_HEAT":  {"tr": "BKS", "en": "HEAT", "ru": "К", "de": "HEAT"},
+    "SEL_HE":    {"tr": "OFS", "en": "HE", "ru": "О", "de": "HE"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 

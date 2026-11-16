@@ -16,13 +16,14 @@ private _vehName = getText (configFile >> "CfgVehicles" >> typeOf _veh >> "displ
 private _violet = [0.6, 0.35, 1, 1];
 private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 
-// ---- Durum lambaları (kılavuz s.25) ----
-[0.9, 2.6, "L_STAB" call _L,   _green,  {[_this] call SB_fnc_stabEffective}] call _lampRound;
-[3.0, 2.6, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {serverTime - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampRound;
-[5.1, 2.6, "L_HYDR" call _L,   _green,  {_this getVariable ["SB_hydr", false]}] call _lampRound;
-[0.9, 4.8, "L_TC" call _L,     _red,    {false}] call _lampRound;
-[3.0, 4.8, "L_DELTA" call _L,  _red,    {_this getVariable ["SB_delta", false]}] call _lampRound;
-[5.1, 4.8, "L_LOADED" call _L, _violet, {(_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0}] call _lampRound;
+// ---- Durum lambaları: tek plakada kompakt 2x3 matris (gerçek panel düzeni; renkler SB görüntüsüyle aynı) ----
+["label", 3.0, 3.6, 6.4, 4.4, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
+[1.2, 2.7, "L_STAB" call _L,   _green,  {[_this] call SB_fnc_stabEffective}] call _lampSmall;
+[3.0, 2.7, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {serverTime - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampSmall;
+[4.8, 2.7, "L_HYDR" call _L,   _green,  {_this getVariable ["SB_hydr", false]}] call _lampSmall;
+[1.2, 4.7, "L_TC" call _L,     _red,    {false}] call _lampSmall;
+[3.0, 4.7, "L_DELTA" call _L,  _red,    {_this getVariable ["SB_delta", false]}] call _lampSmall;
+[4.8, 4.7, "L_LOADED" call _L, _violet, {(_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0}] call _lampSmall;
 
 // ---- Balistik: üçgen (üst KE, sol HE, alt HEAT) + manuel indeks anahtarı (kılavuz s.26) ----
 [8.0, 1.8, 3.6, 0.5, "BALL" call _L, [0.62, 0.78, 0.58, 1]] call _txt;
@@ -53,9 +54,9 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 // ---- Mermi seçici + YÜKLE + mermi sayacı ----
 private _hasAtgm = ([_veh, "atgm", 0] call SB_fnc_tProfile) > 0;
 private _selPos = if (_hasAtgm) then {[
-    ["SEL_OFF" call _L, "sel_OFF", -88], ["AM_KE" call _L, "sel_KE", -44], ["AM_HEAT" call _L, "sel_HEAT", 0], ["AM_HE" call _L, "sel_HE", 44], ["AM_ATGM" call _L, "sel_ATGM", 88]
+    ["SEL_OFF" call _L, "sel_OFF", -88], ["SEL_KE" call _L, "sel_KE", -44], ["SEL_HEAT" call _L, "sel_HEAT", 0], ["SEL_HE" call _L, "sel_HE", 44], ["AM_ATGM" call _L, "sel_ATGM", 88]
 ]} else {[
-    ["SEL_OFF" call _L, "sel_OFF", -75], ["AM_KE" call _L, "sel_KE", -25], ["AM_HEAT" call _L, "sel_HEAT", 25], ["AM_HE" call _L, "sel_HE", 75]
+    ["SEL_OFF" call _L, "sel_OFF", -75], ["SEL_KE" call _L, "sel_KE", -25], ["SEL_HEAT" call _L, "sel_HEAT", 25], ["SEL_HE" call _L, "sel_HE", 75]
 ]};
 [3.0, 12.3, _selPos, compile "['', 'KE', 'HEAT', 'HE', 'ATGM'] find (_this getVariable ['SB_selType', ''])"] call _rotary;
 if (_hasAtgm) then { [18.8, 4.4, "L_ATGM" call _L, _green, {[_this] call SB_fnc_atgmReady}] call _lampRound };
@@ -98,9 +99,9 @@ if (([_veh, "lrfModes", 1] call SB_fnc_tProfile) > 0) then {
 };
 
 // ---- Şalter sırası: Delta-d / stabilizasyon / hidrolik + LRF açma (kılavuz s.27-28) ----
-[12.5, 14.5, "T_DELTA" call _L, "delta", {[180, 0] select (_this getVariable ["SB_delta", false])}] call _toggle;
-[14.8, 14.5, "T_STAB" call _L, "stab", {[180, 0] select (_this getVariable ["SB_stab", false])}] call _toggle;
-[17.1, 14.5, "T_HYDR" call _L, "hydr", {[180, 0] select (_this getVariable ["SB_hydr", false])}] call _toggle;
+[12.5, 14.3, "T_DELTA" call _L, "delta", {_this getVariable ["SB_delta", false]}] call _pushBlack;
+[14.9, 14.3, "T_STAB" call _L, "stab", {_this getVariable ["SB_stab", false]}] call _pushBlack;
+[17.3, 14.3, "T_HYDR" call _L, "hydr", {_this getVariable ["SB_hydr", false]}] call _pushBlack;
 [19.4, 14.5, "T_LRFON" call _L, "lrfon", {[180, 0] select (_this getVariable ["SB_lrfOn", false])}] call _toggle;
 
 call _finish;

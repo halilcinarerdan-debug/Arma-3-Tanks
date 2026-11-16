@@ -124,28 +124,28 @@ class CfgSBTankUI {
             title = "T-90 - CREW DISPLAY";
             language = "ru";
             match[] = {"t90"};
-            station = "T72";
+            station = "T72"; palette = "t72";
             fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
         };
         class T80 {
             title = "T-80 - CREW DISPLAY";
             language = "ru";
             match[] = {"t80"};
-            station = "T72";
+            station = "T72"; palette = "t72";
             fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
         };
         class T72B {
             title = "T-72B - CREW DISPLAY";
             language = "ru";
             match[] = {"t72b"};
-            station = "T72";
+            station = "T72"; palette = "t72";
             fcs = 2; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
         };
         class T72 {
             title = "T-72 - CREW DISPLAY";
             language = "ru";
             match[] = {"t72"};
-            station = "T72"; // gunner için ISTASYON sekmesi (drawStationT72)
+            station = "T72"; palette = "t72"; // gunner için ISTASYON sekmesi (drawStationT72)
             fcs = 1; lrfMax = 3000; lrfModes = 1; atgm = 0; atgmMin = 0; atgmMax = 0;
         };
     };
