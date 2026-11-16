@@ -59,3 +59,8 @@ Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lam
 - `SENSORS`: RANGE (varsayılan 1200), ATTD, LEAD A/M (otomatik/elle lead), H/T POSN OFF/ON, RETURN. `ADJUST`: BORESIGHT, ZERO, BATTLE SIGHT, AMMO SUBDES, AMMO COUNT, RETURN. En sağdaki tuş her ekranda ana menüye döner.
 - Uygulanan: **BATTLE SIGHT** düğmesi (M1 nişancı ekranı, profil `bsRange = 1200`; SENSORS > RANGE varsayılanı 1200 olduğu için çıkarım), mermi sayaçları (AMMO COUNT karşılığı zaten var), elle menzil (RANGE).
 - Arma'da karşılığı yok: LEAD A/M, ATTD, H/T POSN, BORESIGHT, ZERO, AMMO SUBDES.
+
+## SB M1A2 nişangâh görüntüleri
+- Nişangâh altındaki yeşil 4 haneli değer **menzil (metre)**, başı sıfırlı: `0150` (kullanıcı teyit etti). Küçük yeşil kare lazer/hazır göstergesi gibi duruyor (işlevi doğrulanmadı).
+- `Ammo 3` (Home) = M830A1 HEAT-MP-T (MPAT); MPAT'ın tapa modu SB'de `Fuse: impact` mesajıyla değişiyor (panelde `AIR / GROUND`). Arma'da tapa seçimi yok, eklenmedi.
+- Uygulanan: M1 nişancı menzil göstergeleri başı sıfırlı 4 hane yazar (`SB_fnc_rangeText4`).

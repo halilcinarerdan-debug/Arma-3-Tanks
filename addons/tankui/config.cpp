@@ -41,6 +41,7 @@ class CfgFunctions {
             class drawStationM1Cmdr {};
             class gpsText {};
             class leoSetRange {};
+            class rangeText4 {};
             class ballEnv {};
             class ballInput {};
             class drawStationLeo2Ball {};

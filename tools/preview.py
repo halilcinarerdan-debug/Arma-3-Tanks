@@ -320,7 +320,7 @@ def m1_gunner():
     PAL = "m1"
     S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
     header(S, "M1A2 Abrams  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
-    S.spr("display", 4.9, 2.6, 7.6, 2.7); seven(S, 2.875, 2.6, "1960", 4, 1.0); S.txt(4.9, 4.4, 7, 0.5, lbl("RANGE_M"), DIMG, size=0.4)
+    S.spr("display", 4.9, 2.6, 7.6, 2.7); seven(S, 2.875, 2.6, "0150", 4, 1.0); S.txt(4.9, 4.4, 7, 0.5, lbl("RANGE_M"), DIMG, size=0.4)
     for x, k, c, on in [(11.2, "L_READY", GREEN, 1), (13.5, "L_LRF", RED, 1), (15.8, "W_COAX", AMBER, 0), (18.1, "LED_STAB", GREEN, 1)]:
         lamp_round(S, x, 2.6, lbl(k), c, on)
     S.txt(0.9, 5.1, 8, 0.5, lbl("M1_FC_T"), DIMG, 0, 0.45)

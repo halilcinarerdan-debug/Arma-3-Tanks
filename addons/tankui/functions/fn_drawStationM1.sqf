@@ -14,7 +14,7 @@ private _dim = _accent;
 
 // ---- GPS alt satırı ----
 ["display", 4.9, 2.6, 7.6, 2.7, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
-[2.875, 2.6, compile "[_this] call SB_fnc_rangeText", 4, 1] call _sevenSeg;
+[2.875, 2.6, compile "[_this] call SB_fnc_rangeText4", 4, 1] call _sevenSeg;
 [4.9, 4.4, 7, 0.5, "RANGE_M" call _L, _dim, 2, 0.4] call _txt;
 
 // ---- Kontrol ünitesi LED sırası ----
@@ -74,7 +74,7 @@ private _bs = [_veh, "bsRange", 1200] call SB_fnc_tProfile;
 [5.6, 14.0, "P_RDN" call _L, "rng_dn", [0.45, 0.45, 0.45, 1]] call _push;
 [8.8, 14.0, "P_RUP" call _L, "rng_up", [0.45, 0.45, 0.45, 1]] call _push;
 ["display", 14.4, 14.2, 5.6, 1.9, [1, 1, 1, 1], _rectTex, [0.02, 0.02, 0.02, 1]] call _spr;
-[12.4, 14.2, compile "[_this] call SB_fnc_rangeText", 4, 0.8] call _sevenSeg;
+[12.4, 14.2, compile "[_this] call SB_fnc_rangeText4", 4, 0.8] call _sevenSeg;
 [18.0, 14.2, 3, 0.5, "AVST_T" call _L, _dim, 2, 0.38] call _txt;
 
 call _finish;
