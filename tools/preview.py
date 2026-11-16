@@ -326,7 +326,7 @@ def m1_gunner():
     S.txt(0.9, 5.1, 8, 0.5, lbl("M1_FC_T"), DIMG, 0, 0.45)
     for k, y, on in [("M1_FC_ON", 6.3, 1), ("M1_FC_PWR", 7.7, 0), ("M1_FC_MAN", 9.1, 0)]:
         S.spr("label", 4.4, y, 7.4, 1.15); lamp_round(S, 1.3, y, "", GREEN, on); S.txt(2.4, y, 6.5, 0.55, lbl(k), style=0, size=0.4)
-    S.txt(10.6, 5.1, 7, 0.5, lbl("SEL_TITLE"), DIMG, 0, 0.45)
+    S.txt(10.6, 5.1, 7, 0.5, lbl("M1_GUNSEL"), DIMG, 0, 0.45)
     for k, y, on, n, nd in [("AM_SABOT", 6.3, 1, "18", 2), ("AM_HEATM", 7.7, 0, "10", 2), ("W_COAXM", 9.1, 0, "3600", 4)]:
         S.spr("label", 15.2, y, 8.8, 1.15); lamp_round(S, 10.9, y, "", AMBER, on); S.txt(12.0, y, 5, 0.55, lbl(k), style=0, size=0.4)
         S.spr("display", 17.9, y, 3.0, 1.0); seven(S, 16.79 if nd == 4 else 17.53, y, n, nd, 0.55)

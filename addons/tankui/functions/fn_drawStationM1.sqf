@@ -43,7 +43,7 @@ private _dim = _accent;
 } forEach [["M1_FC_ON", "fc_normal", 6.3, 0], ["M1_FC_PWR", "fc_emerg", 7.7, 1], ["M1_FC_MAN", "fc_manual", 9.1, 2]];
 
 // ---- Mermi / silah seçimi (kalan sayılarla) ----
-[10.6, 5.1, 7, 0.5, "SEL_TITLE" call _L, _dim, 0, 0.45] call _txt;
+[10.6, 5.1, 7, 0.5, "M1_GUNSEL" call _L, _dim, 0, 0.45] call _txt;
 {
     _x params ["_key", "_act", "_y", "_type", "_digits"];
     ["label", 15.2, _y, 8.8, 1.15, [1, 1, 1, 1], _rectTex, [0.05, 0.06, 0.05, 1]] call _spr;
@@ -64,7 +64,7 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 [_pl, _veh] call (_pl getVariable "sb_fn");
 [5.4, 10.8, "LASE" call _L, "lase"] call _push;
 [8.6, 10.8, "RESET" call _L, "reset", [0.15, 0.15, 0.15, 1]] call _push;
-[18.4, 11.0, "T_LRFON" call _L, "lrfon", {[180, 0] select (_this getVariable ["SB_lrfOn", false])}] call _toggle;
+[18.4, 11.0, "M1_RANGE" call _L, "lrfon", {[180, 0] select (_this getVariable ["SB_lrfOn", false])}] call _toggle;
 
 // ---- Satır B: balistik bilgisayar (Avstånd AUTOM/MAN, elle menzil) ----
 [2.2, 14.2, "T_RMODE" call _L, "rngmode", {[0, 180] select (_this getVariable ["SB_rngMan", false])}] call _toggle;

@@ -47,3 +47,10 @@ Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lam
 - Balistik panelin sağında `RESET` / `SET ZERO` tuşlu ayrı kutu (kırmızı ekran sönük): işlevi bilinmiyor, eklenmedi.
 - Karar: Leopard 1 (`leopard1`, `leopard_1`, `leo1`) Leopard 2 istasyon ekranını kullanır (`bsRange = 1000`, balistik giriş sayfası açık, duman şalteri yok). Ateş kontrol modlarının tam konumları doğrulanmadı (SB listesinde yalnızca `Fire control: Stab Bereit`); 105 mm mermi satırları APFSDS-T / HE-T olarak eşleşiyor.
 - Leopard AS1 için görsel yok; profile eklenmedi.
+
+## SB M1A2 SEP nişancı iç görselleri (ve not: önceki Bradley görselleri M2A2'ydi, kullanılmadı)
+- Doğrulananlar: `FIRE CONTROL MODE` = NORMAL / EMERGENCY / MANUAL (lambalı üç konum); `GUN SELECT` MAIN / COAX (lamba); `AMMUNITION SELECT` tuşları (SABOT, ikinci tuş okunamadı: büyük olasılıkla MPAT, `AIR / GROUND`, CAN, HEAT);
+  `RANGE` anahtarı `ARM LAST RTN / ARM 1ST RTN / SAFE`; büyütme 3X / 10X; `NORMAL MODE DRIFT AZ/EL`. HUD: `M829A3 APFSDS-T: 11 | 14`. Sayısal tuş takımlı ekran: ana menü `COMBAT / ADJUST / METRL DATA / SENSORS / MAINT / BACKUP`.
+- Uygulananlar: M1 nişancı ekranının etiketleri gerçek adlara çekildi (NORMAL / EMERGENCY / MANUAL, `RANGE ARM / SAFE`, `GUN / AMMUNITION SELECT`). Davranış (NORMAL = güç+stab, EMERGENCY = güç, MANUAL = güç yok) SB'nin üç tank ailesi için aynı adlarla tarif ettiği modlara dayanıyor; yaklaşık eşleşme.
+- Arma'da karşılığı yok: termal cihaz grubu (polarite, sembol, retikül, odak, büyütme 6X-50X, anti-glare, search/stare), boresight, panel ışıkları, `AIR / GROUND`, `NORMAL MODE DRIFT`.
+- Bekleyen: `METRL DATA` menüsünde hangi girişler var (hava sıcaklığı / rüzgâr vb.): açılırsa Leopard'daki gibi isteğe bağlı balistik giriş sayfası eklenebilir.
