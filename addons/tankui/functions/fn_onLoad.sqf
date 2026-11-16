@@ -4,6 +4,22 @@ private _profile = [_veh] call SB_fnc_getProfile;
 private _role = [_veh, player] call SB_fnc_getRole;
 private _roleCfg = configFile >> "CfgSBTankUI" >> "Roles" >> _role;
 
+// Konum ve boyut (CBA ayarları): tablet denetimleri merkezden ölçeklenir ve kaydırılır. Sekme dizilimi ve ekran çizimi bu konumlardan okunur.
+private _s = (missionNamespace getVariable ["SB_TankUI_uiScale", 100]) / 100;
+private _ox = safeZoneW * (missionNamespace getVariable ["SB_TankUI_uiX", 0]) / 100;
+private _oy = safeZoneH * (missionNamespace getVariable ["SB_TankUI_uiY", 0]) / 100;
+if (_s != 1 || {_ox != 0} || {_oy != 0}) then {
+    private _cx = safeZoneX + safeZoneW * 0.5;
+    private _cy = safeZoneY + safeZoneH * 0.5;
+    {
+        private _c = _display displayCtrl _x;
+        (ctrlPosition _c) params ["_px", "_py", "_pw", "_ph"];
+        _c ctrlSetPosition [_cx + (_px - _cx) * _s + _ox, _cy + (_py - _cy) * _s + _oy, _pw * _s, _ph * _s];
+        _c ctrlCommit 0;
+        if (_x in [7411, 7412, 7413, 7499]) then { _c ctrlSetFontHeight (safeZoneH * 0.011 * _s) };
+    } forEach [7401, 7402, 7405, 7411, 7412, 7413, 7499];
+};
+
 uiNamespace setVariable ["SB_TankUI_display", _display];
 uiNamespace setVariable ["SB_TankUI_vehicle", _veh];
 uiNamespace setVariable ["SB_TankUI_role", _role];

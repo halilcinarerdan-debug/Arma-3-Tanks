@@ -176,3 +176,9 @@ CBA ayarı **"Balistik giris sapmasi (opsiyonel)"** (varsayılan kapalı). Açı
 vardır. Girilen değer gerçek ortamdan saparsa atış saparır (**basit oyun dengesi modeli, fizik değil**; ölçek "Sapma siddeti" ile). Girilmeyen değer gerçek değer sayılır (sapma yok);
 yan rüzgâr AUTOM iken sensör gerçeği bilir, MANUELL iken girilen değer kullanılır. ACE Weather açıksa sıcaklık ondan (`ace_weather_currentTemperature`), rüzgâr oyun rüzgârından (`wind`) okunur.
 Doğrulanmadı: `ace_weather_currentTemperature` adı ve `ambientTemperature` dönüş biçimi (yoksa yedek değer kullanılır).
+
+## Konum ve boyut ayarları (CBA → Steel Tank UI → "Konum ve boyut")
+
+- **Menu (tablet) boyutu (%)**: 40–130, varsayılan 100. Menü bir sonraki açılışta geçerli olur.
+- **Menu yatay / dikey konum (%)**: ekran genişliği/yüksekliğinin yüzdesi kadar kaydırır (0 = ortalı; yatay + sağa, dikey + aşağı).
+- **Nisangah plakalari yukseklik (%)**: sol/sağ plakaların üst kenardan uzaklığı (17 = varsayılan). Boyutu ayrıca "Nisangah plaka boyutu".

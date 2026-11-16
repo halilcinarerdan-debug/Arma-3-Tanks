@@ -85,6 +85,26 @@ if (!hasInterface) exitWith {};
     "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;
 
+["SB_TankUI_uiScale", "SLIDER",
+    ["Menu (tablet) boyutu (%)", "Ctrl+T ile acilan tabletin boyutu (100 = varsayilan). Menu bir sonraki acilista gecerli olur."],
+    ["Steel Tank UI", "Konum ve boyut"], [40, 130, 100, 0], 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_uiX", "SLIDER",
+    ["Menu yatay konum (%)", "Tableti ekran genisliginin yuzdesi kadar saga (+) veya sola (-) kaydirir. 0 = ortali."],
+    ["Steel Tank UI", "Konum ve boyut"], [-50, 50, 0, 0], 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_uiY", "SLIDER",
+    ["Menu dikey konum (%)", "Tableti ekran yuksekliginin yuzdesi kadar asagi (+) veya yukari (-) kaydirir. 0 = ortali."],
+    ["Steel Tank UI", "Konum ve boyut"], [-50, 50, 0, 0], 0
+] call CBA_fnc_addSetting;
+
+["SB_TankUI_hudY", "SLIDER",
+    ["Nisangah plakalari yukseklik (%)", "Plakalarin ust kenardan uzakligi (ekran yuksekliginin yuzdesi; 17 = varsayilan)."],
+    ["Steel Tank UI", "Konum ve boyut"], [0, 60, 17, 0], 0
+] call CBA_fnc_addSetting;
+
 ["SB_TankUI_hudScale", "SLIDER",
     ["Nisangah plaka boyutu (%)", "Plakalarin olcegi (115 = varsayilan, 100 = daha kucuk)."],
     "Steel Tank UI", [50, 200, 115, 0], 0

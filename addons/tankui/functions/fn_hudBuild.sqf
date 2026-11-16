@@ -16,7 +16,7 @@ private _colW = 9;
 private _gap = 0.6;
 private _x0L = _sx + 0.5 * _u * _asp;
 private _x0R = _sx + _sw - (_colW + 0.5) * _u * _asp;
-private _yTop = _sy + 0.17 * _sh;
+private _yTop = _sy + ((missionNamespace getVariable ["SB_TankUI_hudY", 17]) / 100) * _sh;
 private _dimTxt = [0.62, 0.78, 0.58, 1];
 private _turretOf = "uiNamespace getVariable ['SB_TankUI_turret', [0]]";
 

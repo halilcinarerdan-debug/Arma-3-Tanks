@@ -21,3 +21,7 @@
 
 ## Sorun olursa gönderin
 Ekran görüntüsü + RPT'deki `[SB_TankUI]` satırları + `Error` içeren satırlar. Araç sınıfı: `copyToClipboard typeOf vehicle player`.
+
+## Konum / boyut ayarı
+CBA ayarları → Steel Tank UI → "Konum ve boyut": tablet boyutunu 70'e, yatay konumu +20'ye çekip menüyü yeniden açın. Tablet küçülüp sağa kaymalı, sekme düğmeleri yerinde kalmalı,
+içerik taşmamalı. Taşma/kayma olursa ekran görüntüsünü gönderin.
