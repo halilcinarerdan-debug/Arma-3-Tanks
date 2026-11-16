@@ -16,7 +16,7 @@ L = {
     "SCR_STATUS":     ("DURUM", "STATUS", "СОСТОЯНИЕ", "ZUSTAND"),
     "CLOSE":          ("KAPAT", "CLOSE", "ЗАКРЫТЬ", "SCHLIESSEN"),
     # istasyon: lambalar
-    "L_STAB":   ("STAB", "STAB", "СТАБ", "STAB"),
+    "L_STAB":   ("STAB", "STAB", "СТАБИЛ", "STAB"),
     "L_MIRROR": ("AYNA", "MIRROR", "ЗЕРКАЛО", "SPIEGEL"),
     "L_HYDR":   ("HIDR", "HYDR", "ПРИВОД", "HYDR"),
     "L_TC":     ("TC", "TC", "КОМ", "KDT"),
