@@ -40,3 +40,10 @@ Arma'da yükleyici koltuğu yok; yükleme YÜKLE düğmesiyle (insan yükleyici 
 2A4 = 2A5 ile aynı kontrol ünitesi / balistik bilgisayar / ateş kontrol paneli (tek fark: 3. tuş `KH / KW`). Ek parça: `MEHRFACHWURFANLAGE` (kırmızı lamba, `EIN/AUS` şalteri, `Links / Fächer / Rechts` ve 0–8 seçici) → Arma'da yalnızca
 EIN/AUS karşılığı var: komutan ekranında şalter EIN olmadan DUMAN düğmesi atmaz (profil özelliği `smokeArm`). Seçici (hangi tüpler) Arma'da yok, eklenmedi.
 Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lamba testi, `40%` kadranı Arma'da karşılığı yok.
+
+## SB Leopard 1A5 iç görselleri
+- Balistik bilgisayar paneli Leopard 2A4 ile birebir aynı (LASER, RÜCKSTEUERUNG, VERKANTUNG-KORR., WISCHER, ENTFERNUNG AUTOM/MANUELL, ANZEIGEWAHL, HÖHE, LUFTTEMP., PULVERTEMP., QUERWIND; ekran dinlenmede `+ 100` = 1000 m).
+- Nişancı panelleri: üstte tuşlar (`STAB EIN` dahil; diğerleri okunamadı), `TURM AUS` / `BORDNETZ` seçicisi, aydınlatma düğmeleri, `LAMPEN-FUNKTION-TEST` kutusu; sağda termal cihaz + `WAFFE MG/HW` + `FJA` (2A4 ile aynı); iki tutamak (kırmızı avuç anahtarı); büyük kırmızı kadran (azimut/menzil benzeri, işlevi bilinmiyor).
+- Balistik panelin sağında `RESET` / `SET ZERO` tuşlu ayrı kutu (kırmızı ekran sönük): işlevi bilinmiyor, eklenmedi.
+- Karar: Leopard 1 (`leopard1`, `leopard_1`, `leo1`) Leopard 2 istasyon ekranını kullanır (`bsRange = 1000`, balistik giriş sayfası açık, duman şalteri yok). Ateş kontrol modlarının tam konumları doğrulanmadı (SB listesinde yalnızca `Fire control: Stab Bereit`); 105 mm mermi satırları APFSDS-T / HE-T olarak eşleşiyor.
+- Leopard AS1 için görsel yok; profile eklenmedi.

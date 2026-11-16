@@ -107,6 +107,17 @@ class CfgSBTankUI {
             palette = "m1";
             station = "M1";
         };
+        // Leopard 1A5: SB iç görselleri Leopard 2A4 ile aynı yapıda (kontrol ünitesi, balistik bilgisayar, termal/silah paneli);
+        // bu yüzden Leopard 2 ekranı kullanılır. Savaş nişanı: balistik bilgisayar ekranı dinlenmede +100 (x10 m = 1000 m) gösteriyor.
+        class Leopard1 {
+            title = "LEOPARD 1 - CREW DISPLAY";
+            language = "de";
+            match[] = {"leopard1", "leopard_1", "leo1"};
+            palette = "leo";
+            station = "LEO2";
+            ballInputs = 1;
+            bsRange = 1000;
+        };
         class Strv122 {
             title = "STRV 122 - CREW DISPLAY";
             language = "sv";
