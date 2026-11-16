@@ -104,11 +104,20 @@ class CfgSBTankUI {
             palette = "m1";
             station = "M1";
         };
+        class Strv122 {
+            title = "STRV 122 - CREW DISPLAY";
+            language = "sv";
+            match[] = {"strv"};
+            palette = "leo";
+            station = "LEO2";
+            bsRange = 1100;      // Strv 122: savaş nişanı 1100 m (SB Strv 122 kılavuzu)
+        };
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
             language = "de";
-            match[] = {"leopard2", "leopard_2", "leo2", "strv"};   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
+            match[] = {"leopard2", "leopard_2", "leo2"};   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
             palette = "leo";
+            bsRange = 1000;      // Leopard 2 (DE): "E 1000" tuşu (SB iç görseli)
             station = "LEO2"; // Leopard 2 ailesi (Strv 122 mantığı); gunner/commander için ISTASYON sekmesi
         };
         class Challenger2 {

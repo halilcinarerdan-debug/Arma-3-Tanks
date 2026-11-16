@@ -28,3 +28,10 @@ Arma'da yükleyici koltuğu yok; yükleme YÜKLE düğmesiyle (insan yükleyici 
   Ekranımızdaki gerçek işlevler (yükle, mermi, ateş kontrol modu, BS 1100, SS 1500, koaks) bu listeyle uyumlu; KH/KW/ZU komutan ezme modları, dinamik lead, yakınlaştırma, filtre, retikül ışığı Arma'da yok (eklenmedi).
 - **Leopard 1** (ayrı araç): Pano (TC panoramik periskop) kontrolleri, Battle-sight range (Backspace), Toggle magnification N, Fire control: Stab Bereit L, Dynamic lead, palm switch.
   Leopard 1 için şimdilik ekran yok (Generic profil); `leopard2`/`strv` eşleşmesi Leopard 1'i artık yakalamıyor.
+
+## SB Leopard 2 (DE) iç görselleri: doğrulananlar
+- Kontrol ünitesi LED/tuş sırası (soldan): `BEREIT / EIN` (yeşil), `FEUER` (kırmızı), `KH / KH HZF`, `MG / HW`, `STAB EIN` (krem), `WNA` (mavi), `E 1000`. Üstte `BEREICH 1 / BEREICH 2` tablosu: A = KE, b = MZ (çok amaçlı), D = MG → GPS satırındaki harfler (A / b / d) bunlar.
+- Ateş kontrol modu paneli: `STAB EIN` · `BEOBACHT` · `TURM AUS` (+ `BORDNETZ` tuşu, işlevi bilinmiyor). Balistik bilgisayar: `LASER` anahtarı EIN/AUS, `ENTFERNUNG AUTOM/MANUELL` + düğme x10 (m), `ANZEIGEWAHL`, `HÖHE`, `LUFTTEMP.`, `PULVERTEMP.`, `QUERWIND AUTOM/MANUELL`, `VAR ENTF AUS / 1500`, `WAFFE MG / HW`.
+- **Savaş nişanı:** Leopard 2 (DE) `E 1000` (1000 m); Strv 122 1100 m (SB Strv 122 kılavuzu). Profil özelliği `bsRange` (Leopard2 = 1000, Strv122 = 1100). `VAR ENTF 1500` ikisinde de var.
+- **Arma'da karşılığı yok / bağlanmadı:** `KH`, `KH HZF`, `WNA`, `BORDNETZ`, `RÜCKSTEUERUNG`, `VERKANTUNG-KORR.`, `WISCHER`, drift ve justaj düğmeleri, termal cihaz grubu (EIN/BER/AUS, polarite, FERN/NAH, SEHFELD, BILDHELLIGKEIT, KONTRAST), `FJA`, aydınlatma düğmeleri.
+- **Gelecek fikri (sistemsel derinlik):** yükseklik / hava / barut sıcaklığı / yan rüzgâr girişleri gerçek değerlerden saparsa atış sapması (T-72 balistik düğmesindeki gibi); henüz yapılmadı.

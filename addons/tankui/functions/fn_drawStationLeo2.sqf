@@ -69,8 +69,10 @@ _pl setVariable ["sb_fn", { params ["_c", "_veh"]; _c ctrlSetText ((["LOAD", "LO
 [_pl, _veh] call (_pl getVariable "sb_fn");
 [5.4, 10.8, "LASE" call _L, "lase"] call _push;
 [8.6, 10.8, "RESET" call _L, "reset", [0.15, 0.15, 0.15, 1]] call _push;
+// savaş nişanı: Leopard 2 (DE) "E 1000", Strv 122 "BS 1100" (profil özelliği bsRange); "VAR ENTF 1500" / SS 1500 ayrı
+private _bs = [_veh, "bsRange", 1100] call SB_fnc_tProfile;
 [11.8, 10.8, "P_SS1500" call _L, "bs_1500", [0.45, 0.45, 0.45, 1]] call _push;
-[15.0, 10.8, "P_BS" call _L, "bs_1100", [0.45, 0.45, 0.45, 1]] call _push;
+[15.0, 10.8, format ["%1 %2", "P_BSL" call _L, _bs], format ["bs_%1", _bs], [0.45, 0.45, 0.45, 1]] call _push;
 [18.4, 11.0, "T_LRFON" call _L, "lrfon", {[180, 0] select (_this getVariable ["SB_lrfOn", false])}] call _toggle;
 
 // ---- Satır B: balistik bilgisayar (Avstånd AUTOM/MAN, elle menzil) ----

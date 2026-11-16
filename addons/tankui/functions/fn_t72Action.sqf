@@ -8,6 +8,8 @@ private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull];
 if (isNull _veh) exitWith {};
 private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
+if ((_action select [0, 3]) == "bs_") exitWith { [_veh, parseNumber (_action select [3])] call SB_fnc_leoSetRange };   // savaş nişanı / SS 1500
+
 if ((_action select [0, 4]) == "sel_") exitWith {
     private _t = _action select [4];
     if (_t == "COAX") exitWith {
@@ -91,8 +93,6 @@ switch (_action) do {
         ["load"] call SB_fnc_t72Action;
     };
     // elle menzil (Avstånd MAN): savaş nişanı / SS 1500 / +-100 m
-    case "bs_1100": { [_veh, 1100] call SB_fnc_leoSetRange };
-    case "bs_1500": { [_veh, 1500] call SB_fnc_leoSetRange };
     case "rng_dn":  { [_veh, ((_veh getVariable ["SB_range", 1100]) - 100) max 200] call SB_fnc_leoSetRange };
     case "rng_up":  { [_veh, ((_veh getVariable ["SB_range", 1100]) + 100) min 9990] call SB_fnc_leoSetRange };
     case "rngmode": { _veh setVariable ["SB_rngMan", !(_veh getVariable ["SB_rngMan", false]), true] };

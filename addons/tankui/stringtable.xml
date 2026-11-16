@@ -164,7 +164,7 @@
         <Key ID="STR_SB_tr_T_LRFON"><Original>LRF ACIK</Original></Key>
         <Key ID="STR_SB_en_T_LRFON"><Original>LRF ON</Original></Key>
         <Key ID="STR_SB_ru_T_LRFON"><Original>ЛД ВКЛ</Original></Key>
-        <Key ID="STR_SB_de_T_LRFON"><Original>LRF AN</Original></Key>
+        <Key ID="STR_SB_de_T_LRFON"><Original>LASER EIN</Original></Key>
         <Key ID="STR_SB_sv_T_LRFON"><Original>LRF PÅ</Original></Key>
         <Key ID="STR_SB_tr_T_AUTO"><Original>OTO / EL</Original></Key>
         <Key ID="STR_SB_en_T_AUTO"><Original>AUT / MAN</Original></Key>
@@ -342,7 +342,7 @@
         <Key ID="STR_SB_sv_FC_NORMAL"><Original>STAB TILL</Original></Key>
         <Key ID="STR_SB_tr_FC_EMERG"><Original>ACIL</Original></Key>
         <Key ID="STR_SB_en_FC_EMERG"><Original>EMERGENCY</Original></Key>
-        <Key ID="STR_SB_de_FC_EMERG"><Original>BEOBACHTEN</Original></Key>
+        <Key ID="STR_SB_de_FC_EMERG"><Original>BEOBACHT</Original></Key>
         <Key ID="STR_SB_sv_FC_EMERG"><Original>OBSERVATION</Original></Key>
         <Key ID="STR_SB_tr_FC_MANUAL"><Original>MANUEL</Original></Key>
         <Key ID="STR_SB_en_FC_MANUAL"><Original>MANUAL</Original></Key>
@@ -358,7 +358,7 @@
         <Key ID="STR_SB_sv_AM_HET"><Original>SLSGR 95</Original></Key>
         <Key ID="STR_SB_tr_LED_BER"><Original>HAZIR</Original></Key>
         <Key ID="STR_SB_en_LED_BER"><Original>RDY</Original></Key>
-        <Key ID="STR_SB_de_LED_BER"><Original>BER</Original></Key>
+        <Key ID="STR_SB_de_LED_BER"><Original>BEREIT</Original></Key>
         <Key ID="STR_SB_sv_LED_BER"><Original>BER</Original></Key>
         <Key ID="STR_SB_tr_LED_ELD"><Original>ATES</Original></Key>
         <Key ID="STR_SB_en_LED_ELD"><Original>FIRE</Original></Key>
@@ -370,11 +370,11 @@
         <Key ID="STR_SB_sv_LED_RK"><Original>RK</Original></Key>
         <Key ID="STR_SB_tr_LED_KSP"><Original>MG</Original></Key>
         <Key ID="STR_SB_en_LED_KSP"><Original>MG</Original></Key>
-        <Key ID="STR_SB_de_LED_KSP"><Original>MG</Original></Key>
+        <Key ID="STR_SB_de_LED_KSP"><Original>MG / HW</Original></Key>
         <Key ID="STR_SB_sv_LED_KSP"><Original>KSP</Original></Key>
         <Key ID="STR_SB_tr_LED_STAB"><Original>STAB</Original></Key>
         <Key ID="STR_SB_en_LED_STAB"><Original>STAB</Original></Key>
-        <Key ID="STR_SB_de_LED_STAB"><Original>STAB</Original></Key>
+        <Key ID="STR_SB_de_LED_STAB"><Original>STAB EIN</Original></Key>
         <Key ID="STR_SB_sv_LED_STAB"><Original>STAB</Original></Key>
         <Key ID="STR_SB_tr_T_KANKSP"><Original>TOP/MG</Original></Key>
         <Key ID="STR_SB_en_T_KANKSP"><Original>GUN/MG</Original></Key>
@@ -386,7 +386,7 @@
         <Key ID="STR_SB_sv_T_FUSE"><Original>TÄNDRÖR</Original></Key>
         <Key ID="STR_SB_tr_T_RMODE"><Original>OTO/EL</Original></Key>
         <Key ID="STR_SB_en_T_RMODE"><Original>AUTO/MAN</Original></Key>
-        <Key ID="STR_SB_de_T_RMODE"><Original>AUT/MAN</Original></Key>
+        <Key ID="STR_SB_de_T_RMODE"><Original>AUTOM/MANUELL</Original></Key>
         <Key ID="STR_SB_sv_T_RMODE"><Original>AUTOM/MAN</Original></Key>
         <Key ID="STR_SB_tr_T_IRV"><Original>TIS</Original></Key>
         <Key ID="STR_SB_en_T_IRV"><Original>TIS</Original></Key>
@@ -400,10 +400,10 @@
         <Key ID="STR_SB_en_P_SS1500"><Original>SS 1500</Original></Key>
         <Key ID="STR_SB_de_P_SS1500"><Original>SS 1500</Original></Key>
         <Key ID="STR_SB_sv_P_SS1500"><Original>SS 1500</Original></Key>
-        <Key ID="STR_SB_tr_P_BS"><Original>BS 1100</Original></Key>
-        <Key ID="STR_SB_en_P_BS"><Original>BS 1100</Original></Key>
-        <Key ID="STR_SB_de_P_BS"><Original>BS 1100</Original></Key>
-        <Key ID="STR_SB_sv_P_BS"><Original>BS 1100</Original></Key>
+        <Key ID="STR_SB_tr_P_BSL"><Original>BS</Original></Key>
+        <Key ID="STR_SB_en_P_BSL"><Original>BS</Original></Key>
+        <Key ID="STR_SB_de_P_BSL"><Original>E</Original></Key>
+        <Key ID="STR_SB_sv_P_BSL"><Original>BS</Original></Key>
         <Key ID="STR_SB_tr_W_MG2"><Original>MG 2</Original></Key>
         <Key ID="STR_SB_en_W_MG2"><Original>MG 2</Original></Key>
         <Key ID="STR_SB_de_W_MG2"><Original>MG3 (LADER)</Original></Key>
