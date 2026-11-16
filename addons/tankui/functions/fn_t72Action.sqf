@@ -10,7 +10,13 @@ private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
 if ((_action select [0, 4]) == "sel_") exitWith {
     private _t = _action select [4];
+    if (_t == "COAX") exitWith {
+        // koaksiyel (П): silahı seç (SB: "Toggle gun select: main / coax")
+        ([_veh, _turret] call SB_fnc_weaponRoles) params ["_main", "_coax"];
+        if (_coax != "") then { [_veh, _turret, _coax, _coax] call SB_fnc_selectWeapon } else { systemChat "Bu taretde koaksiyel silah bulunamadi." };
+    };
     _veh setVariable ["SB_selType", ["", _t] select (_t != "OFF"), true];
+    if (_t != "OFF") then { [_veh, _turret] call SB_fnc_leoMain };      // koaksiyel seçiliyse ana topa dön
 };
 
 switch (_action) do {

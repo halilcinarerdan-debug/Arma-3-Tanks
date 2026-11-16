@@ -57,7 +57,9 @@ if (_hasAtgm) then { [10.2, 12.7, "L_ATGM" call _L, _green, {[_this] call SB_fnc
 
 // ---- Menzil çarkı + lazer ----
 [16.4, 12.4, 3.0, "gauge_arc", 30, -80, 80, compile "([_this] call SB_fnc_rangeValue) / 100", [1, 0.45, 0.1, 1], [0, 0, 0, 0], 0.98] call _gauge;
-[16.4, 14.2, 6, 0.5, "RANGE" call _L, _ink, 2, 0.42] call _txt;
+[16.4, 15.1, 6, 0.5, "RANGE" call _L, _ink, 2, 0.42] call _txt;
+[13.4, 13.0, "P_RDN" call _L, "rng_dn", [0.45, 0.45, 0.45, 1]] call _push;     // SB: "GPS range decrease"
+[19.4, 13.0, "P_RUP" call _L, "rng_up", [0.45, 0.45, 0.45, 1]] call _push;     // SB: "GPS range increase"
 [15.6, 7.0, "LASE" call _L, "lase"] call _push;
 [18.2, 7.0, "RESET" call _L, "reset", [0.15, 0.15, 0.15, 1]] call _push;
 

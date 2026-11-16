@@ -48,3 +48,11 @@ Araştırma (arama özetleri, ikincil kaynak; SB sayfaları ağ nedeniyle açıl
 yükleme nişancı tarafından ayrı bir tuşla yapılıyor. FK Gaming rehberi, Sosna-U düzeninde yükleyicinin yarı otomatik moda alınıp nişancının tuşuna beklediğini söylüyor.
 Doğrulanmadığı için çizilmeyenler: СОСНА-У paneli (МЕНЮ, ЗАПИСЬ ПОДСВЕТКА, ВОЗВРАТ, ВЫВЕРКА Д, Д.У., 4x/12x, ГОТОВ lambaları), РС1–РС4 / ВС, АСЦ, РУЧ/ПОДДОН penceresi, ВКЛ.А, АВТ/РУЧ butonları,
 seçici konumları ЗАГР / П / У / УН, Taales paneli. Bunların işlevi Steel Beasts kılavuzundan (T-72B3 m.2012) doğrulanınca, Arma'da karşılığı varsa eklenecek.
+
+## SB T-72B3 kontrol listesi (kullanıcıdan, "Filter: T-72B3") → Arma eşleşmesi
+Liste: Load Main Gun (Gnr) V · Stabilize TC Peri (T72 TC) , · Slew Gun to Peri (T72 TC) . · GPS range increase/decrease Shift+Up/Down · Change reticle color R ·
+Toggle auto target tracking O · Toggle auto target tracking lock L · Ammo 1/2/4/3 Insert/Delete/End/Home · Toggle gun select main/coax M · Toggle TIS on/off Num+ ·
+Toggle mag./zoom in N · Zoom out Shift+N · Toggle TIS polarity Num− · TC override SABOT/HEAT/ATGM/MPAT/COAX/off Alt+Insert/Delete/Home/End/PageUp/PageDown.
+- **Arma'da gerçek karşılığı olup bağlananlar:** Load Main Gun → ЗАРЯД; Ammo 1-4 + gun select main/coax → seçici (О MPAT/HE, Б SABOT, К HEAT, У ATGM, П koaks); GPS range increase/decrease → menzil çarkı − / + (±100 m, elle menzil).
+- **Çıkarım (teyit bekliyor):** seçici harfleri: Б = SABOT, К = HEAT, О = MPAT, У = ATGM, П = koaks. Kanıt: SB'nin beş seçeneği (SABOT/HEAT/ATGM/MPAT/COAX) ile panelde okunan beş harf birebir örtüşüyor; `ЗАГР` ve `УН` konumları listede karşılık bulmadı, çizilmedi.
+- **Arma'da karşılığı yok (eklenmedi):** auto target tracking (muhtemelen panel АСЦ), TIS açma/polarite, yakınlaştırma, retikül rengi, komutan periskobu / ezme komutları.
