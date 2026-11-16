@@ -22,6 +22,7 @@ private _ammo = _strs select (count _strs - 2);
 private _mag = _strs select (count _strs - 1);
 if (isNull _proj) exitWith {};
 if !(missionNamespace getVariable ["SB_TankUI_effects", true]) exitWith {};
+if ([_veh] call SB_fnc_isDisabled) exitWith {};
 if !(_veh getVariable ["SB_armed", false]) exitWith {};
 
 // yalnızca topçu mermisi/kurşun (füze, duman vb. hariç)

@@ -42,6 +42,7 @@ class CfgFunctions {
             class gpsText {};
             class leoSetRange {};
             class rangeText4 {};
+            class isDisabled {};
             class ballEnv {};
             class ballInput {};
             class drawStationLeo2Ball {};

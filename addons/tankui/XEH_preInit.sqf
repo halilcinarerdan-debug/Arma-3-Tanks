@@ -85,6 +85,11 @@ if (!hasInterface) exitWith {};
     "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;
 
+["SB_TankUI_disabled", "EDITBOX",
+    ["Devre disi araclar", "Bu araclarda Steel Tank UI (menu, nisangah plakalari, panel etkileri) kapali olur. Virgul veya noktali virgul ile ayirin. Bir profil adi (Leopard2, T72B3, M1A2...) o profildeki tum araclari, baska bir yazi ise sinif adinin kucuk harfli bir parcasini kapatir. Ornek: T90, rhs_t80"],
+    ["Steel Tank UI", "Konum ve boyut"], "", 0
+] call CBA_fnc_addSetting;
+
 ["SB_TankUI_classMap", "EDITBOX",
     ["Sinif eslestirme", "Tanimsiz bir araci bir profile baglar. Bicim: sinif=Profil; sinif2=Profil2 (sinif adinin kucuk harfli bir parcasi). Profiller: Leopard2, Leopard1, Strv122, M1A2, T72B3, T72B, T72, T80, T90. Ornek: leopard2a6=Leopard2"],
     ["Steel Tank UI", "Konum ve boyut"], "", 0

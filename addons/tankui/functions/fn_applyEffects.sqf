@@ -29,6 +29,7 @@ if (!isNull _last && {_last != _veh}) then {
 };
 
 if !(_veh isKindOf "Tank") exitWith {};
+if ([_veh] call SB_fnc_isDisabled) exitWith {};
 if (!alive player || {!(missionNamespace getVariable ["SB_TankUI_effects", true])} || {!(_veh getVariable ["SB_armed", false])}) exitWith {};
 if (([_veh, player] call SB_fnc_getRole) != "gunner") exitWith {};
 

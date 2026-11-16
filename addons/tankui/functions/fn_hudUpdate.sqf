@@ -8,7 +8,7 @@ call SB_fnc_applyEffects;
 private _want = false;
 private _veh = vehicle player;
 if (missionNamespace getVariable ["SB_TankUI_hud", true] && {isNull (uiNamespace getVariable ["SB_TankUI_display", displayNull])}) then {
-    if (_veh isKindOf "Tank" && {alive player} && {cameraView == "GUNNER"} && {([_veh, player] call SB_fnc_getRole) in ["gunner", "commander"]}) then { _want = true };
+    if (_veh isKindOf "Tank" && {!([_veh] call SB_fnc_isDisabled)} && {alive player} && {cameraView == "GUNNER"} && {([_veh, player] call SB_fnc_getRole) in ["gunner", "commander"]}) then { _want = true };
 };
 
 private _disp = uiNamespace getVariable ["SB_TankUI_hudDisplay", displayNull];

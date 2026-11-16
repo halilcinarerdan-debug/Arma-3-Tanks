@@ -183,6 +183,11 @@ Doğrulanmadı: `ace_weather_currentTemperature` adı ve `ambientTemperature` d�
 - **Menu yatay / dikey konum (%)**: ekran genişliği/yüksekliğinin yüzdesi kadar kaydırır (0 = ortalı; yatay + sağa, dikey + aşağı).
 - **Nisangah plakalari yukseklik (%)**: sol/sağ plakaların üst kenardan uzaklığı (17 = varsayılan). Boyutu ayrıca "Nisangah plaka boyutu".
 
+## Bazı araçlarda kapatma
+
+CBA → Steel Tank UI → **Devre disi araclar** (client): virgül/noktalı virgülle ayrılmış girdiler. Profil adı (`Leopard2`, `T72B3`, `M1A2`, `T90`...) o profildeki tüm araçları, başka bir yazı sınıf adının küçük harfli bir parçasını kapatır
+(örn. `T90, rhs_t80`). Kapalı araçta menü açılmaz, nişangâh plakaları çıkmaz, panel etkileri (stab sapması, taret kilidi, balistik sapma) çalışmaz, ACE girişi görünmez.
+
 ## Araç tanınmıyorsa (yalnızca Mühimmat ve Durum sekmesi görünüyorsa)
 
 Araç hiçbir profile eşleşmemiş demektir; menü açılınca sohbette sınıf adı yazar. CBA → Steel Tank UI → **Sinif eslestirme** alanına `sinif=Profil` yazın

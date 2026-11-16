@@ -5,6 +5,7 @@
  */
 private _veh = vehicle player;
 if !(_veh isKindOf "Tank") exitWith {};
+if ([_veh] call SB_fnc_isDisabled) exitWith {};
 private _crew = (fullCrew _veh) select {(_x select 0) isEqualTo player};
 if (_crew isEqualTo []) exitWith {};
 private _turret = (_crew select 0) select 3;
