@@ -21,3 +21,10 @@ Hız göstergesi + 7 segment, yakıt, arıza lambaları, motor/far/kapak. Geri g
 
 ## Yükleyici
 Arma'da yükleyici koltuğu yok; yükleme YÜKLE düğmesiyle (insan yükleyici süresi) yapılır.
+
+## SB "Leopard 2" ve "Leopard 1" kontrol listeleri (kullanıcıdan)
+- **Leopard 2** (araca özgü): Dynamic lead P · Toggle magnification (Leo2a5 gunner) N · KH / KW / ZU mode (Leo2 TC) · Peri cancel (Leo2 TC) · Palm switch (gunner / TC) ·
+  Load Main Gun (Gnr) V · Cycle day sight visual filter Shift+R · Toggle sight reticle illumination R. Mermi seçimi, ateş kontrol modu, savaş nişanı, M (ana top/koaks) ortak nişancı listesinde.
+  Ekranımızdaki gerçek işlevler (yükle, mermi, ateş kontrol modu, BS 1100, SS 1500, koaks) bu listeyle uyumlu; KH/KW/ZU komutan ezme modları, dinamik lead, yakınlaştırma, filtre, retikül ışığı Arma'da yok (eklenmedi).
+- **Leopard 1** (ayrı araç): Pano (TC panoramik periskop) kontrolleri, Battle-sight range (Backspace), Toggle magnification N, Fire control: Stab Bereit L, Dynamic lead, palm switch.
+  Leopard 1 için şimdilik ekran yok (Generic profil); `leopard2`/`strv` eşleşmesi Leopard 1'i artık yakalamıyor.

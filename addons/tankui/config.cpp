@@ -107,7 +107,7 @@ class CfgSBTankUI {
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
             language = "de";
-            match[] = {"leopard", "leo2", "strv"};
+            match[] = {"leopard2", "leopard_2", "leo2", "strv"};   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
             palette = "leo";
             station = "LEO2"; // Leopard 2 ailesi (Strv 122 mantığı); gunner/commander için ISTASYON sekmesi
         };
