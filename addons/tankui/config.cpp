@@ -37,6 +37,7 @@ class CfgFunctions {
             class drawStationLeo2Cmdr {};
             class drawStationLeo2Driver {};
             class drawStationM1 {};
+            class drawStationT72B3 {};
             class drawStationM1Cmdr {};
             class gpsText {};
             class leoSetRange {};
@@ -133,6 +134,13 @@ class CfgSBTankUI {
             match[] = {"t80"};
             station = "T72"; palette = "t72";
             fcs = 3; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
+        };
+        class T72B3 {
+            title = "T-72B3 - CREW DISPLAY";
+            language = "ru";
+            match[] = {"t72b3"};
+            station = "T72B3"; palette = "t72";
+            fcs = 2; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
         };
         class T72B {
             title = "T-72B - CREW DISPLAY";

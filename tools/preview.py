@@ -117,16 +117,16 @@ def push_black(S, ox, oy, name, on):
     S.spr("knob", ox, oy, 1.25, 1.25, (0.16, 0.16, 0.16, 1)); S.spr("gloss", ox - 0.2, oy - 0.25, 0.7, 0.7, (1, 1, 1, 0.5))
     S.txt(ox, oy + 1.4, 3.0, 0.5, name, size=0.38)
 
-def toggle(S, ox, oy, name, ang):
-    S.spr("recess", ox, oy, 1.7, 1.7); S.spr("ring", ox, oy, 1.15, 1.15)
-    S.bar(S.U(ox), S.V(oy), u * 1.0, u * 0.3, ang, (1, 1, 1, 1), "lever")
-    S.txt(ox, oy + 1.55, 2.6, 0.5, name, size=0.4)
+def toggle(S, ox, oy, name, ang, sc=1.0, lab=None):
+    S.spr("recess", ox, oy, 1.7 * sc, 1.7 * sc); S.spr("ring", ox, oy, 1.15 * sc, 1.15 * sc)
+    S.bar(S.U(ox), S.V(oy), u * 1.0 * sc, u * 0.3 * sc, ang, (1, 1, 1, 1), "lever")
+    S.txt(ox, oy + 1.55 * sc, 2.6, 0.5, name, lab if lab else (0.84, 0.86, 0.8, 1), size=0.4 if sc >= 0.9 else 0.32)
 
-def rotary(S, ox, oy, pos, idx):
-    S.spr("recess", ox, oy, 3.3, 3.3); S.spr("knob", ox, oy, 2.6, 2.6); S.spr("recess", ox, oy, 1.5, 1.5)
+def rotary(S, ox, oy, pos, idx, sc=1.0):
+    S.spr("recess", ox, oy, 3.3 * sc, 3.3 * sc); S.spr("knob", ox, oy, 2.6 * sc, 2.6 * sc); S.spr("recess", ox, oy, 1.5 * sc, 1.5 * sc)
     for n, _, a in pos:
-        S.txt(ox + math.sin(math.radians(a)) * 2.45, oy - math.cos(math.radians(a)) * 2.45, 1.8, 0.5, n)
-    S.bar(S.U(ox), S.V(oy), u * 1.0, u * 0.26, pos[idx][2], (0.95, 0.95, 0.9, 1))
+        S.txt(ox + math.sin(math.radians(a)) * 2.45 * sc, oy - math.cos(math.radians(a)) * 2.45 * sc, 1.8 * sc, 0.5, n, size=0.46 if sc >= 0.9 else 0.38)
+    S.bar(S.U(ox), S.V(oy), u * 1.0 * sc, u * 0.26 * sc, pos[idx][2], (0.95, 0.95, 0.9, 1))
 
 def gauge(S, ox, oy, r, name, mx, a0, a1, val, needle):
     D = r * 2 / 0.9
@@ -340,6 +340,51 @@ def m1_gunner():
 def m1_cmdr(): return leo_cmdr("m1", "W_M2", "M1A2 Abrams")
 def m1_driver(): return leo_driver("m1", "M1A2 Abrams")
 
+# ---------------------------------------------------------------- T-72B3 (2012) nisanci
+def t72b3():
+    global PAL
+    PAL = "t72"
+    S = Scene(); frame(S, 2, [("", 2), ("", 0), ("", 1)])
+    header(S, "T-72B3  |  " + lbl("SCR_STATION"), lbl("ROLE_gunner"))
+    YEL = (1, 0.85, 0.15, 1); DK = (0.08, 0.09, 0.09, 1); WH = (0.92, 0.92, 0.9, 1)
+    def key(ox, oy, w, h, t, fs=0.34):
+        S.spr("label", ox + w / 2, oy + h / 2, w, h, (1, 1, 1, 1), None) if False else S.spr("label", ox + w / 2, oy + h / 2, w, h)
+        S.txt(ox + w / 2, oy + h / 2, w - 0.1, h * 0.8, t, WH, size=fs)
+    def lamp_side(ox, oy, name, col, on, ink=DK):
+        lamp_small(S, ox, oy, "", col, on); S.txt(ox + 0.65, oy, 2.4, 0.4, name, ink, 0, 0.3)
+    def vkey(ox, oy, w, t, on=0):
+        lamp_small(S, ox + w / 2, oy - 0.55, "", AMBER, on); key(ox, oy, w, 0.9, t, 0.3)
+    def pbs(ox, oy, name, on=0):
+        S.spr("recess", ox, oy, 1.3, 1.3); S.spr("ring", ox, oy, 1.05, 1.05, (0.25, 0.95, 0.35, 1) if on else (0.45, 0.46, 0.43, 1))
+        S.spr("knob", ox, oy, 0.75, 0.75, (0.16, 0.16, 0.16, 1)); S.txt(ox, oy + 0.95, 1.8, 0.4, name, size=0.28)
+    # A
+    S.box(0.1, 1.6, 5.7, 13.9, (0.05, 0.05, 0.05, 1)); S.box(0.25, 1.75, 5.4, 13.6, (0.66, 0.68, 0.68, 1))
+    S.txt(3.0, 2.15, 3, 0.4, "ГОТОВ", DK, size=0.3)
+    for n, cx, cy in [("ССУ", 0.9, 2.9), ("БВ", 0.9, 3.7), ("Д", 0.9, 4.5), ("У", 3.0, 2.9), ("АВТОМАТ", 3.0, 3.7), ("ОБОГРЕВ", 3.0, 4.5)]: lamp_side(cx, cy, n, YEL, 1)
+    toggle(S, 1.0, 6.1, "Д.У.", 0, 0.65, DK); toggle(S, 2.9, 6.1, "↔", 180, 0.65, DK); toggle(S, 4.6, 6.1, "↕", 0, 0.65, DK)
+    S.txt(3.2, 7.8, 4, 0.35, "ВЫВЕРКА Д", DK, size=0.3); toggle(S, 1.2, 8.6, "4x / 12x", 0, 0.65, DK)
+    key(0.5, 10.0, 2.5, 0.9, "МЕНЮ"); key(3.1, 10.0, 2.5, 0.9, "ЗАПИСЬ", 0.26); key(0.5, 11.0, 2.5, 0.9, "−", 0.5); key(3.1, 11.0, 2.5, 0.9, "+", 0.5)
+    key(1.2, 12.0, 3.2, 0.9, "ВОЗВРАТ", 0.3); toggle(S, 1.2, 13.7, "АВТОМАТ", 0, 0.65, DK)
+    # B
+    S.box(6.0, 1.6, 7.4, 2.4, (0.05, 0.05, 0.05, 1))
+    for i, t in enumerate(["РС1", "РС2", "РС3", "РС4", "ВС"]): vkey(6.15 + i * 1.45, 3.0, 1.3, t, 1 if i == 1 else 0)
+    toggle(S, 7.0, 5.6, "АСЦ", 180, 0.65)
+    S.spr("display", 10.6, 6.3, 4.2, 2.8); S.rect(10.6, 7.0, 4.0, 1.3, (0.55, 0.56, 0.56, 1)); S.txt(9.5, 7.5, 1.6, 0.35, "ССУ ВКЛ", WH, size=0.28)
+    key(13.0, 5.2, 0.8, 0.8, "+", 0.4); key(13.0, 6.2, 0.8, 0.8, "−", 0.4); key(13.0, 7.2, 0.8, 0.8, "*", 0.32)
+    lamp_small(S, 6.5, 9.4, "", YEL, 1); toggle(S, 7.9, 9.5, "Д", 0, 0.65); lamp_small(S, 6.5, 11.4, "", GREEN, 1); toggle(S, 7.9, 11.5, "РУЧ / АВТ", 180, 0.65)
+    S.spr("display", 11.4, 10.2, 4.2, 1.9); seven(S, 9.94, 10.2, "1273", 4, 0.72)
+    push(S, 9.6, 12.8, lbl("LASE"), (0.45, 0.45, 0.45, 1)); push(S, 12.0, 12.8, lbl("RESET"), (0.15, 0.15, 0.15, 1))
+    # C
+    S.spr("label", 17.2, 3.4, 6.0, 3.4)
+    for (x, y, k, c, on) in [(15.3, 2.5, "L_STAB", GREEN, 1), (17.2, 2.5, "L_MIRROR", RED, 1), (19.1, 2.5, "L_HYDR", GREEN, 1), (15.3, 4.2, "L_TC", RED, 0), (17.2, 4.2, "L_DELTA", RED, 1), (19.1, 4.2, "L_LOADED", VIOLET, 1)]: lamp_small(S, x, y, lbl(k), c, on)
+    S.spr("label", 15.7, 5.85, 3.2, 0.7); S.txt(14.95, 5.85, 1.4, 0.4, "РУЧ", (0.25, 0.7, 0.3, 1), size=0.3); S.txt(16.5, 5.85, 1.6, 0.4, "ПОДДОН", (0.8, 0.2, 0.15, 1), size=0.3)
+    pbs(18.3, 5.8, "ВКЛ.А"); pbs(19.6, 5.8, "АВТ/РУЧ")
+    push_black(S, 14.9, 8.0, lbl("T_DELTA"), 1); push_black(S, 17.0, 8.0, lbl("T_STAB"), 0); push_black(S, 19.1, 8.0, lbl("T_HYDR"), 0)
+    rotary(S, 16.0, 12.0, [("ЗАГР", "", -120), ("О", "", -80), ("Б", "", -40), ("К", "", 0), ("П", "", 40), ("У", "", 80), ("УН", "", 120)], 2, 0.62)
+    push(S, 19.2, 11.1, lbl("LOAD"), (0.2, 0.6, 0.25, 1))
+    D = 0.95 * 2 / 0.9; S.spr("gauge_ammo", 19.2, 14.55, D, D); L = 0.95 * 0.82 * u; S.bar(S.U(19.2), S.V(14.55), L, L * 0.16, -115 + 230 * 7 / 11, (0.05, 0.05, 0.05, 1))
+    finish(S); PAL = ""; return S
+
 # ---------------------------------------------------------------- NISANGAH PLAKALARI (HUD)
 def hud():
     global u, bx, by
@@ -385,5 +430,5 @@ def hud():
 
 if __name__ == "__main__":
     os.makedirs(OUTDIR, exist_ok=True)
-    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver), ("m1_nisanci", m1_gunner), ("m1_komutan", m1_cmdr), ("m1_surucu", m1_driver)]:
+    for name, fn in [("tablet_istasyon", station), ("tablet_muhimmat", ammo), ("tablet_durum", status), ("nisangah_hud", hud), ("surucu", driver), ("komutan", cmdr), ("leo_nisanci", leo_gunner), ("leo_komutan", leo_cmdr), ("leo_surucu", leo_driver), ("m1_nisanci", m1_gunner), ("m1_komutan", m1_cmdr), ("m1_surucu", m1_driver), ("t72b3_nisanci", t72b3)]:
         fn().im.convert("RGB").save(os.path.join(OUTDIR, name + "_" + LANG + ".png")); print("yazildi", name + "_" + LANG)

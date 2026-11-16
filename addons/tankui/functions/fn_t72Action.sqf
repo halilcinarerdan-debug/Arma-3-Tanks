@@ -8,9 +8,14 @@ private _veh = uiNamespace getVariable ["SB_TankUI_vehicle", objNull];
 if (isNull _veh) exitWith {};
 private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
+// Yalnızca görsel durum (gerçek parçanın şekli/konumu tıklanabilir; oyuna etkisi yok): vis_<ad> açık/kapalı, visrot_<n> seçici konumu
+if ((_action select [0, 4]) == "vis_") exitWith { _veh setVariable [_action, !(_veh getVariable [_action, false])] };
+if ((_action select [0, 7]) == "visrot_") exitWith { _veh setVariable ["SB_visRot", parseNumber (_action select [7])] };
+
 if ((_action select [0, 4]) == "sel_") exitWith {
     private _t = _action select [4];
     _veh setVariable ["SB_selType", ["", _t] select (_t != "OFF"), true];
+    _veh setVariable ["SB_visRot", -1];
 };
 
 switch (_action) do {

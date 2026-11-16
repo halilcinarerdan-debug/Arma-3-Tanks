@@ -197,11 +197,11 @@ private _pushBlack = {
 
 // ---- Kollu şalter: _angCode araç alır, kol açısı döner ----
 private _toggle = {
-    params ["_ox", "_oy", "_name", "_act", "_angCode"];
-    ["recess", _ox, _oy, 1.7, 1.7, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
-    ["ring", _ox, _oy, 1.15, 1.15, [1, 1, 1, 1], _dotTex, [0.6, 0.62, 0.57, 1]] call _spr;
+    params ["_ox", "_oy", "_name", "_act", "_angCode", ["_sc", 1], ["_labCol", _ink]];
+    ["recess", _ox, _oy, 1.7 * _sc, 1.7 * _sc, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
+    ["ring", _ox, _oy, 1.15 * _sc, 1.15 * _sc, [1, 1, 1, 1], _dotTex, [0.6, 0.62, 0.57, 1]] call _spr;
     private _lever = [[1, 1, 1, 1], "lever"] call _bar;
-    _lever setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.0, _u * 0.3, _asp, _sgn]];
+    _lever setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.0 * _sc, _u * 0.3 * _sc, _asp, _sgn]];
     _lever setVariable ["sb_ang", _angCode];
     _lever setVariable ["sb_fn", {
         params ["_c", "_veh"];
@@ -209,25 +209,25 @@ private _toggle = {
         [_c, _x0, _y0, _len, _th, _veh call (_c getVariable "sb_ang"), _a, _s] call SB_fnc_placeRect;
     }];
     [_lever, _veh] call (_lever getVariable "sb_fn");
-    [_ox, _oy + 1.55, 2.6, 0.5, _name, _ink, 2, 0.4] call _txt;
-    [_ox, _oy, 1.8, 2.3, _act] call _inv;
+    [_ox, _oy + 1.55 * _sc, 2.6, 0.5, _name, _labCol, 2, [0.4, 0.32] select (_sc < 0.9)] call _txt;
+    [_ox, _oy, 1.8 * _sc, 2.3 * _sc, _act] call _inv;
 };
 
 // ---- Dönel seçici: _pos = [[etiket, eylem, açı], ...] ----
 private _rotary = {
-    params ["_ox", "_oy", "_pos", "_idxCode"];
-    ["recess", _ox, _oy, 3.3, 3.3, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
-    ["knob", _ox, _oy, 2.6, 2.6, [1, 1, 1, 1], _dotTex, [0.5, 0.52, 0.48, 1]] call _spr;
-    ["recess", _ox, _oy, 1.5, 1.5, [1, 1, 1, 1], _dotTex, [0.12, 0.13, 0.11, 1]] call _spr;
+    params ["_ox", "_oy", "_pos", "_idxCode", ["_sc", 1]];
+    ["recess", _ox, _oy, 3.3 * _sc, 3.3 * _sc, [1, 1, 1, 1], _dotTex, [0.1, 0.11, 0.09, 1]] call _spr;
+    ["knob", _ox, _oy, 2.6 * _sc, 2.6 * _sc, [1, 1, 1, 1], _dotTex, [0.5, 0.52, 0.48, 1]] call _spr;
+    ["recess", _ox, _oy, 1.5 * _sc, 1.5 * _sc, [1, 1, 1, 1], _dotTex, [0.12, 0.13, 0.11, 1]] call _spr;
     private _ptr = [[0.95, 0.95, 0.9, 1]] call _bar;
     {
         _x params ["_name", "_act", "_ang"];
-        private _lx = _ox + (sin _ang) * 2.45;
-        private _ly = _oy - (cos _ang) * 2.45;
-        [_lx, _ly, 1.8, 0.5, _name] call _txt;
-        [_lx, _ly, 1.9, 1.0, _act] call _inv;
+        private _lx = _ox + (sin _ang) * 2.45 * _sc;
+        private _ly = _oy - (cos _ang) * 2.45 * _sc;
+        [_lx, _ly, 1.8 * _sc, 0.5, _name, _ink, 2, [0.46, 0.38] select (_sc < 0.9)] call _txt;
+        [_lx, _ly, 1.9 * _sc, 1.0, _act] call _inv;
     } forEach _pos;
-    _ptr setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.0, _u * 0.26, _asp, _sgn]];
+    _ptr setVariable ["sb_geo", [_ox call _fx, _oy call _fy, _u * 1.0 * _sc, _u * 0.26 * _sc, _asp, _sgn]];
     _ptr setVariable ["sb_angles", _pos apply { _x select 2 }];
     _ptr setVariable ["sb_idx", _idxCode];
     _ptr setVariable ["sb_fn", {

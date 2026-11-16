@@ -37,3 +37,10 @@ Kaynak: kullanıcının Steel Beasts ekran görüntüleri (repoda yok). "Net" = 
 ## Belirsiz (anlamı bilinmiyor, koda alınmadı)
 Altı lambanın hangisinin ne olduğu; sarı/yeşil lambaların işlevi; sol alt dört basmalı lamba; soldaki iki kadran; РУЧ/ПОДДОН ne zaman yanıyor; `ЗАГР`, `У`, `УН`, `П` konumları; РС1-РС4/ВС; АСЦ; Düzen B'deki tüm СОСНА-У işlevleri.
 Not: `АВТ./РУЧ.` yazısı, mevcut "АВТ / РУЧ" yükleyici şalterimizle tutarlı ama bağlantı teyit edilmedi.
+
+## T-72B3 (2012) ekranı: ne bağlı, ne görsel
+`station = "T72B3"` (profil `t72b3`). Her parça tabletten tıklanır; **oyuna etkisi olanlar:** lamba matrisi (STAB / aynayı / hidrolik / delta / yüklü), МЕХ-Д / СТАБИЛ / ПРИВОД butonları,
+seçicide Б, К, О (mermi seçimi) + ЗАРЯД düğmesi (bizim eklememiz), `Д` şalteri (LRF aç/kapat; "Д" = дальномер etiketine dayalı), `РУЧ / АВТ` şalteri (yükleyici elle/oto; etiket eşleşmesi),
+menzil ekranı, LAZER / sıfırla, mermi sayacı. **Yalnızca görsel (etkisi bilinmiyor):** СОСНА-У paneli (lambalar, şalterler, МЕНЮ / ЗАПИСЬ / − / + / ВОЗВРАТ),
+РС1–РС4 / ВС, АСЦ, monitör düğmeleri, `ЗАГР` / `П` / `У` / `УН` seçici konumları, `РУЧ`/`ПОДДОН` penceresi, `ВКЛ.А` ve `АВТ/РУЧ` küçük butonlar.
+Taales paneli çizilmedi.
