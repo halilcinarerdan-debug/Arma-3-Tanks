@@ -147,7 +147,7 @@ class CfgSBTankUI {
             language = "ru";
             match[] = {"t72b"};
             station = "T72"; palette = "t72";
-            fcs = 2; lrfMax = 4000; lrfModes = 0; atgm = 1; atgmMin = 100; atgmMax = 4000;
+            fcs = 2; lrfMax = 4000; lrfModes = 0; atgm = 0; atgmMin = 0; atgmMax = 0;   // SB "T-72" kontrol listesinde ATGM tuşu yok (B1/B: Svir yok)
         };
         class T72 {
             title = "T-72 - CREW DISPLAY";

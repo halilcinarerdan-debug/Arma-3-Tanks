@@ -56,3 +56,8 @@ Toggle mag./zoom in N · Zoom out Shift+N · Toggle TIS polarity Num− · TC ov
 - **Arma'da gerçek karşılığı olup bağlananlar:** Load Main Gun → ЗАРЯД; Ammo 1-4 + gun select main/coax → seçici (О MPAT/HE, Б SABOT, К HEAT, У ATGM, П koaks); GPS range increase/decrease → menzil çarkı − / + (±100 m, elle menzil).
 - **Çıkarım (teyit bekliyor):** seçici harfleri: Б = SABOT, К = HEAT, О = MPAT, У = ATGM, П = koaks. Kanıt: SB'nin beş seçeneği (SABOT/HEAT/ATGM/MPAT/COAX) ile panelde okunan beş harf birebir örtüşüyor; `ЗАГР` ve `УН` konumları listede karşılık bulmadı, çizilmedi.
 - **Arma'da karşılığı yok (eklenmedi):** auto target tracking (muhtemelen panel АСЦ), TIS açma/polarite, yakınlaştırma, retikül rengi, komutan periskobu / ezme komutları.
+
+## SB "T-72" (eski: M1 / B1) kontrol listesi
+Filtre "T-72": yalnızca `Load Main Gun (Gnr)` V, `Stabilize TC Peri (T72 TC)` , ve `Slew Gun to Peri (T72 TC)` . var.
+Sonuç: eski T-72'de ATGM tuşu, menzil artır/azalt, otomatik hedef takibi, TIS ve yakınlaştırma yok; mermi seçimi panel üzerinden (tıklanan seçici), yükleme V. Bu yüzden
+`T72B` profili `atgm = 0` yapıldı (menzil −/+ ve ATGM yalnızca T-72B3 ekranında). Menzil çarkı ve seçici eski ekranda doğru konumda.
