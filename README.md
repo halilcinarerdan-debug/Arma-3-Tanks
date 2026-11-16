@@ -164,3 +164,8 @@ Yeni doku: `housing_m1_ca.png` (PAA'ya çevirin). Dil: İngilizce.
 Koyu mavi-gri boyalı çelik gövde (`housing_t72_ca.png`, PAA'ya çevrilmeli); SB T-72 görüntülerindeki biçimler: tek plakada kompakt 2×3 lamba matrisi,
 МЕХ-Д / СТАБИЛ / ПРИВОД için siyah yuvarlak butonlar (açıkken ince yeşil halka), seçicide harfler (Б / К / О). T-72, T-72B, T-80 ve T-90 profilleri kullanır.
 Görüntüden okunamayan parçalar (sol alt renkli butonlar, menzil ekranı yanındaki sarı lamba, РУЧ/ПОДДОН penceresi) bilerek eklenmedi.
+
+## Doku kalitesi (`tools/gen_textures_hq.py`)
+
+`python3 tools/gen_textures_hq.py [housing|small|gauges|all]` yüksek kalite sürümü üretir: yükseklik haritası + gerçek aydınlatma (pah, speküler), kenar aşınması
+(açık metal ve pas sıyrığı), çok oktavlı kir/akıntı, 2048×2048 gövde, 1024×1024 kadran, 512 topuz, 256 lens/halka. Aynı dosya adlarının üzerine yazar; **tüm PNG'leri yeniden PAA'ya çevirin**.

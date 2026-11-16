@@ -262,8 +262,8 @@ def dirt():
 
 
 # ------------------------------------------------------------------ gösterge kadranı
-def gauge(name, vmax, a0, a1, label_step, face, ink, labels=None, sub=0, ring=(120, 122, 116)):
-    S = 512
+def gauge(name, vmax, a0, a1, label_step, face, ink, labels=None, sub=0, ring=(120, 122, 116), S=512):
+    k = S / 512
     c = S / 2
     R = S / 2 - 2
     a = np.zeros((S, S, 4), np.float32)
@@ -295,24 +295,24 @@ def gauge(name, vmax, a0, a1, label_step, face, ink, labels=None, sub=0, ring=(1
         ang_d = a0 + (a1 - a0) * i / n
         s, co = math.sin(math.radians(ang_d)), -math.cos(math.radians(ang_d))
         r0, r1 = face_r * 0.72, face_r * 0.95
-        d.line([c + s * r0, c + co * r0, c + s * r1, c + co * r1], fill=ink, width=5 if i % label_step == 0 else 3)
+        d.line([c + s * r0, c + co * r0, c + s * r1, c + co * r1], fill=ink, width=int(5 * k) if i % label_step == 0 else int(3 * k))
         if sub and i < n:
             for k in range(1, sub + 1):
                 ad = a0 + (a1 - a0) * (i + k / (sub + 1)) / n
                 s2, c2 = math.sin(math.radians(ad)), -math.cos(math.radians(ad))
-                d.line([c + s2 * face_r * 0.84, c + c2 * face_r * 0.84, c + s2 * r1, c + c2 * r1], fill=ink, width=2)
+                d.line([c + s2 * face_r * 0.84, c + c2 * face_r * 0.84, c + s2 * r1, c + c2 * r1], fill=ink, width=int(2 * k))
         if i % label_step == 0:
             txt = labels[i // label_step] if labels else str(i)
             tx, ty = c + s * face_r * 0.52, c + co * face_r * 0.52
-            f_ = font(34, True)
+            f_ = font(int(34 * k), True)
             bb = d.textbbox((0, 0), txt, font=f_)
             d.text((tx - (bb[2] - bb[0]) / 2, ty - (bb[3] - bb[1]) / 2 - bb[1]), txt, font=f_, fill=ink)
     save(img, name)
 
 
 # ------------------------------------------------------------------ yay biçimli menzil çarkı (kılavuz s.15)
-def gauge_arc(name="gauge_arc", vmax=30, a0=-80, a1=80, step=5):
-    S = 512
+def gauge_arc(name="gauge_arc", vmax=30, a0=-80, a1=80, step=5, S=512):
+    k = S / 512
     c = S / 2
     R = S / 2 - 4
     img = Image.new("RGBA", (S * 2, S * 2), (0, 0, 0, 0))
@@ -329,10 +329,10 @@ def gauge_arc(name="gauge_arc", vmax=30, a0=-80, a1=80, step=5):
         s_, c_ = math.sin(math.radians(a)), -math.cos(math.radians(a))
         major = i % step == 0
         r0 = r_in + (r_out - r_in) * (0.55 if major else 0.72)
-        d.line([cc + s_ * r0, cc + c_ * r0, cc + s_ * (r_out - 12), cc + c_ * (r_out - 12)], fill=ink, width=8 if major else 4)
+        d.line([cc + s_ * r0, cc + c_ * r0, cc + s_ * (r_out - 12), cc + c_ * (r_out - 12)], fill=ink, width=int(8 * k) if major else int(4 * k))
         if major:
             t = str(i)
-            f_ = font(64, True)
+            f_ = font(int(64 * k), True)
             tx, ty = cc + s_ * (r_in + (r_out - r_in) * 0.30), cc + c_ * (r_in + (r_out - r_in) * 0.30)
             bb = d.textbbox((0, 0), t, font=f_)
             d.text((tx - (bb[2] - bb[0]) / 2, ty - (bb[3] - bb[1]) / 2 - bb[1]), t, font=f_, fill=ink)
