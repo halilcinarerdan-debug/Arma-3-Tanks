@@ -22,14 +22,17 @@ uiNamespace setVariable ["SB_TankUI_sig", ""];
 // Palet (Leopard 2: açık gri iç mekan): gövde dokusu ve yan düğme yazıları
 private _pal = getText (_profile >> "palette");
 if (_pal != "") then {
-    if (missionNamespace getVariable ["SB_TankUI_useTextures", true]) then {
-        (_display displayCtrl 7405) ctrlSetText format ["\z\tank33\addons\tankui\data\housing_%1_ca.paa", _pal];
+    // doku PAA'ya çevrilmemişse (dosya yok) varsayılan gövde kalır
+    private _hp = format ["\z\tank33\addons\tankui\data\housing_%1_ca.paa", _pal];
+    if ((missionNamespace getVariable ["SB_TankUI_useTextures", true]) && {fileExists _hp}) then {
+        (_display displayCtrl 7405) ctrlSetText _hp;
     };
     { (_display displayCtrl _x) ctrlSetTextColor [0.92, 0.94, 0.92, 1] } forEach [7411, 7412, 7413, 7499];
 };
 
 // Doku kapalıysa zemin zeytin yeşili yedek gövde olur; açıkken koyu zemin kalır (gövdenin arkasından dünya görünmesin)
 if !(missionNamespace getVariable ["SB_TankUI_useTextures", true]) then { (_display displayCtrl 7401) ctrlSetBackgroundColor [0.25, 0.30, 0.20, 1] };
+diag_log format ["[SB_TankUI] arac=%1 profil=%2 istasyon=%3 rol=%4", typeOf _veh, configName _profile, getText (_profile >> "station"), _role];
 // Tanılama: fileExists sonucu (RPT)
 diag_log format ["[SB_TankUI] fileExists ring=%1 housing=%2", fileExists "\z\tank33\addons\tankui\data\ring_ca.paa", fileExists "\z\tank33\addons\tankui\data\housing_ca.paa"];
 

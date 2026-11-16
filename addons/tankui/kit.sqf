@@ -19,8 +19,9 @@ private _profCfg = [_veh] call SB_fnc_getProfile;   // not: >> operatörü call'
 private _pal = getText (_profCfg >> "palette");
 private _leo = _pal != "";
 private _accent = [[0.62, 0.78, 0.58, 1], [0.9, 0.92, 0.9, 1]] select _leo;
-private _ringN = ["ring", "ring_sq"] select _leo;
-private _lensN = ["lens", "lens_sq"] select _leo;
+private _sqOk = _leo && {fileExists "\z\tank33\addons\tankui\data\ring_sq_ca.paa"} && {fileExists "\z\tank33\addons\tankui\data\lens_sq_ca.paa"};
+private _ringN = ["ring", "ring_sq"] select _sqOk;
+private _lensN = ["lens", "lens_sq"] select _sqOk;
 private _roleLabel = ("ROLE_" + (uiNamespace getVariable ["SB_TankUI_role", "other"])) call _L;
 
 private _dotTex = "\A3\ui_f\data\map\markers\military\dot_CA.paa";

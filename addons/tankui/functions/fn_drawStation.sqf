@@ -29,7 +29,7 @@ switch (_station) do {
         (ctrlPosition (_display displayCtrl 7402)) params ["_sx", "_sy", "_sw", "_sh"];
         private _c = _display ctrlCreate ["SB_RscText", -1];
         _c ctrlSetPosition [_sx + _sw * 0.03, _sy + _sh * 0.2, _sw * 0.9, _sh * 0.05];
-        _c ctrlSetText "Bu arac icin istasyon ekrani yok.";
+        _c ctrlSetText format ["Bu arac icin istasyon ekrani yok. Arac: %1  Profil: %2", typeOf _veh, configName _profile];
         _c ctrlCommit 0;
         uiNamespace setVariable ["SB_TankUI_ctrls", [_c]];
     };
