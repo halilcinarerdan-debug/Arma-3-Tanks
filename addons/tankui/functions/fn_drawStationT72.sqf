@@ -21,7 +21,6 @@ private _turretOf = { uiNamespace getVariable ["SB_TankUI_turret", [0]] };
 [1.2, 2.7, "L_STAB" call _L,   _green,  {[_this] call SB_fnc_stabEffective}] call _lampSmall;
 [3.0, 2.7, "L_MIRROR" call _L, _red,    {(_this getVariable ["SB_hydr", false]) && {_this getVariable ["SB_mirror", false]} && {serverTime - (_this getVariable ["SB_hydrOn", 0]) >= 120}}] call _lampSmall;
 [4.8, 2.7, "L_HYDR" call _L,   _green,  {_this getVariable ["SB_hydr", false]}] call _lampSmall;
-[1.2, 4.7, "L_TC" call _L,     _red,    {false}] call _lampSmall;
 [3.0, 4.7, "L_DELTA" call _L,  _red,    {_this getVariable ["SB_delta", false]}] call _lampSmall;
 [4.8, 4.7, "L_LOADED" call _L, _violet, {(_this ammo (_this currentWeaponTurret (uiNamespace getVariable ["SB_TankUI_turret", [0]]))) > 0}] call _lampSmall;
 

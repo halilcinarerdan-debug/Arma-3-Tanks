@@ -38,9 +38,13 @@ Kaynak: kullanıcının Steel Beasts ekran görüntüleri (repoda yok). "Net" = 
 Altı lambanın hangisinin ne olduğu; sarı/yeşil lambaların işlevi; sol alt dört basmalı lamba; soldaki iki kadran; РУЧ/ПОДДОН ne zaman yanıyor; `ЗАГР`, `У`, `УН`, `П` konumları; РС1-РС4/ВС; АСЦ; Düzen B'deki tüm СОСНА-У işlevleri.
 Not: `АВТ./РУЧ.` yazısı, mevcut "АВТ / РУЧ" yükleyici şalterimizle tutarlı ama bağlantı teyit edilmedi.
 
-## T-72B3 (2012) ekranı: ne bağlı, ne görsel
-`station = "T72B3"` (profil `t72b3`). Her parça tabletten tıklanır; **oyuna etkisi olanlar:** lamba matrisi (STAB / aynayı / hidrolik / delta / yüklü), МЕХ-Д / СТАБИЛ / ПРИВОД butonları,
-seçicide Б, К, О (mermi seçimi) + ЗАРЯД düğmesi (bizim eklememiz), `Д` şalteri (LRF aç/kapat; "Д" = дальномер etiketine dayalı), `РУЧ / АВТ` şalteri (yükleyici elle/oto; etiket eşleşmesi),
-menzil ekranı, LAZER / sıfırla, mermi sayacı. **Yalnızca görsel (etkisi bilinmiyor):** СОСНА-У paneli (lambalar, şalterler, МЕНЮ / ЗАПИСЬ / − / + / ВОЗВРАТ),
-РС1–РС4 / ВС, АСЦ, monitör düğmeleri, `ЗАГР` / `П` / `У` / `УН` seçici konumları, `РУЧ`/`ПОДДОН` penceresi, `ВКЛ.А` ve `АВТ/РУЧ` küçük butonlar.
-Taales paneli çizilmedi.
+## T-72B3 (2012) ekranı: yalnızca işlevli parçalar
+Karar (kullanıcı): süs/işlevsiz parça yok. Ekranda yalnızca oyunda gerçek etkisi olan veya gerçek veriyi gösteren parçalar var:
+lamba matrisi (STAB, ayna, hidrolik, delta, yüklü), МЕХ-Д / СТАБИЛ / ПРИВОД, seçici О / Б / К (+ ПТУР konumu: yalnızca profilde `atgm = 1` ise), ЗАРЯД, mermi sayacı,
+`Д` (LRF) şalteri ve lambası, hazır lambası, `РУЧ / АВТ` (yükleyici elle/oto) şalteri, ПТУР hazır lambası, menzil ekranı, menzil çarkı, LAZER / sıfırla.
+`КОМ` (komutan ezmesi) lambası Arma'da karşılığı olmadığı için hem T-72 hem T-72B3 ekranından kaldırıldı.
+
+Araştırma (arama özetleri, ikincil kaynak; SB sayfaları ağ nedeniyle açılamadı): SBWiki T-72B3 (m.2012) sayfası seçiciyi "yükleyiciye sıradaki mermi tipini söyleyen dönel şalter" olarak, tuşları KE / HEAT / HE / ATGM olarak anlatıyor;
+yükleme nişancı tarafından ayrı bir tuşla yapılıyor. FK Gaming rehberi, Sosna-U düzeninde yükleyicinin yarı otomatik moda alınıp nişancının tuşuna beklediğini söylüyor.
+Doğrulanmadığı için çizilmeyenler: СОСНА-У paneli (МЕНЮ, ЗАПИСЬ ПОДСВЕТКА, ВОЗВРАТ, ВЫВЕРКА Д, Д.У., 4x/12x, ГОТОВ lambaları), РС1–РС4 / ВС, АСЦ, РУЧ/ПОДДОН penceresi, ВКЛ.А, АВТ/РУЧ butonları,
+seçici konumları ЗАГР / П / У / УН, Taales paneli. Bunların işlevi Steel Beasts kılavuzundan (T-72B3 m.2012) doğrulanınca, Arma'da karşılığı varsa eklenecek.
