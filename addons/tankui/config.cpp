@@ -132,7 +132,7 @@ class CfgSBTankUI {
         class Leopard2 {
             title = "LEOPARD 2 - CREW DISPLAY";
             language = "de";
-            match[] = {"leopard2", "leopard_2", "leo2"};   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
+            match[] = {"leopard2", "leopard_2", "leo2", "fp_ger_leopard"};   // FP_Ger_Leopard: sürüm adı yok, Leopard 2 ekranı (Leopard 1 ile aynı düzen)   // "leopard" tek başına Leopard 1'i de yakalardı; Leopard 1 ayrı araç (SB: ayrı kontrol listesi)
             palette = "leo";
             ballInputs = 1; smokeArm = 1;
             bsRange = 1000;      // Leopard 2 (DE): "E 1000" tuşu (SB iç görseli)
