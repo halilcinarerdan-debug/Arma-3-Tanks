@@ -85,6 +85,11 @@ if (!hasInterface) exitWith {};
     "Steel Tank UI", true, 0
 ] call CBA_fnc_addSetting;
 
+["SB_TankUI_classMap", "EDITBOX",
+    ["Sinif eslestirme", "Tanimsiz bir araci bir profile baglar. Bicim: sinif=Profil; sinif2=Profil2 (sinif adinin kucuk harfli bir parcasi). Profiller: Leopard2, Leopard1, Strv122, M1A2, T72B3, T72B, T72, T80, T90. Ornek: leopard2a6=Leopard2"],
+    ["Steel Tank UI", "Konum ve boyut"], "", 0
+] call CBA_fnc_addSetting;
+
 ["SB_TankUI_uiScale", "SLIDER",
     ["Menu (tablet) boyutu (%)", "Ctrl+T ile acilan tabletin boyutu (100 = varsayilan). Menu bir sonraki acilista gecerli olur."],
     ["Steel Tank UI", "Konum ve boyut"], [40, 130, 100, 0], 0

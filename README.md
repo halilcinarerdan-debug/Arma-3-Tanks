@@ -182,3 +182,8 @@ Doğrulanmadı: `ace_weather_currentTemperature` adı ve `ambientTemperature` d�
 - **Menu (tablet) boyutu (%)**: 40–130, varsayılan 100. Menü bir sonraki açılışta geçerli olur.
 - **Menu yatay / dikey konum (%)**: ekran genişliği/yüksekliğinin yüzdesi kadar kaydırır (0 = ortalı; yatay + sağa, dikey + aşağı).
 - **Nisangah plakalari yukseklik (%)**: sol/sağ plakaların üst kenardan uzaklığı (17 = varsayılan). Boyutu ayrıca "Nisangah plaka boyutu".
+
+## Araç tanınmıyorsa (yalnızca Mühimmat ve Durum sekmesi görünüyorsa)
+
+Araç hiçbir profile eşleşmemiş demektir; menü açılınca sohbette sınıf adı yazar. CBA → Steel Tank UI → **Sinif eslestirme** alanına `sinif=Profil` yazın
+(örn. `leopard2a6=Leopard2`; birden çoksa `;` ile ayırın). Profiller: Leopard2, Leopard1, Strv122, M1A2, T72B3, T72B, T72, T80, T90. Sınıf adının küçük harfli bir parçası yeter.

@@ -2,6 +2,9 @@ params ["_display"];
 private _veh = vehicle player;
 private _profile = [_veh] call SB_fnc_getProfile;
 private _role = [_veh, player] call SB_fnc_getRole;
+if ((configName _profile) == "Generic") then {
+    systemChat format ["Steel Tank UI: '%1' icin profil yok (yalniz Muhimmat/Durum). CBA > Steel Tank UI > Sinif eslestirme alanina yazin: %2=Leopard2 (veya M1A2, T72B3, T72...)", typeOf _veh, toLower typeOf _veh];
+};
 private _roleCfg = configFile >> "CfgSBTankUI" >> "Roles" >> _role;
 
 // Konum ve boyut (CBA ayarları): tablet denetimleri merkezden ölçeklenir ve kaydırılır. Sekme dizilimi ve ekran çizimi bu konumlardan okunur.
