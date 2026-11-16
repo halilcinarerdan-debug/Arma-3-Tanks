@@ -500,6 +500,10 @@
         <Key ID="STR_SB_en_BAL_BTN"><Original>BAL</Original></Key>
         <Key ID="STR_SB_de_BAL_BTN"><Original>BAL</Original></Key>
         <Key ID="STR_SB_sv_BAL_BTN"><Original>BAL</Original></Key>
+        <Key ID="STR_SB_tr_T_SMOKEARM"><Original>DUMAN ATICI</Original></Key>
+        <Key ID="STR_SB_en_T_SMOKEARM"><Original>SMOKE LAUNCHER</Original></Key>
+        <Key ID="STR_SB_de_T_SMOKEARM"><Original>MEHRFACHWURFANL.</Original></Key>
+        <Key ID="STR_SB_sv_T_SMOKEARM"><Original>RÖKGRANATKASTARE</Original></Key>
         <Key ID="STR_SB_tr_LEO_NOTE"><Original>Leopard 2 ailesi</Original></Key>
         <Key ID="STR_SB_en_LEO_NOTE"><Original>Leopard 2 family</Original></Key>
         <Key ID="STR_SB_de_LEO_NOTE"><Original>Leopard 2</Original></Key>

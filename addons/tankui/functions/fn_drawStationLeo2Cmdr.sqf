@@ -67,6 +67,7 @@ private _dim = _accent;
 [6.8, 13.6, "F_RTR" call _L, _red,  {([_this, "hitrtrack"] call SB_fnc_getHit) >= 0.3}] call _lampRound;
 [9.4, 13.6, "F_HULL" call _L, _red, {([_this, "hithull"] call SB_fnc_getHit) >= 0.3}] call _lampRound;
 [16.0, 13.4, "T_HATCH" call _L, "hatch", compile "[180, 0] select (isTurnedOut player)"] call _toggle;
+[12.8, 13.4, "T_SMOKEARM" call _L, "smokearm", {[180, 0] select (_this getVariable ["SB_smokeArmed", false])}] call _toggle;   // MEHRFACHWURFANLAGE EIN/AUS
 [19.3, 13.2, "SMOKE" call _L, "smoke", [0.45, 0.45, 0.45, 1]] call _push;
 
 call _finish;

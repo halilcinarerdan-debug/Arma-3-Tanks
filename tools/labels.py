@@ -142,6 +142,7 @@ L.update({
     "BAL_ENV":   {"tr": "ORTAM", "en": "AMBIENT", "de": "UMGEBUNG", "sv": "OMGIVNING"},
     "BAL_BACK":  {"tr": "GERI", "en": "BACK", "de": "ZURÜCK", "sv": "TILLBAKA"},
     "BAL_BTN":   {"tr": "BAL", "en": "BAL", "de": "BAL", "sv": "BAL"},
+    "T_SMOKEARM": {"tr": "DUMAN ATICI", "en": "SMOKE LAUNCHER", "de": "MEHRFACHWURFANL.", "sv": "RÖKGRANATKASTARE"},
     "LEO_NOTE":  {"tr": "Leopard 2 ailesi", "en": "Leopard 2 family", "de": "Leopard 2", "sv": "Leopard 2-familjen"},
 })
 

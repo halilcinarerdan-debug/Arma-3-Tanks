@@ -21,6 +21,10 @@ switch (_action) do {
         if (call compile "isTurnedOut player") then { player action ["TurnIn", _veh] } else { player action ["TurnOut", _veh] };
     };
     case "smoke": {
+        // Leopard 2 / Strv 122: MEHRFACHWURFANLAGE şalteri EIN olmadan duman atılmaz (profil özelliği smokeArm)
+        if (([_veh, "smokeArm", 0] call SB_fnc_tProfile) > 0 && {!(_veh getVariable ["SB_smokeArmed", false])}) exitWith {
+            systemChat "Duman atici kapali: MWA salterini EIN yapin.";
+        };
         // fire/selectWeapon yalnızca YEREL birim için güvenilir: duman fırlatıcı oyuncunun kendi taretinde aranır ve oyuncuya ateş ettirilir
         private _own = uiNamespace getVariable ["SB_TankUI_turret", [0]];
         private _found = ["", ""];

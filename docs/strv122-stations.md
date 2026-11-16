@@ -35,3 +35,8 @@ Arma'da yükleyici koltuğu yok; yükleme YÜKLE düğmesiyle (insan yükleyici 
 - **Savaş nişanı:** Leopard 2 (DE) `E 1000` (1000 m); Strv 122 1100 m (SB Strv 122 kılavuzu). Profil özelliği `bsRange` (Leopard2 = 1000, Strv122 = 1100). `VAR ENTF 1500` ikisinde de var.
 - **Arma'da karşılığı yok / bağlanmadı:** `KH`, `KH HZF`, `WNA`, `BORDNETZ`, `RÜCKSTEUERUNG`, `VERKANTUNG-KORR.`, `WISCHER`, drift ve justaj düğmeleri, termal cihaz grubu (EIN/BER/AUS, polarite, FERN/NAH, SEHFELD, BILDHELLIGKEIT, KONTRAST), `FJA`, aydınlatma düğmeleri.
 - **Gelecek fikri (sistemsel derinlik):** yükseklik / hava / barut sıcaklığı / yan rüzgâr girişleri gerçek değerlerden saparsa atış sapması (T-72 balistik düğmesindeki gibi); henüz yapılmadı.
+
+## SB Leopard 2A4 iç görselleri
+2A4 = 2A5 ile aynı kontrol ünitesi / balistik bilgisayar / ateş kontrol paneli (tek fark: 3. tuş `KH / KW`). Ek parça: `MEHRFACHWURFANLAGE` (kırmızı lamba, `EIN/AUS` şalteri, `Links / Fächer / Rechts` ve 0–8 seçici) → Arma'da yalnızca
+EIN/AUS karşılığı var: komutan ekranında şalter EIN olmadan DUMAN düğmesi atmaz (profil özelliği `smokeArm`). Seçici (hangi tüpler) Arma'da yok, eklenmedi.
+Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lamba testi, `40%` kadranı Arma'da karşılığı yok.

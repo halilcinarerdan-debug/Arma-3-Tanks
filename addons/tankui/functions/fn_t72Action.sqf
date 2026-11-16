@@ -9,6 +9,8 @@ if (isNull _veh) exitWith {};
 private _turret = uiNamespace getVariable ["SB_TankUI_turret", [0]];
 
 // sayfa değiştirme ve balistik giriş düğmeleri (Leopard 2)
+if (_action == "smokearm") exitWith { _veh setVariable ["SB_smokeArmed", !(_veh getVariable ["SB_smokeArmed", false]), true] };
+
 if ((_action select [0, 5]) == "page_") exitWith {
     uiNamespace setVariable ["SB_leoPage", [0, 1] select (_action == "page_bal")];
     [2] call SB_fnc_setTab;

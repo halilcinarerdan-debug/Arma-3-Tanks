@@ -293,7 +293,7 @@ def leo_cmdr(pal="leo", mg2="W_MG2", veh="Leopard 2A6"):
     for cx, k, v in ((3.5, "W_COAX", "250"), (9.0, mg2, "60"), (14.5, "SMOKE", "16")):
         S.txt(cx, 10.4, 5, 0.5, lbl(k), size=0.5); S.spr("display", cx, 11.7, 4.6, 1.8); seven(S, cx - 1.1, 11.7, v, 3, 0.8)
     for x, k, on in ((1.6, "F_ENG", 0), (4.2, "F_LTR", 1), (6.8, "F_RTR", 0), (9.4, "F_HULL", 0)): lamp_round(S, x, 13.6, lbl(k), RED, on)
-    toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
+    toggle(S, 16.0, 13.4, lbl("T_HATCH"), 180); toggle(S, 12.8, 13.4, lbl("T_SMOKEARM"), 180); push(S, 19.3, 13.2, lbl("SMOKE"), (0.45, 0.45, 0.45, 1))
     finish(S); PAL = ""; return S
 
 def leo_driver(pal="leo", veh="Leopard 2A6"):
