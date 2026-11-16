@@ -64,3 +64,4 @@ Termal cihaz paneli (polarite, görüş alanı, odak, parlaklık, kontrast), lam
 - Nişangâh altındaki yeşil 4 haneli değer **menzil (metre)**, başı sıfırlı: `0150` (kullanıcı teyit etti). Küçük yeşil kare lazer/hazır göstergesi gibi duruyor (işlevi doğrulanmadı).
 - `Ammo 3` (Home) = M830A1 HEAT-MP-T (MPAT); MPAT'ın tapa modu SB'de `Fuse: impact` mesajıyla değişiyor (panelde `AIR / GROUND`). Arma'da tapa seçimi yok, eklenmedi.
 - Uygulanan: M1 nişancı menzil göstergeleri başı sıfırlı 4 hane yazar (`SB_fnc_rangeText4`).
+- SB M1A2 SEP mermi tuşları (kullanıcı görüntüleri): Ammo 1 = M829A3 APFSDS-T (SABOT), Ammo 2 = M830 HEAT-T, Ammo 3 = M830A1 HEAT-MP-T (MPAT), Ammo 4 = büyük olasılıkla CAN (teyit edilmedi). Ekrandaki "HEAT / MPAT" satırı ikisini birleştirir.
